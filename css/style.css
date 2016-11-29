@@ -1,0 +1,68 @@
+html, body {
+	font-family: 'Montserrat', sans-serif;
+	background-color:#2196F3;
+	color: white;
+	background-size:100%;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	background-size: cover;
+}
+
+h1{
+	text-align:center;
+}
+h2{
+	text-align:left;
+	font-size:24;
+}
+h3{
+	text-align:left;
+	font-size:18;
+}
+a, a:hover{
+	text-decoration:none;
+}
+.navbar{
+	border-radius: 0px;
+	border:none;
+	background-color: #1976D2;
+	border-color: rgba(39, 111, 172, 0.75);
+	opacity: 90%;
+	color: #ffffff;
+	z-index:1;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
+	color: #fff;
+    background-color: rgba(23, 27, 28, 0.28);
+}
+.navbar-inverse .navbar-brand {
+	color:white;	
+}
+.navbar-inverse .navbar-brand:hover {
+	color:orange;	
+}
+.navbar-inverse .navbar-nav>li>a {
+	color:white;
+}
+.navbar-inverse .navbar-nav>li>a:hover {
+	color:orange;
+}
+.navbar-inverse .navbar-text {
+	color:white;
+}
+.button {
+	width:476px;
+	height:246px;
+	margin: 0 auto;
+    box-shadow: 1px 1px 10px #000000;
+	border-radius: 3px;
+	filter: brightness(70%);
+	z-index: 100;
+}
+.button:hover {
+	filter: brightness(100%);
+	z-index: 10000;
+}
+.container{
+	margin-top: 60px;
+}
