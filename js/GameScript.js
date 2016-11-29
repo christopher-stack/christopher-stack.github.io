@@ -1,9 +1,9 @@
 function HomePage() {
-	window.open('index.html', '_self');
+	window.open('../index.html', '_self');
 }
 
 function NewsPage() {
-	window.open('News.html', '_self');
+	window.open('../News.html', '_self');
 }
 
 function TwitterPage() {
@@ -15,5 +15,5 @@ function YouTubePage() {
 }
 
 function HappyWheels() {
-	window.open('Games/HappyWheels.html', '_self');
+	window.open('HappyWheels.html', '_self');
 }
