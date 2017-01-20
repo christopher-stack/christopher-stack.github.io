@@ -38,6 +38,7 @@ a, a:hover{
 	color:white;
 }
 .dropdown-menu>li>a:hover{
+	background-color: #2196F3;
 	color:orange;
 }
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
