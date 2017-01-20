@@ -39,7 +39,7 @@ a, a:hover{
 }
 .dropdown-menu>li>a:hover{
 	background-color: #2196F3;
-	color:orange;
+	color: #F57C00;
 }
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
 	color: #fff;
@@ -49,13 +49,13 @@ a, a:hover{
 	color:white;	
 }
 .navbar-inverse .navbar-brand:hover {
-	color:orange;	
+	color: #F57C00;	
 }
 .navbar-inverse .navbar-nav>li>a {
 	color:white;
 }
 .navbar-inverse .navbar-nav>li>a:hover {
-	color:orange;
+	color: #F57C00;
 }
 .navbar-inverse .navbar-text {
 	color:white;
