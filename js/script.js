@@ -17,6 +17,6 @@ function YouTubePage() {
 function HappyWheels() {
 	window.open('Games/HappyWheels.html', '_self');
 }
-$( "#header_main" ).load( "/php/header_main.html", function() {
+$( "#header_main" ).load( "php/header_main.html", function() {
   alert( "Header Loaded." );
 });
