@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="http://www.w3schools.com/lib/w3data.js"></script>
 	<head>
 	<meta char="UTF-8">
 	<title>TeamCDA Website - Home</title>
@@ -20,6 +19,9 @@
 		<meta name="msapplication-TileImage" content="/mstile-144x144.png">
 		<meta name="theme-color" content="#ffffff">
 		<!-- END FAVICON CODE -->
+		<!-- Font Awesome - Include Scripts Below -->
+		<link rel="stylesheet" href="modules/font-awesome-4.7.0/css/font-awesome.min.css">
+		<!-- END FONT AWESOME CODE -->
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -27,7 +29,10 @@
 		<script src="js/script.js"></script>
 	</head>
 	<body>
-		<?php include('php/header_main.html');?>
+		<?php
+		require 'php/header_main.php';
+		require_once 'php/header_main.php';
+		?>
 		<div class="container">
 		<h1><u>TeamCDA's Website</u></h1>
 		<h3 style="text-align:center">This Website Has Lots of Resources including Games, Cracks, and other stuff that is consistantly Updated.</h3>
