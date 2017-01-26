@@ -1,2 +1,6 @@
-RemoveHandler.html
+## .htaccess Configuration ##
+
+<Files *.html>
 AddType application/x-httpd-php .php .html
+ForceType application/x-httpd-php
+</Files>
