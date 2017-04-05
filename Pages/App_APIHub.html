@@ -1,0 +1,147 @@
+<!doctype HTML>
+<html lang="en">
+<head>
+<meta char="UTF-8">
+<title> Apps - APIHub for Pokemon GO! </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/tether.min.css" rel="stylesheet">
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<!-- Favicon Code - Include ALL Below -->
+	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="../favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="../favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="../manifest.json">
+	<link rel="mask-icon" href="../safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#2b5797">
+	<meta name="msapplication-TileImage" content="../mstile-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+	<!-- END FAVICON CODE -->
+	<!-- Font Awesome (neccessary for Custom Icons) -->
+	<link rel="stylesheet" href="../css/font-awesome.min.css">
+	<!-- END FONT AWESOME CODE -->
+	<!-- jQuery & Tether (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script src="https://github.hubspot.com/tether/dist/js/tether.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/jquery-3.2.1.min.js"></script>
+	<script src="../js/tether.min.js"></script>
+	<script src="../js/ExtScript.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-toggleable-md navbar-inverse bg-faded">
+		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle Navigation">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+	<a class="navbar-brand" href="#">TeamCDA</a>
+	<div class="navbar-collapse collapse show" id="navbarSupportedContent" aria-expanded="true">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" onclick="HomePG()"><i class="fa fa-home fa-fw" aria-hidden="true"></i> Home </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" onclick="AboutPG()"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> About </a>
+      </li>
+    <li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> Apps </a>
+		<div class="dropdown-menu" aria-labelledby="Preview">
+			<a class="dropdown-item" onclick="APIHubPG()"> APIHub - Pokemon GO <span class="sr-only">(current)</span></a>
+			<a class="dropdown-item disabled" href="#">Coming Soon...</a>
+		</div>
+	</li>
+	<li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gamepad" aria-hidden="true"></i> Games </a>
+		<div class="dropdown-menu" aria-labelledby="Preview">
+			<a class="dropdown-item" onclick="HappyWheels()"> Happy Wheels </a>
+			<a class="dropdown-item disabled" href="#">Coming Soon...</a>
+		</div>
+	</li>
+    </ul>
+	</div>
+	</nav>
+	<div class="container" style="overflow-x:auto;">
+	<h1>API Hub for Pokemon GO</h1>
+	<br></br>
+		<center>
+			<a class="navbar-btn btn-primary btn" onclick="APIHub_DownloadPG()"><i class="fa fa-windows" aria-hidden="true"></i> Download </a>
+			<a class="navbar-btn btn-primary btn" onclick="APIHub_SourcePG()"><i class="fa fa-github" aria-hidden="true"></i> Source </a>
+		</center>
+	<br></br>
+	<h1><i class="fa fa-key" aria-hidden="true"></i> Key List <i class="fa fa-key" aria-hidden="true"></i></h1>
+	<br></br>
+	<h1 id="Time"></h1>
+	<script>
+	var Time = "Updated: " + new Date().toLocaleTimeString();
+	document.getElementById("Time").innerHTML = Time + " <i class='fa fa-spin fa-refresh' aria-hidden='true'></i>";
+	</script>
+	<br></br>
+	<table class="table">
+		<thread>
+		<tr>
+			<th>Key:</th>
+			<th>Status:</th>
+			<th>Efficiency:</th>
+		</tr>
+		</thread>
+	<tbody>
+		<tr>
+			<td>4V9O5D8X4W5A6W4A8F4H</td>
+			<td style="color:#00E676"><b>Working</b></td>
+			<td>90%+</td>
+		</tr>
+		<tr>
+			<td>3Y3U7U4Y3L8N9D4P5I2G</td>
+			<td style="color:#00E676"><b>Working</b></td>
+			<td>90%</td>
+		</tr>
+		<tr>
+			<td>8X7D7G4O0O9Q0A8K9O3V</td>
+			<td style="color:#00E676"><b>Working</b></td>
+			<td>75%</td>
+		</tr>
+		<tr>
+			<td>2K6J0Z3K7H8J6I5O2M3K</td>
+			<td style="color:#00E676"><b>Working</b></td>
+			<td>70%</td>
+		</tr>
+		<tr>
+			<td>7U9Z0D6T3V6N6V1Z4F4U</td>
+			<td style="color:#00E676"><b>Working</b></td>
+			<td>60%</td>
+		</tr>
+		<tr>
+			<td>5M6O3Z1Z2M7V9P1C5J9G</td>
+			<td style="color:#00E676"><b>Working</b></td>
+			<td>40% - 60%</td>
+		</tr>
+		<tr>
+			<td>6Q9W5G5G4N3D3T4W7N4A</td>
+			<td style="color:#00E676"><b>Working</b></td>
+			<td>30% - 60%</td>
+		</tr>
+		<tr>
+			<td>6J9F6V5F0M6N6E5Y3E8F</td>
+			<td style="color:#00E676"><b>Working</b></td>
+			<td>10%</td>
+		</tr>
+		<tr>
+			<td>2C4F5J5J8T5F0T1E4C2T</td>
+			<td style="color:#00E676"><b>Working</b></td>
+			<td>10%</td>
+		</tr>
+	</tbody>
+	</table>
+	<br></br>
+	</div>
+	<nav class="navbar fixed-bottom navbar-inverse bg-faded">
+	<div class="container-fluid">
+		<a class="navbar-btn btn-primary btn" onclick="TwitterPG()"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter </a>
+		<a class="navbar-btn btn-primary btn" onclick="YoutubePG()"><i class="fa fa-youtube" aria-hidden="true"></i> YouTube </a>
+	</div>
+	</nav>
+</body>
+</html>
