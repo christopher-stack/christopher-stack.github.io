@@ -13,6 +13,6 @@ function HappyWheels() {
 function TwitterPG() {
 	window.open('https://twitter.com/CDA_Gamers', '_system');
 }
-function YouTubePG() {
+function YoutubePG() {
 	window.open('https://t.co/gvolbJr5ng', '_system');
 }
