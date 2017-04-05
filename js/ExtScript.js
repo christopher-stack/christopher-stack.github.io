@@ -1,5 +1,5 @@
 function HomePG() {
-	window.open('../main.html', '_self');
+	window.open('../index.html', '_self');
 }
 function AboutPG() {
 	window.open('About.html', '_self');
