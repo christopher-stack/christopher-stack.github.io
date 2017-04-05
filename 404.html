@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto" rel="stylesheet">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://www.w3schools.com/lib/w3data.js"></script>
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
 	<link href="../css/tether.min.css" rel="stylesheet">
 	<link href="../css/style.css" rel="stylesheet" type="text/css">
@@ -33,6 +34,9 @@
 	<script src="../js/script.js"></script>
 </head>
 <body>
+	<script>
+	w3IncludeHTML();
+	</script>
 	<div class="container" style="overflow-x:auto;">
 	<h1>404!</h1>
 	<br></br>
@@ -40,11 +44,6 @@
 	<h1> You can Press your Browser's Back button to Return where you were before :) </h1>
 	<br></br>
 	</div>
-	<nav class="navbar fixed-bottom navbar-inverse bg-faded">
-	<div class="container-fluid">
-		<a class="navbar-btn btn-primary btn" onclick="TwitterPG()"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter </a>
-		<a class="navbar-btn btn-primary btn" onclick="YoutubePG()"><i class="fa fa-youtube" aria-hidden="true"></i> YouTube </a>
-	</div>
-	</nav>
+	<nav class="navbar fixed-bottom navbar-inverse bg-faded" w3-include-html="../src/Footer.html"></nav>
 </body>
 </html>
