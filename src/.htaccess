@@ -1,0 +1,15 @@
+## .htaccess Configuration ##
+
+<Files *.html>
+AddType application/x-httpd-php .php .html
+ForceType application/x-httpd-php
+</Files>
+
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+## End .htaccess Configuration ##
