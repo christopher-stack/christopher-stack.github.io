@@ -52,7 +52,7 @@ a {
 .dropdown .dropdown-menu .dropdown-item{
 	color:white;
 }
-.dropdown .dropdown-menu .dropdown-item:hover .dropdown-menu:active{
+.dropdown .dropdown-menu .dropdown-item:hover{
 	background-color: #2196F3;
 	color: #F57C00;
 }
