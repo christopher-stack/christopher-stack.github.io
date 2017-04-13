@@ -1,19 +1,12 @@
-function HomePG() {
-	window.open('index', '_self');
-}
+var time;
 
-function AboutPG() {
-	window.open('Pages/About', '_self');
+function calcTime() {
+	time = setTimeout(showPage, 3000);
 }
-
-function APIHubPG() {
-	window.open('Pages/App_APIHub', '_self');
+function showPage() {
+	document.getElementById("loader").style.display = "none";
+	document.getElementById("webDiv").style.display = "block";
 }
-
-function HappyWheels() {
-	window.open('Pages/Game_HappyWheels', '_self');
-}
-
 function TwitterPG() {
 	window.open('https://twitter.com/CDA_Gamers', '_system');
 }
