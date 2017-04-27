@@ -8,16 +8,14 @@ if (typeof jQuery === 'undefined') {
   throw new Error('Bootstrap\'s JavaScript requires jQuery. jQuery must be included before Bootstrap\'s JavaScript.')
 }
 
-+function ($) {
+(function ($) {
   var version = $.fn.jquery.split(' ')[0].split('.')
   if ((version[0] < 2 && version[1] < 9) || (version[0] == 1 && version[1] == 9 && version[2] < 1) || (version[0] >= 4)) {
     throw new Error('Bootstrap\'s JavaScript requires at least jQuery v1.9.1 but less than v4.0.0')
   }
-}(jQuery);
+})(jQuery);
 
-
-+function () {
-
+(function () {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1485,7 +1483,7 @@ var Dropdown = function ($) {
       // only needed because of broken event delegation on iOS
       // https://www.quirksmode.org/blog/archives/2014/02/mouse_event_bub.html
       if ('ontouchstart' in document.documentElement && !$(parent).closest(Selector.NAVBAR_NAV).length) {
-        $('body').children().on('mouseover', '*', $.noop);
+        $('body').children().on('mouseover', null, $.noop);
       }
 
       this.focus();
@@ -1559,7 +1557,7 @@ var Dropdown = function ($) {
         // if this is a touch-enabled device we remove the extra
         // empty mouseover listeners we added for iOS support
         if ('ontouchstart' in document.documentElement) {
-          $('body').children().off('mouseover', '*', $.noop);
+          $('body').children().off('mouseover', null, $.noop);
         }
 
         toggles[i].setAttribute('aria-expanded', 'false');
@@ -3063,6 +3061,14 @@ var Tooltip = function ($) {
 
         $(tip).addClass(ClassName.SHOW);
 
+        // if this is a touch-enabled device we add extra
+        // empty mouseover listeners to the body's immediate children;
+        // only needed because of broken event delegation on iOS
+        // https://www.quirksmode.org/blog/archives/2014/02/mouse_event_bub.html
+        if ('ontouchstart' in document.documentElement) {
+          $('body').children().on('mouseover', null, $.noop);
+        }
+
         var complete = function complete() {
           var prevHoverState = _this23._hoverState;
           _this23._hoverState = null;
@@ -3110,6 +3116,12 @@ var Tooltip = function ($) {
       }
 
       $(tip).removeClass(ClassName.SHOW);
+
+      // if this is a touch-enabled device we remove the extra
+      // empty mouseover listeners we added for iOS support
+      if ('ontouchstart' in document.documentElement) {
+        $('body').children().off('mouseover', null, $.noop);
+      }
 
       this._activeTrigger[Trigger.CLICK] = false;
       this._activeTrigger[Trigger.FOCUS] = false;
@@ -3615,4 +3627,5 @@ var Popover = function ($) {
   return Popover;
 }(jQuery);
 
-}();
+
+})()
