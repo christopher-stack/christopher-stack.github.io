@@ -1,5 +1,6 @@
 .tether-element, .tether-element:after, .tether-element:before, .tether-element *, .tether-element *:after, .tether-element *:before {
-  box-sizing: border-box; }
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
 
 .tether-element {
   position: absolute;
@@ -12,7 +13,8 @@
   max-height: 100%; }
   .tether-element.tether-theme-basic .tether-content {
     border-radius: 5px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     font-family: inherit;
     background: #fff;
     color: inherit;
