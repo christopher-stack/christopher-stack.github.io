@@ -33,13 +33,16 @@
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/tether.min.js"></script>
 	<script src="../js/script.js"></script>
-	<script>window.google = {}</script>
+	<script>
+		window.google = {}
+	</script>
 </head>
 <body onload="calcTime()" style="margin:0;">
 <div id="loader"/>
 <div style="display:none;" id="webDiv" class="animate-bottom">
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-faded" w3-include-html="src/Header.html"></nav>
   <center>
-  <div id="wrapper">
+  <div id="wrapper" class="container" style="overflow-x:auto;">
   	<a href="#gameover" id="dlink"></a>
   	<div id='logo' title="PAC-MAN's 30th Birthday! Doodle with PAC-MAN™ and ©1980 NAMCO BANDAI Games Inc.">
   	<div id="logo-l">
