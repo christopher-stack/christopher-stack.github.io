@@ -1,6 +1,11 @@
-body {
-	background: #0080FF;
-	font-family: monospace;
+html, body {
+	font-family: 'Montserrat', monospace;
+	background-color: #2196F3;
+	color: #ffffff;
+	background-size:100%;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	background-size: cover;
 	margin-top: 50px
 }
 
