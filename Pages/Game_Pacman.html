@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
   <title>Google Pac-Man</title>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://www.w3schools.com/lib/w3data.js"></script>
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/tether.min.css" rel="stylesheet">
+	<link href="../css/pacman.css" rel="stylesheet" type="text/css">
   	<!-- Favicon Code - Include ALL Below -->
 	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 	<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,12 +21,24 @@
 	<meta name="msapplication-TileImage" content="../mstile-144x144.png">
 	<meta name="theme-color" content="#ffffff">
 	<!-- END FAVICON CODE -->
+	<!-- Font Awesome (neccessary for Custom Icons) -->
+	<link rel="stylesheet" href="../css/font-awesome.min.css">
+	<!-- END FONT AWESOME CODE -->
+	<!-- jQuery & Tether (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/tether.min.js"></script>
+	<script src="../js/script.js"></script>
   <script>
     window.google = {}
   </script>
-  <link href="../css/pacman.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body onload="calcTime()" style="margin:0;">
+<div id="loader"/>
+<div style="display:none;" id="webDiv" class="animate-bottom">
   <center>
   <div id="wrapper">
   	<a href="#gameover" id="dlink"></a>
@@ -29,7 +46,7 @@
   	<div id="logo-l">
   		<div id="logo-b" />
   	</div>
-    </div>
+        </div>
   </div>
 <script>
     google.dom = {};
@@ -97,6 +114,9 @@
       <li><a href="http://pacman.com">&copy; 2012-2016 BANDAI NAMCO Entertainment America Inc. All Rights Reserved.</a></li>
     </ul>
   </div>
-  <script>google.pml && google.pml()</script>
+  <script>
+	  google.pml && google.pml()
+  </script>
   </center>
+</div>
 </html>
