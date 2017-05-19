@@ -38,17 +38,17 @@
 	</script>
 </head>
 <body onload="calcTime()" style="margin:0;">
-<div id="loader"/>
+<div id="loader"></div>
 <div style="display:none;" id="webDiv" class="animate-bottom">
 <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-faded" w3-include-html="src/Header.html"></nav>
   <center>
-  <div id="wrapper" class="container" style="overflow-x:auto;">
+  <div id="wrapper">
   	<a href="#gameover" id="dlink"></a>
-  	<div id='logo' title="PAC-MAN's 30th Birthday! Doodle with PAC-MAN™ and ©1980 NAMCO BANDAI Games Inc.">
+  	<div id='logo' title="PAC-MAN's 37th Birthday! Doodle with PAC-MAN™ and ©1980 NAMCO BANDAI Games Inc.">
   	<div id="logo-l">
-  		<div id="logo-b" />
+  		<div id="logo-b"></div>
   	</div>
-        </div>
+    </div>
   </div>
 <script>
     google.dom = {};
@@ -118,7 +118,9 @@
   </div>
   <script>
 	  google.pml && google.pml()
+	  w3IncludeHTML();
   </script>
   </center>
 </div>
+</body>
 </html>
