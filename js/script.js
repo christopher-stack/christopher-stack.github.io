@@ -1,5 +1,4 @@
 var time;
-
 function calcTime() {
 	time = setTimeout(showPage, 2000);
 }
