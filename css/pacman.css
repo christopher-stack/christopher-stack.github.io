@@ -11,6 +11,7 @@ html, body {
 
 td {
 	line-height: .8em;
+	border: none;
 }
 
 form {
@@ -26,8 +27,7 @@ a {
 	text-decoration: none
 }
 
-a:hover,
-a:active {
+a:hover, a:active {
 	text-decoration: underline
 }
 
@@ -60,9 +60,11 @@ a:visited {
 }
 
 .lsb {
-	background: url(../resources/nav_logo13.png) bottom;
-	font: 15px arial, sans-serif;
+	background-color: #0275d8;
+	color: #FFFFFF;
+	font-size: 15px;
 	border: none;
+	padding: .5rem 1rem;
 	cursor: pointer;
 	height: 30px;
 	margin: 0;
@@ -70,11 +72,17 @@ a:visited {
 	vertical-align: top
 }
 
-.lsb:active {
-	background: #ccc
+.lsb:hover, .lsb:active {
+	background-color: #025aa5;
+	color: #FFFFFF;
+	padding: .5rem 1rem;
 }
 
 #logo {
+	width: 544px;
+	height: 176px;
+	top: -5px;
+	left: -10px;
 	background: black url(../resources/pacman10-hp.gif) 0 0 no-repeat;
 	position: relative;
 	margin-bottom: 9px
@@ -114,14 +122,13 @@ a:visited {
 
 #footer a {
 	display: inline-block;
-	color: #444;
+	color: #FFFFFF;
 	font-size: 10pt;
 	font-family: monospace;
 	padding: 5px
 }
 
 #footer a:hover {
-	color: #666;
-	text-decoration: none;
-	background: #333
+	color: #F57C00;
+	text-decoration: none
 }
