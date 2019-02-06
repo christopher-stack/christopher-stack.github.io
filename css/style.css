@@ -26,10 +26,9 @@ a, a:hover{
 	text-decoration:none;
 }
 td, th {
-    border: 1px solid #dddddd;
-    text-align: center;
+	text-align: center;
 	vertical-align: center;
-    padding: 8px;
+	padding: 8px;
 }
 a {
 	color: #ffffff;
