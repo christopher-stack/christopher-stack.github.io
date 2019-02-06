@@ -31,7 +31,7 @@ td, th {
 	padding: 8px;
 }
 a {
-	color: #ffffff;
+	color: #ffffff!important;
 }
 .navbar{
 	border-radius: 0px;
