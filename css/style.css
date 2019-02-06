@@ -36,7 +36,7 @@ a {
 .navbar{
 	border-radius: 0px;
 	border:none;
-	background-color: #1976D2;
+	background-color: #1976D2!important;
 	border-color: rgba(39, 111, 172, 0.75);
 	opacity: 0.85;
 	color: #ffffff;
