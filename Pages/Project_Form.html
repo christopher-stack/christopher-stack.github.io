@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta char="UTF-8">
+	<title> TeamCDA Website - Example Form! </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+	<!-- Style Scripts -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Roboto">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/style.css" type="text/css">
+	<!-- End of Style Scripts -->
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/ccfb95e64e.js" crossorigin="anonymous"></script>
+	<script src="https://www.w3schools.com/lib/w3data.js"></script>
+	<script src="/js/script.js"></script>
+	<!-- Favicon Code - Include ALL Below -->
+	<link rel="shortcut icon" href="/resources/icon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" sizes="180x180" href="/resources/icon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="/resources/icon/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/resources/icon/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="/resources/icon/manifest.json">
+	<link rel="mask-icon" href="/resources/icon/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#2b5797">
+	<meta name="msapplication-TileImage" content="/resources/icon/mstile-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+	<!-- END FAVICON CODE -->
+</head>
+<body onload="calcTime()" style="margin:0;">
+	<div id="loader"></div>
+	<div style="display:none;" id="webDiv" class="animate-bottom">
+		<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary" w3-include-html="/src/Header.html"></nav>
+		<div class="container" style="overflow-x:auto;">
+			<h1>Job Applicant - Submission Form</h1>
+            <br />
+            <h2 style="text-align:left">Position: QA Tester</h2>
+            <br />
+            <h3 style="text-align:left">Details:</h3>
+            <p style="text-align:left">
+                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
+                Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. 
+                Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. 
+                Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. 
+                Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. 
+                Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. 
+                Donec non enim in turpis pulvinar facilisis. Ut felis. 
+                Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. 
+                Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus
+            </p>
+            <hr />
+            <!--Get/Post and submit Example-->
+            <form method="post" method="post" action="/resources/php/Project_Form_Submit.php">
+                First Name:
+                <br>
+                <input type="text" name="firstName">
+                <br>
+                Last Name:
+                <br>
+                <input type="text" name="lastName">
+                <br><br>
+                What was your favorite grade in school?
+                <br><br>
+                <select name="favoriteGrade">
+                    <option value="0">Kindergarten</option>
+                    <option value="1">First Grade</option>
+                    <option value="2">Second Grade</option>
+                    <option value="3">Third Grade</option>
+                    <option value="4">Fourth Grade</option>
+                    <option value="5" selected>Fifth Grade</option>
+                    <option value="6">Sixth Grade</option>
+                    <option value="7">Seventh Grade</option>
+                    <option value="8">Eighth Grade</option>
+                    <option value="9">Freshman</option>
+                    <option value="10">Sophomore</option>
+                    <option value="11">Junior</option>
+                    <option value="12">Senior</option>
+                </select>
+                <br><br>
+                Please write the lyrics to your favorite TV show theme song:
+                <br><br>
+                <textarea name="lyrics" rows="6" cols="40"></textarea>
+                <br><br>
+                <input type="submit" name="submitInfo" value="Submit Information">
+            </form>
+		</div>
+		<nav class="navbar navbar-expand-lg fixed-bottom navbar-dark bg-primary" w3-include-html="/src/Footer.html"></nav>
+	</div>
+	<script> w3IncludeHTML(); </script>
+</body>
+</html>
