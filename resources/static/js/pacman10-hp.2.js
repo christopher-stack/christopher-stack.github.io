@@ -1,11 +1,3 @@
-/*!
- * Google Pacman 
- *
- * Copyright 2010, Google
- *
- * Date: Fri May 21 2010
- */
-
 google.pacman ||
 function () {
   var a = true,
@@ -1304,10 +1296,6 @@ function () {
     if (this.id >= g.playerCount) this.targetPlayerId = Math.floor(g.rand() * g.playerCount)
   };
   E.prototype.z = function (b) {
-    if (!g.userDisabledSound) {
-      google.pacManSound = a;
-      g.updateSoundIcon()
-    }
     if (this.dir == g.oppositeDirections[b]) {
       this.dir = b;
       this.posDelta = [0, 0];
@@ -1854,13 +1842,13 @@ function () {
     c = g.getCorrectedSpritePos(parseInt(c, 10));
     d = g.getCorrectedSpritePos(parseInt(d, 10));
     if (g.useCss) {
-      b.style.backgroundImage = "url(../resources/pacman/pacman10-hp-sprite-2.png)";
+      b.style.backgroundImage = "url(../Resources/pacman/pacman10-hp-sprite.png)";
       b.style.backgroundPosition = -c + "px " + -d + "px";
       b.style.backgroundRepeat = "no-repeat"
     } else {
       b.style.overflow = "hidden";
       c = "display: block; position: relative; left: " + -c + "px; top: " + -d + "px";
-      b.innerHTML = '<img style="' + c + '" src="../resources/pacman/pacman10-hp-sprite-2.png">'
+      b.innerHTML = '<img style="' + c + '" src="../Resources/pacman/pacman10-hp-sprite.png">'
     }
   };
   g.changeElementBkPos = function (b, c, d, f) {
@@ -2200,7 +2188,7 @@ function () {
     j.style.height = f + "px";
     j.style.zIndex = 119;
     if (h) {
-      j.style.background = "url(../resources/pacman/pacman10-hp-sprite-2.png) -" + g.killScreenTileX + "px -" + g.killScreenTileY + "px no-repeat";
+      j.style.background = "url(../Resources/pacman/pacman10-hp-sprite.png) -" + g.killScreenTileX + "px -" + g.killScreenTileY + "px no-repeat";
       g.killScreenTileY += 8
     } else j.style.background = "black";
     g.playfieldEl.appendChild(j)
@@ -2224,10 +2212,7 @@ function () {
   g.newLevel = function (b) {
     g.level++;
     g.levels = g.level >= z.length ? z[z.length - 1] : z[g.level];
-    // start issue 14: Ghosts stay blue permanently on restart
-    if ((g.levels.frightTime > 0) && (g.levels.frightTime <= 6))
-      g.levels.frightTime = Math.round(g.levels.frightTime * D);
-    // end issue 14
+    g.levels.frightTime = Math.round(g.levels.frightTime * D);
     g.levels.frightTotalTime = g.levels.frightTime + g.timing[1] * (g.levels.frightBlinkCount * 2 - 1);
     for (var c in g.actors) g.actors[c].dotCount = 0;
     g.alternatePenLeavingScheme = e;
@@ -2504,23 +2489,6 @@ function () {
     g.showElementById("pcm-sc-2", b);
     g.showElementById("pcm-li", b);
     g.showElementById("pcm-so", b)
-  };
-  g.toggleSound = function (b) {
-    b = window.event || b;
-    b.cancelBubble = a;
-    if (google.pacManSound) {
-      g.userDisabledSound = a;
-      g.stopAllAudio();
-      google.pacManSound = e
-    } else {
-      google.pacManSound = a;
-      g.playAmbientSound()
-    }
-    g.updateSoundIcon();
-    return b.returnValue = e
-  };
-  g.updateSoundIcon = function () {
-    if (g.soundEl) google.pacManSound ? g.changeElementBkPos(g.soundEl, 216, 105, e) : g.changeElementBkPos(g.soundEl, 236, 105, e)
   };
   g.startCutscene = function () {
     g.playfieldEl.style.visibility = "hidden";
@@ -2880,22 +2848,13 @@ function () {
       }
       g.canvasEl.appendChild(g.scoreEl[1])
     }
-    if (g.soundAvailable) {
-      g.soundEl = document.createElement("div");
-      g.soundEl.id = "pcm-so";
-      g.prepareElement(g.soundEl, -32, -16);
-      g.canvasEl.appendChild(g.soundEl);
-      g.soundEl.onclick =
-      g.toggleSound;
-      g.updateSoundIcon()
-    }
   };
   g.clearDotEatingNow = function () {
     g.dotEatingNow = [e, e];
     g.dotEatingNext = [e, e]
   };
   g.playSound = function (b, c, d) {
-    if (!(!g.soundAvailable || !google.pacManSound || g.paused)) {
+    if (!(!g.soundAvailable || !g.soundEnabled || g.paused)) {
       d || g.stopSoundChannel(c);
       try {
         g.flashSoundPlayer.playTrack(b, c)
@@ -2905,14 +2864,14 @@ function () {
     }
   };
   g.stopSoundChannel = function (b) {
-    if (g.soundAvailable) try {
+    if (g.soundAvailable && g.soundEnabled) try {
       g.flashSoundPlayer.stopChannel(b)
     } catch (c) {
       g.soundAvailable = e
     }
   };
   g.stopAllAudio = function () {
-    if (g.soundAvailable) {
+    if (g.soundAvailable && g.soundEnabled) {
       try {
         g.flashSoundPlayer.stopAmbientTrack()
       } catch (b) {
@@ -2922,7 +2881,7 @@ function () {
     }
   };
   g.playDotEatingSound = function (b) {
-    if (g.soundAvailable && google.pacManSound) if (g.gameplayMode == 0) if (g.dotEatingNow[b]) g.dotEatingNext[b] = a;
+    if (g.soundAvailable && g.soundEnabled) if (g.gameplayMode == 0) if (g.dotEatingNow[b]) g.dotEatingNext[b] = a;
     else {
       if (b == 0) {
         var c = g.dotEatingSoundPart[b] == 1 ? "eating-dot-1" : "eating-dot-2";
@@ -2951,7 +2910,7 @@ function () {
     g.repeatDotEatingSound(1)
   };
   g.playAmbientSound = function () {
-    if (g.soundAvailable && google.pacManSound) {
+    if (g.soundAvailable && g.soundEnabled) {
       var b = 0;
       if (g.gameplayMode == 0 || g.gameplayMode == 1) b = g.ghostEyesCount ? "ambient-eyes" : g.mainGhostMode == 4 ? "ambient-fright" : g.dotsEaten > 241 ? "ambient-4" : g.dotsEaten > 207 ? "ambient-3" : g.dotsEaten > 138 ? "ambient-2" : "ambient-1";
       else if (g.gameplayMode == 13) b = "cutscene";
@@ -2969,7 +2928,7 @@ function () {
     g.tickMultiplier = D / g.fps;
     g.timing = {};
     for (var b in w) {
-      var c = !google.pacManSound && (b == 7 || b == 8) ? 1 : w[b];
+      var c = !g.soundEnabled && (b == 7 || b == 8) ? 1 : w[b];
       g.timing[b] = Math.round(c * D)
     }
     g.lastTime = (new Date).getTime();
@@ -2985,7 +2944,7 @@ function () {
     }
   };
   g.addCss = function () {
-    var b = "#pcm-c {  width: 554px;  top: 20px;  padding-bottom: 25px;  height: 136px;  position: relative;  background: black;  outline: 0;  overflow: hidden;  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);}#pcm-c * {  position: absolute;  overflow: hidden;}#pcm-p,#pcm-cc {  left: 45px;  width: 464px;  height: 136px;  z-index: 99;  overflow: hidden;}#pcm-p .pcm-d {  width: 2px;  height: 2px;  margin-left: 3px;  margin-top: 3px;  background: #f8b090;  z-index: 100;}#pcm-p .pcm-e {  width: 8px;  height: 8px;  z-index: 101;}#pcm-sc-1 {  left: 18px;  top: 16px;  width: 8px;  height: 56px;  position: absolute;  overflow: hidden;}#pcm-sc-2 {  left: 18px;  top: 80px;  width: 8px;  height: 56px;  position: absolute;  overflow: hidden;}#pcm-le {  position: absolute;  left: 515px;  top: 74px;  height: 64px;  width: 32px;} #pcm-le div {  position: relative;}#pcm-sc-1-l {    left: -2px;  top: 0;  width: 48px;  height: 8px;}#pcm-sc-2-l {    left: -2px;  top: 64px;  width: 48px;  height: 8px;}#pcm-so {  left: 15px;  top: 125px;  width: 12px;  height: 12px;  cursor: pointer;}#pcm-li {  position: absolute;  left: 523px;  top: 0;  height: 80px;  width: 16px;}#pcm-li .pcm-lif {  position: relative;  width: 16px;  height: 12px;  margin-bottom: 3px;}#pcm-p.blk .pcm-e {  visibility: hidden;}#pcm-c .pcm-ac {  width: 16px;  height: 16px;  margin-left: -4px;  margin-top: -4px;  z-index: 110;}#pcm-c .pcm-n {  z-index: 111;}#pcm-c #pcm-stck {  z-index: 109;}#pcm-c #pcm-gbug {  width: 32px;}#pcm-c #pcm-bpcm {  width: 32px;  height: 32px;  margin-left: -20px;  margin-top: -20px;}#pcm-f,#pcm-le div {  width: 32px;  height: 16px;  z-index: 105;}#pcm-f {  margin-left: -8px;  margin-top: -4px;}#pcm-do {  width: 19px;  height: 2px;  left: 279px;  top: 46px;  overflow: hidden;  position: absolute;  background: #ffaaa5;}#pcm-re {  width: 48px;  height: 8px;  z-index: 120;  left: 264px;  top: 80px;}#pcm-go {  width: 80px;  height: 8px;  z-index: 120;  left: 248px;  top: 80px;}";
+    var b = "#pcm-c {  width: 554px;  border-top: 25px solid black;  padding-bottom: 25px;  height: 136px;  position: relative;  background: black;  outline: 0;  overflow: hidden;  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);}#pcm-c * {  position: absolute;  overflow: hidden;}#pcm-p,#pcm-cc {  left: 45px;  width: 464px;  height: 136px;  z-index: 99;  overflow: hidden;}#pcm-p .pcm-d {  width: 2px;  height: 2px;  margin-left: 3px;  margin-top: 3px;  background: #f8b090;  z-index: 100;}#pcm-p .pcm-e {  width: 8px;  height: 8px;  z-index: 101;}#pcm-sc-1 {  left: 18px;  top: 16px;  width: 8px;  height: 56px;  position: absolute;  overflow: hidden;}#pcm-sc-2 {  left: 18px;  top: 80px;  width: 8px;  height: 56px;  position: absolute;  overflow: hidden;}#pcm-le {  position: absolute;  left: 515px;  top: 74px;  height: 64px;  width: 32px;} #pcm-le div {  position: relative;}#pcm-sc-1-l {  left: -2px;  top: 0;  width: 48px;  height: 8px;}#pcm-sc-2-l {  left: -2px;  top: 64px;  width: 48px;  height: 8px;}#pcm-so {  left: 15px;  top: 125px;  width: 12px;  height: 12px;  cursor: pointer;}#pcm-li {  position: absolute;  left: 523px;  top: 0;  height: 80px;  width: 16px;}#pcm-li .pcm-lif {  position: relative;  width: 16px;  height: 12px;  margin-bottom: 3px;}#pcm-p.blk .pcm-e {  visibility: hidden;}#pcm-c .pcm-ac {  width: 16px;  height: 16px;  margin-left: -4px;  margin-top: -4px;  z-index: 110;}#pcm-c .pcm-n {  z-index: 111;}#pcm-c #pcm-stck {  z-index: 109;}#pcm-c #pcm-gbug {  width: 32px;}#pcm-c #pcm-bpcm {  width: 32px;  height: 32px;  margin-left: -20px;  margin-top: -20px;}#pcm-f,#pcm-le div {  width: 32px;  height: 16px;  z-index: 105;}#pcm-f {  margin-left: -8px;  margin-top: -4px;}#pcm-do {  width: 19px;  height: 2px;  left: 279px;  top: 46px;  overflow: hidden;  position: absolute;  background: #ffaaa5;}#pcm-re {  width: 48px;  height: 8px;  z-index: 120;  left: 264px;  top: 80px;}#pcm-go {  width: 80px;  height: 8px;  z-index: 120;  left: 248px;  top: 80px;}";
     g.styleElement =
     document.createElement("style");
     g.styleElement.type = "text/css";
@@ -3042,7 +3001,7 @@ function () {
   };
   g.prepareGraphics = function () {
     g.graphicsReady = e;
-    g.preloadImage("../resources/pacman/pacman10-hp-sprite-2.png")
+    g.preloadImage("../Resources/pacman/pacman10-hp-sprite.png")
   };
   g.trimString = function (b) {
     return b.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "")
@@ -3117,6 +3076,7 @@ function () {
   };
   g.prepareSound = function () {
     g.soundAvailable = e;
+    g.soundEnabled = e;
     g.soundReady = e;
     g.detectFlash();
     if (!g.hasFlash || !g.isFlashVersion("9.0.0.0")) {
@@ -3142,6 +3102,7 @@ function () {
   g.flashNotReady = function () {
     if (!g.ready) {
       g.soundAvailable = e;
+      g.soundEnabled = e;
       g.soundReady = a;
       g.checkIfEverythingIsReady()
     }
@@ -3149,6 +3110,7 @@ function () {
   g.flashReady = function (b) {
     g.flashSoundPlayer = b;
     g.soundAvailable = a;
+    g.soundEnabled = a;
     g.soundReady = a;
     g.checkIfEverythingIsReady()
   };

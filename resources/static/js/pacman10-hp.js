@@ -1702,7 +1702,7 @@ function () {
       if (b == 2 && this.id == 0) b = 0;
       if (b == 3) {
         b = 2;
-        if (this.id == 0) c = 0
+        c = 0
       }
       if (this.id == 1) b += 4
     }
@@ -1842,13 +1842,13 @@ function () {
     c = g.getCorrectedSpritePos(parseInt(c, 10));
     d = g.getCorrectedSpritePos(parseInt(d, 10));
     if (g.useCss) {
-      b.style.backgroundImage = "url(../resources/pacman/pacman10-hp-sprite.png)";
+      b.style.backgroundImage = "url(../Resources/pacman/pacman10-hp-sprite.png)";
       b.style.backgroundPosition = -c + "px " + -d + "px";
       b.style.backgroundRepeat = "no-repeat"
     } else {
       b.style.overflow = "hidden";
       c = "display: block; position: relative; left: " + -c + "px; top: " + -d + "px";
-      b.innerHTML = '<img style="' + c + '" src="../resources/pacman/pacman10-hp-sprite.png">'
+      b.innerHTML = '<img style="' + c + '" src="../Resources/pacman/pacman10-hp-sprite.png">'
     }
   };
   g.changeElementBkPos = function (b, c, d, f) {
@@ -2188,7 +2188,7 @@ function () {
     j.style.height = f + "px";
     j.style.zIndex = 119;
     if (h) {
-      j.style.background = "url(../resources/pacman/pacman10-hp-sprite.png) -" + g.killScreenTileX + "px -" + g.killScreenTileY + "px no-repeat";
+      j.style.background = "url(../Resources/pacman/pacman10-hp-sprite.png) -" + g.killScreenTileX + "px -" + g.killScreenTileY + "px no-repeat";
       g.killScreenTileY += 8
     } else j.style.background = "black";
     g.playfieldEl.appendChild(j)
@@ -2944,7 +2944,7 @@ function () {
     }
   };
   g.addCss = function () {
-    var b = "#pcm-c {  width: 554px;  border-top: 25px solid black;  padding-bottom: 25px;  height: 136px;  position: relative;  background: black;  outline: 0;  overflow: hidden;  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);}#pcm-c * {  position: absolute;  overflow: hidden;}#pcm-p,#pcm-cc {  left: 45px;  width: 464px;  height: 136px;  z-index: 99;  overflow: hidden;}#pcm-p .pcm-d {  width: 2px;  height: 2px;  margin-left: 3px;  margin-top: 3px;  background: #f8b090;  z-index: 100;}#pcm-p .pcm-e {  width: 8px;  height: 8px;  z-index: 101;}#pcm-sc-1 {  left: 18px;  top: 16px;  width: 8px;  height: 56px;  position: absolute;  overflow: hidden;}#pcm-sc-2 {  left: 18px;  top: 80px;  width: 8px;  height: 56px;  position: absolute;  overflow: hidden;}#pcm-le {  position: absolute;  left: 515px;  top: 74px;  height: 64px;  width: 32px;} #pcm-le div {  position: relative;}#pcm-sc-1-l {  left: -2px;  top: 0;  width: 48px;  height: 8px;}#pcm-sc-2-l {  left: -2px;  top: 64px;  width: 48px;  height: 8px;}#pcm-so {  left: 15px;  top: 125px;  width: 12px;  height: 12px;  cursor: pointer;}#pcm-li {  position: absolute;  left: 523px;  top: 0;  height: 80px;  width: 16px;}#pcm-li .pcm-lif {  position: relative;  width: 16px;  height: 12px;  margin-bottom: 3px;}#pcm-p.blk .pcm-e {  visibility: hidden;}#pcm-c .pcm-ac {  width: 16px;  height: 16px;  margin-left: -4px;  margin-top: -4px;  z-index: 110;}#pcm-c .pcm-n {  z-index: 111;}#pcm-c #pcm-stck {  z-index: 109;}#pcm-c #pcm-gbug {  width: 32px;}#pcm-c #pcm-bpcm {  width: 32px;  height: 32px;  margin-left: -20px;  margin-top: -20px;}#pcm-f,#pcm-le div {  width: 32px;  height: 16px;  z-index: 105;}#pcm-f {  margin-left: -8px;  margin-top: -4px;}#pcm-do {  width: 19px;  height: 2px;  left: 279px;  top: 46px;  overflow: hidden;  position: absolute;  background: #ffaaa5;}#pcm-re {  width: 48px;  height: 8px;  z-index: 120;  left: 264px;  top: 80px;}#pcm-go {  width: 80px;  height: 8px;  z-index: 120;  left: 248px;  top: 80px;}";
+    var b = "#pcm-c {  width: 554px;  border-top: 25px solid black;  padding-bottom: 25px;  height: 136px;  position: relative;  background: black;  outline: 0;  overflow: hidden;  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);}#pcm-c * {  position: absolute;  overflow: hidden;}#pcm-p,#pcm-cc {  left: 45px;  width: 464px;  height: 136px;  z-index: 99;  overflow: hidden;}#pcm-p .pcm-d {  width: 2px;  height: 2px;  margin-left: 3px;  margin-top: 3px;  background: #f8b090;  z-index: 100;}#pcm-p .pcm-e {  width: 8px;  height: 8px;  z-index: 101;}#pcm-sc-1 {  left: 18px;  top: 16px;  width: 8px;  height: 56px;  position: absolute;  overflow: hidden;}#pcm-sc-2 {  left: 18px;  top: 80px;  width: 8px;  height: 56px;  position: absolute;  overflow: hidden;}#pcm-le {  position: absolute;  left: 515px;  top: 74px;  height: 64px;  width: 32px;} #pcm-le div {  position: relative;}#pcm-sc-1-l {    left: -2px;  top: 0;  width: 48px;  height: 8px;}#pcm-sc-2-l {    left: -2px;  top: 64px;  width: 48px;  height: 8px;}#pcm-so {  left: 15px;  top: 125px;  width: 12px;  height: 12px;  cursor: pointer;}#pcm-li {  position: absolute;  left: 523px;  top: 0;  height: 80px;  width: 16px;}#pcm-li .pcm-lif {  position: relative;  width: 16px;  height: 12px;  margin-bottom: 3px;}#pcm-p.blk .pcm-e {  visibility: hidden;}#pcm-c .pcm-ac {  width: 16px;  height: 16px;  margin-left: -4px;  margin-top: -4px;  z-index: 110;}#pcm-c .pcm-n {  z-index: 111;}#pcm-c #pcm-stck {  z-index: 109;}#pcm-c #pcm-gbug {  width: 32px;}#pcm-c #pcm-bpcm {  width: 32px;  height: 32px;  margin-left: -20px;  margin-top: -20px;}#pcm-f,#pcm-le div {  width: 32px;  height: 16px;  z-index: 105;}#pcm-f {  margin-left: -8px;  margin-top: -4px;}#pcm-do {  width: 19px;  height: 2px;  left: 279px;  top: 46px;  overflow: hidden;  position: absolute;  background: #ffaaa5;}#pcm-re {  width: 48px;  height: 8px;  z-index: 120;  left: 264px;  top: 80px;}#pcm-go {  width: 80px;  height: 8px;  z-index: 120;  left: 248px;  top: 80px;}";
     g.styleElement =
     document.createElement("style");
     g.styleElement.type = "text/css";
@@ -3001,7 +3001,7 @@ function () {
   };
   g.prepareGraphics = function () {
     g.graphicsReady = e;
-    g.preloadImage("../resources/pacman/pacman10-hp-sprite.png")
+    g.preloadImage("../Resources/pacman/pacman10-hp-sprite.png")
   };
   g.trimString = function (b) {
     return b.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "")
@@ -3086,6 +3086,7 @@ function () {
       g.flashIframe = document.createElement("iframe");
       g.flashIframe.name = "pm-sound";
       g.flashIframe.style.position = "absolute";
+      g.flashIframe.style.left = "-150px";
       g.flashIframe.style.top = "-150px";
       g.flashIframe.style.border = 0;
       g.flashIframe.style.width = "100px";
@@ -3094,7 +3095,7 @@ function () {
       g.flashIframeDoc = g.flashIframe.contentDocument;
       if (g.flashIframeDoc == undefined || g.flashIframeDoc == null) g.flashIframeDoc = g.flashIframe.contentWindow.document;
       g.flashIframeDoc.open();
-      g.flashIframeDoc.write('<html><head></head><body><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="0" height="0" id="pacman-sound-player" type="application/x-shockwave-flash"> <param name="movie" value="../swf/pacman10-hp-sound.swf"> <param name="allowScriptAccess" value="always"> <object id="pacman-sound-player-2"  type="application/x-shockwave-flash" data="../swf/pacman10-hp-sound.swf" width="0" height="0"><param name="allowScriptAccess" value="always"> </object></object></body></html>');
+      g.flashIframeDoc.write('<html><head></head><body><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="0" height="0" id="pacman-sound-player" type="application/x-shockwave-flash"> <param name="movie" value="../swf/pacman10-hp-sound.swf"> <object id="pacman-sound-player-2"  type="application/x-shockwave-flash" data="../swf/pacman10-hp-sound.swf" width="0" height="0"></object></object></body></html>');
       g.flashIframeDoc.close();
       window.setTimeout(g.flashNotReady, 3E3)
     }

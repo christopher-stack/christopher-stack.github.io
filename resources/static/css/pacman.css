@@ -20,7 +20,8 @@ form {
 
 input {
 	font-family: inherit;
-	-moz-box-sizing: content-box
+	-moz-box-sizing: content-box;
+	box-sizing: content-box
 }
 a {
 	color: #11c;
@@ -83,7 +84,7 @@ a:visited {
 	height: 176px;
 	top: -5px;
 	left: -10px;
-	background: black url(../resources/pacman/pacman10-hp.gif) 0 0 no-repeat;
+	background: black url(../../pacman/pacman10-hp.gif) 0 0 no-repeat;
 	position: relative;
 	margin-bottom: 9px
 }
@@ -113,6 +114,7 @@ a:visited {
 	padding: 10px;
 	background: #000;
 	-webkit-border-radius: 8px;
+	border-radius: 8px;
 }
 
 #footer ul {
