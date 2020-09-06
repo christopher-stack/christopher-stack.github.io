@@ -1,3 +1,7 @@
+html, body {
+    font-family: 'Montserrat', sans-serif;
+}
+
 .topbar {
     display: flex;
     justify-content: space-between;
@@ -11,6 +15,7 @@
     display: inline-block;
     line-height: 50px;
     padding-left: 10px;
+    padding-top: 1.5em;
 }
 
 .search {
@@ -50,6 +55,7 @@
     background-color: #dddddd;
     border-radius: 10px;
     padding: 14px 5px;
+    line-height: 1em;
 }
 
 .input #searchButton {
@@ -177,6 +183,10 @@ th, td {
     border-width: 1px 0px;
     border-color: gray;
     border-style: solid;
+}
+
+.MethodDescriptor {
+    word-break: break-all;
 }
 
 .selectedMethod {

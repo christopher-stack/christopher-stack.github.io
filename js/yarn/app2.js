@@ -112,7 +112,7 @@ function loadVersion(version) {
                 lines.shift();
             }
 
-            //add class with  gen'd field/methods to intermediary map
+            //add class with generated field/methods to intermediary map
             intermediary.set(int, {obf:obf, methods:methods, fields:fields});
         }
         //get yarn versions
@@ -306,6 +306,7 @@ function loadClass(className, query) {
             row.classList.add("MethodRow");
             obf.innerHTML = methodOverflowData?.obf ? methodOverflowData?.obf : methodName;
             desc.innerHTML = methodOverflowData?.desc;
+            desc.classList.add("MethodDescriptor");
             int.innerHTML = methodName;
             named.innerHTML = methodOverflowData?.named;
             row.appendChild(obf);
