@@ -38,7 +38,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-            <a class="nav-link" href="../index.html"><i class="fas fa-home"></i> Home </a>
+            <a class="nav-link" href="../../index.html"><i class="fas fa-home"></i> Home </a>
             </li>
             <li class="nav-item disabled">
             <a class="nav-link" href="#"><i class="fas fa-exclamation-circle"></i> About </a>
@@ -46,14 +46,14 @@
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> Apps </a>
             <div class="dropdown-menu" aria-labelledby="Preview">
-                <a class="dropdown-item" href="../Pages/App_APIHub.html"> APIHub - Pokemon GO </a>
-                <a class="dropdown-item" href="../Pages/NecroEase/index.html"> NecroEase - Pokemon GO </a>
+                <a class="dropdown-item" href="../../Pages/App_APIHub.html"> APIHub - Pokemon GO </a>
+                <a class="dropdown-item" href="../../Pages/NecroEase/index.html"> NecroEase - Pokemon GO </a>
             </div>
         </li>
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-gamepad"></i> Games </a>
             <div class="dropdown-menu" aria-labelledby="Preview">
-                <a class="dropdown-item" href="../Pages/Game_Pacman.html">Bandai Namco - Pac-Man</a>
+                <a class="dropdown-item" href="../../Pages/Game_Pacman.html">Bandai Namco - Pac-Man</a>
             </div>
         </li>
         <li class="nav-item dropdown">
