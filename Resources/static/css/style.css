@@ -7,6 +7,11 @@ html, body {
 	-webkit-background-size: cover;
 	background-size: cover;
 }
+.center {
+	margin: auto;
+	width: 60%;
+	padding: 10px;
+  }
 table {
     border-collapse: collapse;
     width: 75%;
@@ -27,7 +32,7 @@ a, a:hover{
 }
 td, th {
 	text-align: center;
-	vertical-align: center;
+	vertical-align: middle;
 	padding: 8px;
 }
 a {
