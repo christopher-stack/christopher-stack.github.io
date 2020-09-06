@@ -1,6 +1,6 @@
-/* MIT LISCENSE
+/* MIT LICENSE
 
-Copyright 2020 Wagyourtail
+Copyright 2020 wagyourtail
 
 Permission is hereby granted, free of
 charge, to any person obtaining a copy of this software and associated documentation
