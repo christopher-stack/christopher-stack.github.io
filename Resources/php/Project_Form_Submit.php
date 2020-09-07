@@ -93,8 +93,13 @@
 				echo "<td>";
 				echo str_replace('_', ' ', $key);
 				echo ":</td>";
-				echo "<td>";
-				echo $value;
+                echo "<td>";
+                if (is_array($value)) {
+					echo implode(",",$value);
+				}
+				else {
+					echo (empty($value) ? "N/A" : $value);
+				}
 				echo "</td>";
 				echo "</tr>";
 			}
