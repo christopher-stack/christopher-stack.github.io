@@ -69,24 +69,23 @@
 	<div class="container" style="overflow-x:auto;">
         <h1>Job Applicant - Submission Form Results</h1>
         <br />
-        <h2 style="text-align:left">Position: QA Tester</h2>
-        <br />
-        <h3 style="text-align:left">Details:</h3>
-        <p style="text-align:left">
-            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-            Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. 
-            Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. 
-            Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. 
-            Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. 
-            Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. 
-            Donec non enim in turpis pulvinar facilisis. Ut felis. 
-            Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. 
-            Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus
-        </p>
-		<hr />
 		
 		<table>
-		<?php
+        <?php
+            // Print Position Info and Details
+            // TODO: Make the Details dynamic based upon position
+            echo "<h2 style=\"text-align:left\">";
+            echo "Position: ";
+            echo $_POST["Position"];
+            echo "</h2>";
+            echo "<br />";
+            echo "<h3 style=\"text-align:left\">";
+            echo "Details:";
+            echo "</h3>";
+            echo "<p style=\"text-align:left\">";
+            echo "<script>document.write(demoString);</script>";
+            echo "</p>";
+            echo "<hr />";
 
 			foreach ($_POST as $key => $value) {
 				echo "<tr>";
@@ -103,7 +102,6 @@
 				echo "</td>";
 				echo "</tr>";
 			}
-
 		?>
 		</table>
 		<hr />
