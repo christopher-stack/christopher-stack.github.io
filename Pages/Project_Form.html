@@ -78,106 +78,106 @@ Further details about your selected fields will be shown after you've filled out
         <hr />
         <!--Get/Post and submit Example-->
         <form method="post" action="../Resources/php/Project_Form_Submit.php">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="positionSelect">Select Position</label>
-                <select class="form-control" id="positionSelect" name="Position">
-                  <option>QA Tester</option>
-                  <option>UX Designer</option>
-                  <option>PR Management</option>
-                  <option>Concept Artist</option>
-                  <option>Other...</option>
-                </select>
+          <div class="form-row mb-4">
+            <label for="positionSelect">Select Position</label>
+            <div class="input-group mb-2">
+              <select class="form-control" id="positionSelect" name="Position">
+                <option>QA Tester</option>
+                <option>UX Designer</option>
+                <option>PR Management</option>
+                <option>Concept Artist</option>
+                <option>Other...</option>
+              </select>
+            </div>
+            <label for="expectedPay">Expected Pay</label>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
               </div>
-              <label for="expectedPay">Expected Pay</label>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">$</span>
-                </div>
-                <input type="text" class="form-control" id="expectedPay" name="Expected Pay" aria-label="Amount (to the nearest dollar)">
-                <div class="input-group-append">
-                  <span class="input-group-text">.00</span>
-                </div>
-              </div>
-              <label for="startDate">Start Date</label>
-              <div class="input-group date" data-date-format="dd.mm.yyyy">
-                <input type="date" class="form-control" id="startDate" name="Start Date" placeholder="dd.mm.yyyy">
-                <div class="input-group-addon" >
-                  <span class="glyphicon glyphicon-th"></span>
-                </div>
+              <input type="text" class="form-control" id="expectedPay" name="Expected Pay" aria-label="Amount (to the nearest dollar)">
+              <div class="input-group-append">
+                <span class="input-group-text">.00</span>
               </div>
             </div>
-            <div class="input-group">
-              <div class="form-group col-md-6">
-                <label for="firstNameEntry">First Name</label>
-                <input type="text" class="form-control" id="firstNameEntry" name="First Name" required="required" data-error="This field is required.">
+            <label for="startDate">Start Date</label>
+            <div class="input-group date" data-date-format="dd.mm.yyyy">
+              <input type="date" class="form-control" id="startDate" name="Start Date" placeholder="dd.mm.yyyy">
+              <div class="input-group-addon">
+                <span class="glyphicon glyphicon-th"></span>
               </div>
-              <div class="form-group col-md-6">
-                <label for="lastNameEntry">Last Name</label>
-                <input type="text" class="form-control" id="lastNameEntry" name="Last Name" required="required" data-error="This field is required.">
-              </div>
+            </div>
+          </div>
+          <div class="input-group mb-4">
+            <div class="form-group mr-3 col-md-5">
+              <label for="firstNameEntry">First Name</label>
+              <input type="text" class="form-control" id="firstNameEntry" name="First Name" required="required" data-error="This field is required.">
+            </div>
+            <div class="form-group col-md-5">
+              <label for="lastNameEntry">Last Name</label>
+              <input type="text" class="form-control" id="lastNameEntry" name="Last Name" required="required" data-error="This field is required.">
+            </div>
+          </div>
+          <div class="form-group mb-4">
+            <label for="emailEntry">Email Address</label>
+            <input type="email" class="form-control" id="emailEntry" name="Email Address" required="required" data-error="This field is required." placeholder="example@yahoo.com">
+          </div>
+          <div class="form-group mb-2">
+            <label for="inputAddress">Address</label>
+            <input type="text" class="form-control" id="inputAddress" name="Address 1" required="required" data-error="This field is required." placeholder="1234 Main St">
+          </div>
+          <div class="form-group mb-2">
+            <label for="inputAddress2">Address 2</label>
+            <input type="text" class="form-control" id="inputAddress2" name="Address 2" placeholder="Apartment, studio, or floor">
+          </div>
+          <div class="input-group mb-4">
+            <div class="form-group mr-3 col-md-3">
+              <label for="inputCity">City</label>
+              <input type="text" class="form-control" id="inputCity" name="City" required="required" data-error="This field is required.">
+            </div>
+            <div class="form-group mr-3 col-md-3">
+              <label for="inputState">State</label>
+              <input type="text" class="form-control" id="inputState" name="State" required="required" data-error="This field is required.">
+            </div>
+            <div class="form-group col-md-2">
+              <label for="inputZip">Zip</label>
+              <input type="text" class="form-control" id="inputZip" name="Zip Code" required="required" data-error="This field is required.">
+            </div>
+          </div>
+          <div class="form-row mb-4">
+            <div class="form-group mb-2 col-md-4">
+              <label for="educationSelect">Select Highest Education</label>
+              <select class="form-control" id="educationSelect" name="Education Position">
+                <option>College</option>
+                <option>High School</option>
+                <option>Specialized Training/Experience</option>
+                <option>Other...</option>
+              </select>
+            </div>
+            <div class="form-group mb-2 col-md-6">
+              <label for="referenceEntry">Institution/Reference Name</label>
+              <input type="text" class="form-control" id="referenceEntry" name="Reference Name" required="required" data-error="This field is required.">
+            </div>
+            <div class="form-group mb-2">
+              <label for="inputReferenceAddress">Reference Address</label>
+              <input type="text" class="form-control" id="inputReferenceAddress" name="Reference Address" required="required" data-error="This field is required." placeholder="1234 Main St">
+            </div>
+            <div class="form-group mb-2 col-md-6">
+              <label for="referenceLevelEntry">Institution/Reference Level</label>
+              <input type="text" class="form-control" id="referenceLevelEntry" name="Reference Level" required="required" data-error="This field is required.">
+            </div>
+          </div>
+          <div class="form-group mb-4">
+            <div class="form-group mb-2">
+              <label for="employmentHistory">Employment History</label>
+              <textarea class="form-control" id="employmentHistory" name="Employment History" required="required" rows="10" data-error="This field is required." placeholder="Please describe your last three positions, including your position, business name, and a reference contact."></textarea>
             </div>
             <div class="form-group">
-              <label for="emailEntry">Email Address</label>
-              <input type="email" class="form-control" id="emailEntry" name="Email Address" required="required" data-error="This field is required." placeholder="example@yahoo.com">
+              <label for="additionalInfo">Additional Info</label>
+              <textarea class="form-control" id="additionalInfo" name="Additional Info" rows="10" data-error="This field is required." placeholder="Let us know of any additional info about yourself or related to this form, which may/may not help this process."></textarea>
             </div>
-            <div class="form-group">
-              <label for="inputAddress">Address</label>
-              <input type="text" class="form-control" id="inputAddress" name="Address 1" required="required" data-error="This field is required." placeholder="1234 Main St">
-            </div>
-            <div class="form-group">
-              <label for="inputAddress2">Address 2</label>
-              <input type="text" class="form-control" id="inputAddress2" name="Address 2" placeholder="Apartment, studio, or floor">
-            </div>
-            <div class="input-group">
-              <div class="form-group col-md-6">
-                <label for="inputCity">City</label>
-                <input type="text" class="form-control" id="inputCity" name="City" required="required" data-error="This field is required.">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="inputState">State</label>
-                <input type="text" class="form-control" id="inputState" name="State" required="required" data-error="This field is required.">
-              </div>
-              <div class="form-group col-md-2">
-                <label for="inputZip">Zip</label>
-                <input type="text" class="form-control" id="inputZip" name="Zip Code" required="required" data-error="This field is required.">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="educationSelect">Select Highest Education</label>
-                <select class="form-control" id="educationSelect" name="Education Position">
-                  <option>College</option>
-                  <option>High School</option>
-                  <option>Specialized Training/Experience</option>
-                  <option>Other...</option>
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="referenceEntry">Institution/Reference Name</label>
-                <input type="text" class="form-control" id="referenceEntry" name="Reference Name" required="required" data-error="This field is required.">
-              </div>
-              <div class="form-group">
-                <label for="inputReferenceAddress">Reference Address</label>
-                <input type="text" class="form-control" id="inputReferenceAddress" name="Reference Address" required="required" data-error="This field is required." placeholder="1234 Main St">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="referenceLevelEntry">Institution/Reference Level</label>
-                <input type="text" class="form-control" id="referenceLevelEntry" name="Reference Level" required="required" data-error="This field is required.">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-group">
-                <label for="employmentHistory">Employment History</label>
-                <textarea class="form-control" id="employmentHistory" name="Employment History" required="required" rows=10 data-error="This field is required." placeholder="Please describe your last three positions, including your position, business name, and a reference contact."></textarea>
-              </div>
-              <div class="form-group">
-                <label for="additionalInfo">Additional Info</label>
-                <textarea class="form-control" id="additionalInfo" name="Additional Info" rows=10 data-error="This field is required." placeholder="Let us know of any additional info about yourself or related to this form, which may/may not help this process."></textarea>
-              </div>
-            </div>
-            <br />
-            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         <hr />
     </div>
