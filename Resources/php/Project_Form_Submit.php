@@ -105,7 +105,10 @@
 		?>
 		</table>
 		<hr />
-		<h2 style="text-align:center">Thank you for your Submission! You will be contacted at a later date, pending further information!</h2>
+        <p style="text-align:center;white-space: pre-wrap;font-size: x-large;">
+Thank you for your Submission!
+You will be contacted at a later date, pending further information!
+        </p>
     </div>
     <!-- NAVIGATION FOOTER START -->
 	<nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary">
