@@ -89,12 +89,12 @@ Further details about your selected fields will be shown after you've filled out
                 <option>Other...</option>
               </select>
             </div>
-            <label for="expectedPay">Expected Pay</label>
+            <label for="desiredPay">Desired Pay</label>
             <div class="input-group mb-2">
               <div class="input-group-prepend">
                 <span class="input-group-text">$</span>
               </div>
-              <input type="text" class="form-control" id="expectedPay" name="Expected Pay" aria-label="Amount (to the nearest dollar)">
+              <input type="text" class="form-control" id="desiredPay" name="Desired Pay" aria-label="Amount (to the nearest dollar)">
               <div class="input-group-append">
                 <span class="input-group-text">.00</span>
               </div>
@@ -102,9 +102,6 @@ Further details about your selected fields will be shown after you've filled out
             <label for="startDate">Start Date</label>
             <div class="input-group date" data-date-format="dd.mm.yyyy">
               <input type="date" class="form-control" id="startDate" name="Start Date" placeholder="dd.mm.yyyy">
-              <div class="input-group-addon">
-                <span class="glyphicon glyphicon-th"></span>
-              </div>
             </div>
           </div>
           <div class="input-group mb-4">
@@ -117,9 +114,15 @@ Further details about your selected fields will be shown after you've filled out
               <input type="text" class="form-control" id="lastNameEntry" name="Last Name" required="required" data-error="This field is required.">
             </div>
           </div>
-          <div class="form-group mb-4">
-            <label for="emailEntry">Email Address</label>
-            <input type="email" class="form-control" id="emailEntry" name="Email Address" required="required" data-error="This field is required." placeholder="example@yahoo.com">
+          <div class="input-group mb-4">
+            <div class="form-group mr-3 col-md-5">
+              <label for="emailEntry">Email Address</label>
+              <input type="email" class="form-control" id="emailEntry" name="Email Address" required="required" data-error="This field is required." placeholder="example@yahoo.com">
+            </div>
+            <div class="form-group col-md-5">
+              <label for="phoneEntry">Phone Number</label>
+              <input type="tel" class="form-control" id="phoneEntry" name="Phone Number" required="required" data-error="This field is required." placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+            </div>
           </div>
           <div class="form-group mb-2">
             <label for="inputAddress">Address</label>
@@ -145,8 +148,8 @@ Further details about your selected fields will be shown after you've filled out
           </div>
           <div class="form-row mb-4">
             <div class="form-group mb-2 col-md-4">
-              <label for="educationSelect">Select Highest Education</label>
-              <select class="form-control" id="educationSelect" name="Education Position">
+              <label for="expertiseSelect">Select Highest Education/Expertise</label>
+              <select class="form-control" id="expertiseSelect" name="Expertise Selection">
                 <option>College</option>
                 <option>High School</option>
                 <option>Specialized Training/Experience</option>
