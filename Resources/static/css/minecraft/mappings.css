@@ -1,6 +1,6 @@
-body {
+html, body {
     margin: 0px;
-    font-family: monospace;
+    font-family: 'Montserrat', monospace;
 }
 
 .topbar {
@@ -16,6 +16,7 @@ body {
     display: inline-block;
     line-height: 50px;
     padding-left: 10px;
+    padding-top: 1.5em;
 }
 
 .search {
@@ -74,6 +75,7 @@ body {
     background-color: #dddddd;
     border-radius: 10px;
     padding: 14px 5px;
+    line-height: 1em;
 }
 
 .input #searchButton {
