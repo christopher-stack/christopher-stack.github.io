@@ -1,5 +1,6 @@
-html, body {
-    font-family: 'Montserrat', sans-serif;
+body {
+    margin: 0px;
+    font-family: monospace;
 }
 
 .topbar {
@@ -15,7 +16,6 @@ html, body {
     display: inline-block;
     line-height: 50px;
     padding-left: 10px;
-    padding-top: 1.5em;
 }
 
 .search {
@@ -23,10 +23,29 @@ html, body {
     padding-right: 5px;
 }
 
+.mappingtypes {
+    display: inline-block;
+}
+
+.mapping {
+    display: inline-block;
+    padding: 10px;
+}
+
+.mapping label {
+    display: inline-block;
+    padding-top: 5px;
+}
+
 .version {
     display: inline-block;
     line-height: 100px;
     margin-right: 15px;
+}
+
+.version label {
+    display: inline-block;
+    line-height: normal;
 }
 
 .version #versionSelect {
@@ -55,7 +74,6 @@ html, body {
     background-color: #dddddd;
     border-radius: 10px;
     padding: 14px 5px;
-    line-height: 1em;
 }
 
 .input #searchButton {
@@ -93,6 +111,35 @@ html, body {
     cursor: pointer;
     padding: 10px 15px;
     background-color: #3355FF;
+    border-radius: 10px;
+    color: white;
+}
+
+#mojangConfirmPrompt {
+    position: fixed;
+    margin-top: 100px;
+    text-align: center;
+    width: 50%;
+    margin-left: 25%;
+    background-color: white;
+}
+
+#mojangConfirm {
+    margin-right: 5px;
+    display:inline-block;
+    background-color: #3355FF;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: white;
+}
+
+#mojangDeny {
+    margin-left: 5px;
+    display:inline-block;
+    background-color: #AAAAAA;
+    cursor: pointer;
+    padding: 10px 15px;
     border-radius: 10px;
     color: white;
 }
@@ -140,17 +187,14 @@ th, td {
     overflow-y: scroll;
 }
 
-#classes thead tr th {
-    border-bottom: 3px solid black;
-}
-
 .ClassRow {
     cursor: pointer;
 }
 
 .ClassRow td {
-    padding: 3px 10px;
-    border-width: 1px 0px;
+    padding: 4px 10px;
+    border-width: 0px;
+    border-bottom-width: 1px;
     border-color: gray;
     border-style: solid;
 }
