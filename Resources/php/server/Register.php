@@ -96,13 +96,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
-    </style>
+	<meta char="UTF-8">
+	<title> TeamCDA Website - Register </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+	<!-- Style Scripts -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Roboto">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+	<link rel="stylesheet" href="../../static/css/style.css" type="text/css">
+	<!-- End of Style Scripts -->
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/ccfb95e64e.js" crossorigin="anonymous"></script>
+	<script src="../../static/js/script.js"></script>
+	<!-- Favicon Code - Include ALL Below -->
+	<link rel="shortcut icon" href="../../static/icon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" sizes="180x180" href="../../static/icon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="../../static/icon/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="../../static/icon/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="../../static/icon/manifest.json">
+	<link rel="mask-icon" href="../../static/icon/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#2b5797">
+	<meta name="msapplication-TileImage" content="../../static/icon/mstile-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+	<!-- END FAVICON CODE -->
 </head>
 <body>
     <div class="wrapper">
