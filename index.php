@@ -57,14 +57,14 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> Apps </a>
 						<div class="dropdown-menu" aria-labelledby="Preview">
-							<a class="dropdown-item" href="./Pages/App_APIHub.html"> APIHub - Pokemon GO </a>
-							<a class="dropdown-item" href="./Pages/NecroEase/index.html"> NecroEase - Pokemon GO </a>
+							<a class="dropdown-item" href="#"> APIHub - Pokemon GO </a>
+							<a class="dropdown-item" href="#"> NecroEase - Pokemon GO </a>
 						</div>
 					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-gamepad"></i> Games </a>
 						<div class="dropdown-menu" aria-labelledby="Preview">
-							<a class="dropdown-item" href="./Pages/Game_Pacman.html">Bandai Namco - Pac-Man</a>
+							<a class="dropdown-item" href="#">Bandai Namco - Pac-Man</a>
 						</div>
 					</li>
 					<li class="nav-item dropdown">
@@ -99,7 +99,14 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 			<br />
 			<br />
 			<h1 style="text-align:left">Projects:</h1>
-			<a class="navbar-btn btn-primary btn" href="./Pages/Project_Form.html">Applicant Form</a>
+			<?php
+				// Check if the user has the user role, and if so add the Applicant Form link
+				if($_SESSION["role"] == "User"){
+					echo "<a";
+					echo " class=\"navbar-btn btn-primary btn\"";
+					echo " href=\"./Pages/Project_Form.php\">Applicant Form</a>";
+				}
+			?>
 			<br />
 		</div>
 		<!-- NAVIGATION FOOTER START -->
