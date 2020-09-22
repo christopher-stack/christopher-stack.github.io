@@ -44,7 +44,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 		<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle Navigation">
 				<span class="navbar-toggler-icon"></span>
-				</button>
+			</button>
 			<a class="navbar-brand" href="#">TeamCDA</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
