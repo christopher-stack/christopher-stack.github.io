@@ -4,13 +4,13 @@ session_start();
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
-    header("location: ./Login.php");
+    header("location: ./server/Login.php");
     exit;
 } else {
   // If user satisfied the above condition, we'll also check their role.
   // If they lack permission, navigate them to the role error page
   if ($_SESSION["role"] !== "User") {
-    header("location: ./Error_Permission.php");
+    header("location: ./server/Error_Permission.php");
     exit;
   }
 }
@@ -121,8 +121,8 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
                         echo " href=\"../../404.html\">Search applicants</a>";
                     }
 				?>
-              <a class="dropdown-item" href="./Reset_Password.php">Reset password</a>
-              <a class="dropdown-item" href="./Logout.php">Sign out</a>
+              <a class="dropdown-item" href="./server/Reset_Password.php">Reset password</a>
+              <a class="dropdown-item" href="./server/Logout.php">Sign out</a>
             </div>
           </li>
         </ul>
