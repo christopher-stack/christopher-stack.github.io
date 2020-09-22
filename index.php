@@ -49,7 +49,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 			  <li class="nav-item">
-				<a class="nav-link" href="./index.html"><i class="fas fa-home"></i> Home </a>
+				<a class="nav-link" href="./index.php"><i class="fas fa-home"></i> Home </a>
 			  </li>
 			  <li class="nav-item disabled">
 				<a class="nav-link" href="#"><i class="fas fa-exclamation-circle"></i> About </a>

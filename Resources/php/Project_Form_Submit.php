@@ -38,7 +38,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-            <a class="nav-link" href="../../index.html"><i class="fas fa-home"></i> Home </a>
+            <a class="nav-link" href="../../index.php"><i class="fas fa-home"></i> Home </a>
             </li>
             <li class="nav-item disabled">
             <a class="nav-link" href="#"><i class="fas fa-exclamation-circle"></i> About </a>
@@ -90,14 +90,14 @@
 			foreach ($_POST as $key => $value) {
 				echo "<tr>";
 				echo "<td>";
-				echo str_replace('_', ' ', $key);
+				echo str_replace('_', ' ', htmlspecialchars($key));
 				echo ":</td>";
                 echo "<td>";
                 if (is_array($value)) {
-					echo implode(",",$value);
+					echo htmlspecialchars(implode(",", $value));
 				}
 				else {
-					echo (empty($value) ? "N/A" : $value);
+					echo htmlspecialchars((empty($value) ? "N/A" : $value));
 				}
 				echo "</td>";
 				echo "</tr>";
