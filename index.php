@@ -78,7 +78,42 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i> <?php echo htmlspecialchars($_SESSION["username"]); ?></a>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="Preview">
-							<a class="dropdown-item" href="./404.html">Profile</a>
+							<?php
+								// Add appropriate links based on role
+								if($_SESSION["role"] == "User"){
+									echo "<a";
+									echo " class=\"dropdown-item\"";
+									echo " href=\"./Pages/Project_Form.php\">Profile</a>";
+									echo "<a";
+									echo " class=\"dropdown-item\"";
+									echo " href=\"./404.html\">Application history</a>";
+									echo "<a";
+									echo " class=\"dropdown-item\"";
+									echo " href=\"./404.html\">Search jobs</a>";
+									echo "<a";
+									echo " class=\"dropdown-item\"";
+									echo " href=\"./404.html\">View jobs by category</a>";
+									echo "<a";
+									echo " class=\"dropdown-item\"";
+									echo " href=\"./404.html\">View jobs by company</a>";
+								} else if($_SESSION["role"] == "Employer"){
+									echo "<a";
+									echo " class=\"dropdown-item\"";
+									echo " href=\"./404.html\">Company profile</a>";
+									echo "<a";
+									echo " class=\"dropdown-item\"";
+									echo " href=\"./404.html\">Post new position</a>";
+									echo "<a";
+									echo " class=\"dropdown-item\"";
+									echo " href=\"./404.html\">Edit positions</a>";
+									echo "<a";
+									echo " class=\"dropdown-item\"";
+									echo " href=\"./404.html\">Review applicants</a>";
+									echo "<a";
+									echo " class=\"dropdown-item\"";
+									echo " href=\"./404.html\">Search applicants</a>";
+								}
+							?>
 							<a class="dropdown-item" href="./Resources/php/Reset_Password.php">Reset password</a>
 							<a class="dropdown-item" href="./Resources/php/Logout.php">Sign out</a>
 						</div>
