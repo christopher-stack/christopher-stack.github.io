@@ -4,7 +4,7 @@ session_start();
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
-    header("location: Login.php");
+    header("location: ./Resources/php/Login.php");
     exit;
 }
 ?>
@@ -99,7 +99,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 			<br />
 			<br />
 			<h1 style="text-align:left">Projects:</h1>
-			<a class="navbar-btn btn-primary btn" href="./Pages/Project_Form.html">Example Form</a>
+			<a class="navbar-btn btn-primary btn" href="./Pages/Project_Form.html">Applicant Form</a>
 			<br />
 		</div>
 		<!-- NAVIGATION FOOTER START -->

@@ -4,8 +4,15 @@ session_start();
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
-    header("location: Login.php");
+    header("location: ../Resources/php/Login.php");
     exit;
+} else {
+  // If user satisfied the above condition, we'll also check their role.
+  // If they lack permission, navigate them to the role error page
+  if ($_SESSION["role"] !== "User") {
+    header("location: ../Resources/php/Error_Permission.php");
+    exit;
+  }
 }
 ?>
 
@@ -13,7 +20,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 <html lang="en">
 <head>
 	<meta char="UTF-8">
-	<title> TeamCDA Website - Example Form! </title>
+	<title> TeamCDA Website - Job Applicant Form! </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
 	<!-- Style Scripts -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Roboto">
