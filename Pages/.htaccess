@@ -5,7 +5,7 @@ AddType application/x-httpd-php .php .html
 ForceType application/x-httpd-php
 </Files>
 
-ErrorDocument 404 /404.html
+ErrorDocument 404 /Resources/static/error/404.html
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f

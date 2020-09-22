@@ -86,32 +86,32 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 								echo " href=\"../Pages/Project_Form.php\">Profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../404.html\">Application history</a>";
+								echo " href=\"../Resources/static/error/404.html\">Application history</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../404.html\">Search jobs</a>";
+								echo " href=\"../Resources/static/error/404.html\">Search jobs</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../404.html\">View jobs by category</a>";
+								echo " href=\"../Resources/static/error/404.html\">View jobs by category</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../404.html\">View jobs by company</a>";
+								echo " href=\"../Resources/static/error/404.html\">View jobs by company</a>";
 							} else if($_SESSION["role"] == "Employer"){
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../404.html\">Company profile</a>";
+								echo " href=\"../Resources/static/error/404.html\">Company profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../404.html\">Post new position</a>";
+								echo " href=\"../Resources/static/error/404.html\">Post new position</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../404.html\">Edit positions</a>";
+								echo " href=\"../Resources/static/error/404.html\">Edit positions</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../404.html\">Review applicants</a>";
+								echo " href=\"../Resources/static/error/404.html\">Review applicants</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../404.html\">Search applicants</a>";
+								echo " href=\"../Resources/static/error/404.html\">Search applicants</a>";
 							}
 						?>
 						<a class="dropdown-item" href="../Resources/php/server/Reset_Password.php">Reset password</a>
