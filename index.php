@@ -1,3 +1,14 @@
+<?php
+// Initialize the session
+session_start();
+ 
+// Check if the user is logged in, if not then redirect him to login page
+if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
+    header("location: Login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -44,42 +55,50 @@
 				<a class="nav-link" href="#"><i class="fas fa-exclamation-circle"></i> About </a>
 			  </li>
 			<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> Apps </a>
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> Apps </a>
 				<div class="dropdown-menu" aria-labelledby="Preview">
 					<a class="dropdown-item" href="./Pages/App_APIHub.html"> APIHub - Pokemon GO </a>
 					<a class="dropdown-item" href="./Pages/NecroEase/index.html"> NecroEase - Pokemon GO </a>
 				</div>
 			</li>
 			<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-gamepad"></i> Games </a>
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-gamepad"></i> Games </a>
 				<div class="dropdown-menu" aria-labelledby="Preview">
 					<a class="dropdown-item" href="./Pages/Game_Pacman.html">Bandai Namco - Pac-Man</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-download"></i> Downloads </a>
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-download"></i> Downloads </a>
 				<div class="dropdown-menu" aria-labelledby="Preview">
 					<a class="dropdown-item disabled" href="#"> All Downloads </a>
 				</div>
 			</li>
 			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i> <?php echo htmlspecialchars($_SESSION["username"]); ?></a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="Preview">
+						<a class="dropdown-item" href="#">Profile</a>
+						<a class="dropdown-item" href="./Resources/php/Reset_Password.php">Reset password</a>
+						<a class="dropdown-item" href="./Resources/php/Logout.php">Sign out</a>
+					</div>
+				</li>
+            </ul>
 			</div>
 		</nav>
 		<!-- NAVIGATION HEADER END -->
 		<div class="container" style="overflow-x:auto;">
 			<h1>TeamCDA's Website</h1>
 			<br />
-			<h2 style="text-align:center">This website has lots of resources and projects like games, apps, and more stuff that is constantly kept up-to-date!</h2>
+			<h2 style="text-align:center">This website has lots of resources and projects that is constantly kept up-to-date!</h2>
 			<br />
 			<h1>Quick Links</h1>
 			<br />
-			<h1 style="text-align:left">Games:</h1>
+			<h1 style="text-align:left">Actions:</h1>
+			<a class="navbar-btn btn-primary btn" href="#">Profile</a>
 			<br />
-			<a class="navbar-btn btn-primary btn" href="./Pages/Game_Pacman.html">Bandai Namco - Pac-Man</a>
 			<br />
 			<h1 style="text-align:left">Projects:</h1>
-			<br />
-			<a class="navbar-btn btn-primary btn" href="./Pages/MinecraftMappingsViewer/App.html">Minecraft Mappings Viewer</a>
 			<a class="navbar-btn btn-primary btn" href="./Pages/Project_Form.html">Example Form</a>
 			<br />
 		</div>
