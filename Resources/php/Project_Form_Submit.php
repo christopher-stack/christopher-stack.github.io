@@ -24,12 +24,11 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
 	<!-- Style Scripts -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Roboto">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
 	<link rel="stylesheet" href="../static/css/style.css" type="text/css">
 	<!-- End of Style Scripts -->
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
 	<script src="https://kit.fontawesome.com/ccfb95e64e.js" crossorigin="anonymous"></script>
 	<script src="../static/js/script.js"></script>
 	<!-- Favicon Code - Include ALL Below -->
