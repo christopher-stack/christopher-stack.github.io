@@ -7,8 +7,8 @@ $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
 $fname = $lname = "";
 $fname_err = $lname_err = "";
-$email = "";
-$email_err = "";
+$email = $phone = "";
+$email_err = $phone_err = "";
  
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
@@ -48,7 +48,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     
     // Validate password
     if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter a password.";     
+        $password_err = "Please enter a password.";
     } elseif(strlen(trim($_POST["password"])) < 6){
         $password_err = "Password must have at least 6 characters.";
     } else{
@@ -57,7 +57,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     
     // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = "Please confirm password.";     
+        $confirm_password_err = "Please confirm password.";
     } else{
         $confirm_password = trim($_POST["confirm_password"]);
         if(empty($password_err) && ($password != $confirm_password)){
@@ -67,32 +67,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 
     // Validate first name
     if(empty(trim($_POST["firstNameEntry"]))){
-        $fname_err = "Please enter a first name.";     
+        $fname_err = "Please enter a first name.";
     } else{
         $fname = trim($_POST["firstNameEntry"]);
     }
     // Validate last name
     if(empty(trim($_POST["lastNameEntry"]))){
-        $lname_err = "Please enter a last name.";     
+        $lname_err = "Please enter a last name.";
     } else{
         $lname = trim($_POST["lastNameEntry"]);
     }
+
     // Validate email address
     if(empty(trim($_POST["emailEntry"]))){
-        $email_err = "Please enter a valid email address.";     
+        $email_err = "Please enter a valid email address.";
     } else{
         $email = trim($_POST["emailEntry"]);
     }
+    // Validate phone number (not-required)
+    if(empty(trim($_POST["phoneEntry"]))){
+        //$phone_err = "Please enter a valid phone number.";
+    } else{
+        $phone = trim($_POST["phoneEntry"]);
+    }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($fname_err) && empty($lname_err) && empty($email_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($fname_err) && empty($lname_err) && empty($email_err) && empty($phone_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO people (username, phash, fname, lname, email) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO people (username, phash, fname, lname, email, phone) VALUES (?, ?, ?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_username, $param_password, $param_fname, $param_lname, $param_email);
+            mysqli_stmt_bind_param($stmt, "ssssss", $param_username, $param_password, $param_fname, $param_lname, $param_email, $param_phone);
             
             // Set parameters
             $param_username = $username;
@@ -100,6 +107,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             $param_fname = $fname;
             $param_lname = $lname;
             $param_email = $email;
+            $param_phone = $phone;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -166,6 +174,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
+            <div class="form-row mb-4">
+                <label for="roleSelectEntry">Select Role</label>
+                <div class="input-group mb-2">
+                <select class="form-select" name="roleSelectEntry">
+                    <option>jobseeker</option>
+                    <option>employer</option>
+                    <option>admin</option>
+                </select>
+            </div>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($fname_err)) ? 'has-error' : ''; ?>">
                     <label for="firstNameEntry">First Name</label>
@@ -184,31 +201,38 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                     <input type="email" class="form-control" name="emailEntry" required="required" data-error="This field is required." placeholder="example@yahoo.com">
                     <span class="help-block"><?php echo $email_err; ?></span>
                 </div>
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-5 <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
                     <label for="phoneEntry">Phone Number</label>
-                    <input type="tel" class="form-control" name="phoneEntry" required="required" data-error="This field is required." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}">
+                    <input type="tel" class="form-control" name="phoneEntry" data-error="This field is optional but must be valid." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}">
+                    <span class="help-block"><?php echo $phone_err; ?></span>
+                </div>
+            </div>
+            <div class="form-row mb-4">
+                <label for="dateOfBirthEntry">Date of Birth</label>
+                <div class="input-group date" data-date-format="dd.mm.yyyy">
+                    <input type="date" class="form-control" name="dateOfBirthEntry" placeholder="dd.mm.yyyy">
                 </div>
             </div>
             <div class="form-group mb-2">
                 <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" name="inputAddress" required="required" data-error="This field is required." placeholder="1234 Main St">
+                <input type="text" class="form-control" name="inputAddress" data-error="TThis field is optional but must be valid." placeholder="1234 Main St">
             </div>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-3">
                     <label for="inputCity">City</label>
-                    <input type="text" class="form-control" name="inputCity" required="required" data-error="This field is required.">
+                    <input type="text" class="form-control" name="inputCity" data-error="This field is optional but must be valid.">
                 </div>
                 <div class="form-group mr-3 col-md-3">
                     <label for="inputState">State</label>
-                    <input type="text" class="form-control" name="inputState" required="required" data-error="This field is required.">
+                    <input type="text" class="form-control" name="inputState" data-error="This field is optional but must be valid.">
                 </div>
                 <div class="form-group mr-3 col-md-2">
                     <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" name="inputZip" required="required" data-error="This field is required.">
+                    <input type="text" class="form-control" name="inputZip" data-error="This field is optional but must be valid.">
                 </div>
                 <div class="form-group mr-3 col-md-2">
                     <label for="inputCountry">Country</label>
-                    <input type="text" class="form-control" name="inputCountry" required="required" data-error="This field is required.">
+                    <input type="text" class="form-control" name="inputCountry" data-error="This field is optional but must be valid.">
                 </div>
             </div>
             <div class="bottom-padding form-group">
