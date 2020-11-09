@@ -5,10 +5,12 @@ require_once "Config.php";
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
+$role = $role_err = "";
 $fname = $lname = "";
 $fname_err = $lname_err = "";
 $email = $phone = "";
 $email_err = $phone_err = "";
+$dob = $dob_err = "";
  
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
@@ -65,6 +67,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         }
     }
 
+    // Validate role data
+    if(empty(trim($_POST["roleEntry"]))){
+        $role_err = "Please enter/select a valid role.";
+    } else{
+        $role = trim($_POST["roleEntry"]);
+    }
     // Validate first name
     if(empty(trim($_POST["firstNameEntry"]))){
         $fname_err = "Please enter a first name.";
@@ -90,24 +98,32 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     } else{
         $phone = trim($_POST["phoneEntry"]);
     }
+    // Validate date of birth (not-required)
+    if(empty(trim($_POST["dateOfBirthEntry"]))){
+        //$dob_err = "Please enter a valid date of birth.";
+    } else{
+        $dob = trim($_POST["dateOfBirthEntry"]);
+    }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($fname_err) && empty($lname_err) && empty($email_err) && empty($phone_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($role_err) && empty($fname_err) && empty($lname_err) && empty($email_err) && empty($phone_err) && empty($dob_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO people (username, phash, fname, lname, email, phone) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO people (username, phash, usertype, fname, lname, email, phone, dob) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssssss", $param_username, $param_password, $param_fname, $param_lname, $param_email, $param_phone);
+            mysqli_stmt_bind_param($stmt, "ssssssss", $param_username, $param_password, $param_role, $param_fname, $param_lname, $param_email, $param_phone, $param_dob);
             
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+            $param_role = $role;
             $param_fname = $fname;
             $param_lname = $lname;
             $param_email = $email;
             $param_phone = $phone;
+            $param_dob = $dob;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -174,14 +190,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
-            <div class="form-row mb-4">
-                <label for="roleSelectEntry">Select Role</label>
+            <div class="form-group row mb-4 <?php echo (!empty($role_err)) ? 'has-error' : ''; ?>">
+                <label for="roleEntry">Select Role</label>
                 <div class="input-group mb-2">
-                <select class="form-select" name="roleSelectEntry">
+                <select class="form-select" name="roleEntry">
                     <option>jobseeker</option>
                     <option>employer</option>
                     <option>admin</option>
                 </select>
+                <span class="help-block"><?php echo $role_err; ?></span>
             </div>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($fname_err)) ? 'has-error' : ''; ?>">
@@ -207,11 +224,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                     <span class="help-block"><?php echo $phone_err; ?></span>
                 </div>
             </div>
-            <div class="form-row mb-4">
+            <div class="form-group row mb-4 <?php echo (!empty($dob_err)) ? 'has-error' : ''; ?>">
                 <label for="dateOfBirthEntry">Date of Birth</label>
                 <div class="input-group date" data-date-format="dd.mm.yyyy">
                     <input type="date" class="form-control" name="dateOfBirthEntry" placeholder="dd.mm.yyyy">
                 </div>
+                <span class="help-block"><?php echo $dob_err; ?></span>
             </div>
             <div class="form-group mb-2">
                 <label for="inputAddress">Address</label>

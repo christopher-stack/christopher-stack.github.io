@@ -140,7 +140,7 @@ Further details about your selected fields will be shown after you've filled out
         <hr />
         <!--Form Data-->
         <form method="post" action="../Resources/php/Project_Form_Submit.php">
-          <div class="form-row mb-4">
+          <div class="form-group row mb-4">
             <label for="positionSelect">Select Position</label>
             <div class="input-group mb-2">
               <select class="form-control" id="positionSelect" name="Position">
@@ -208,7 +208,7 @@ Further details about your selected fields will be shown after you've filled out
               <input type="text" class="form-control" id="inputZip" name="Zip Code" required="required" data-error="This field is required.">
             </div>
           </div>
-          <div class="form-row mb-4">
+          <div class="form-group row mb-4">
             <div class="form-group mb-2 col-md-4">
               <label for="expertiseSelect">Select Highest Education/Expertise</label>
               <select class="form-control" id="expertiseSelect" name="Expertise Selection">
