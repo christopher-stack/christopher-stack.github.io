@@ -11,6 +11,11 @@ $fname_err = $lname_err = "";
 $email = $phone = "";
 $email_err = $phone_err = "";
 $dob = $dob_err = "";
+$address = $address_err = "";
+$city = $city_err = "";
+$state = $state_err = "";
+$postal = $postal_err = "";
+$country = $country_err = "";
  
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
@@ -104,16 +109,47 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     } else{
         $dob = trim($_POST["dateOfBirthEntry"]);
     }
+
+    // Validate address (not-required)
+    if(empty(trim($_POST["inputAddress"]))){
+        //$address_err = "Please enter a valid address.";
+    } else{
+        $address = trim($_POST["inputAddress"]);
+    }
+    // Validate city (not-required)
+    if(empty(trim($_POST["inputCity"]))){
+        //$city_err = "Please enter a valid city.";
+    } else{
+        $address = trim($_POST["inputCity"]);
+    }
+    // Validate state (not-required)
+    if(empty(trim($_POST["inputState"]))){
+        //$state_err = "Please enter a valid state.";
+    } else{
+        $state = trim($_POST["inputState"]);
+    }
+    // Validate zip (not-required)
+    if(empty(trim($_POST["inputZip"]))){
+        //$postal_err = "Please enter a valid zip.";
+    } else{
+        $postal = trim($_POST["inputZip"]);
+    }
+    // Validate country (not-required)
+    if(empty(trim($_POST["inputCountry"]))){
+        //$country_err = "Please enter a valid country.";
+    } else{
+        $country = trim($_POST["inputCountry"]);
+    }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($role_err) && empty($fname_err) && empty($lname_err) && empty($email_err) && empty($phone_err) && empty($dob_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($role_err) && empty($fname_err) && empty($lname_err) && empty($email_err) && empty($phone_err) && empty($dob_err) && empty($address_err) && empty($city_err) && empty($state_err) && empty($postal_err) && empty($country_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO people (username, phash, usertype, fname, lname, email, phone, dob) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO people (username, phash, usertype, fname, lname, email, phone, dob, street, city, state, postal, country) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssssssss", $param_username, $param_password, $param_role, $param_fname, $param_lname, $param_email, $param_phone, $param_dob);
+            mysqli_stmt_bind_param($stmt, "sssssssssssss", $param_username, $param_password, $param_role, $param_fname, $param_lname, $param_email, $param_phone, $param_dob, $param_address, $param_city, $param_state, $param_postal, $param_country);
             
             // Set parameters
             $param_username = $username;
@@ -124,6 +160,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             $param_email = $email;
             $param_phone = $phone;
             $param_dob = $dob;
+            $param_address = $address;
+            $param_city = $city;
+            $param_state = $state;
+            $param_postal = $postal;
+            $param_country = $country;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -231,26 +272,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 </div>
                 <span class="help-block"><?php echo $dob_err; ?></span>
             </div>
-            <div class="form-group mb-2">
+            <div class="form-group mb-2 <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
                 <label for="inputAddress">Address</label>
                 <input type="text" class="form-control" name="inputAddress" data-error="TThis field is optional but must be valid." placeholder="1234 Main St">
+                <span class="help-block"><?php echo $address_err; ?></span>
             </div>
             <div class="input-group mb-4">
-                <div class="form-group mr-3 col-md-3">
+                <div class="form-group mr-3 col-md-3 <?php echo (!empty($city_err)) ? 'has-error' : ''; ?>">
                     <label for="inputCity">City</label>
                     <input type="text" class="form-control" name="inputCity" data-error="This field is optional but must be valid.">
+                    <span class="help-block"><?php echo $city_err; ?></span>
                 </div>
-                <div class="form-group mr-3 col-md-3">
+                <div class="form-group mr-3 col-md-3 <?php echo (!empty($state_err)) ? 'has-error' : ''; ?>">
                     <label for="inputState">State</label>
                     <input type="text" class="form-control" name="inputState" data-error="This field is optional but must be valid.">
+                    <span class="help-block"><?php echo $state_err; ?></span>
                 </div>
-                <div class="form-group mr-3 col-md-2">
+                <div class="form-group mr-3 col-md-2 <?php echo (!empty($postal_err)) ? 'has-error' : ''; ?>">
                     <label for="inputZip">Zip</label>
                     <input type="text" class="form-control" name="inputZip" data-error="This field is optional but must be valid.">
+                    <span class="help-block"><?php echo $postal_err; ?></span>
                 </div>
-                <div class="form-group mr-3 col-md-2">
+                <div class="form-group mr-3 col-md-2 <?php echo (!empty($country_err)) ? 'has-error' : ''; ?>">
                     <label for="inputCountry">Country</label>
                     <input type="text" class="form-control" name="inputCountry" data-error="This field is optional but must be valid.">
+                    <span class="help-block"><?php echo $country_err; ?></span>
                 </div>
             </div>
             <div class="bottom-padding form-group">
