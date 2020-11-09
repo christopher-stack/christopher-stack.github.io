@@ -143,7 +143,7 @@ Further details about your selected fields will be shown after you've filled out
           <div class="form-group row mb-4">
             <label for="positionSelect">Select Position</label>
             <div class="input-group mb-2">
-              <select class="form-control" id="positionSelect" name="Position">
+              <select class="form-select" id="positionSelect" name="Position">
                 <option>QA Tester</option>
                 <option>UX Designer</option>
                 <option>PR Management</option>
@@ -211,7 +211,7 @@ Further details about your selected fields will be shown after you've filled out
           <div class="form-group row mb-4">
             <div class="form-group mb-2 col-md-4">
               <label for="expertiseSelect">Select Highest Education/Expertise</label>
-              <select class="form-control" id="expertiseSelect" name="Expertise Selection">
+              <select class="form-select" id="expertiseSelect" name="Expertise Selection">
                 <option>College</option>
                 <option>High School</option>
                 <option>Specialized Training/Experience</option>
