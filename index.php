@@ -79,7 +79,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="Preview">
 							<?php
 								// Add appropriate links based on role
-								if($_SESSION["role"] == "User"){
+								if($_SESSION["role"] == "jobseeker"){
 									echo "<a";
 									echo " class=\"dropdown-item\"";
 									echo " href=\"./Pages/Project_Form.php\">Profile</a>";
@@ -95,7 +95,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 									echo "<a";
 									echo " class=\"dropdown-item\"";
 									echo " href=\"./Resources/static/error/404.html\">View jobs by company</a>";
-								} else if($_SESSION["role"] == "Employer"){
+								} else if($_SESSION["role"] == "employer"){
 									echo "<a";
 									echo " class=\"dropdown-item\"";
 									echo " href=\"./Resources/static/error/404.html\">Company profile</a>";
@@ -135,7 +135,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 			<h1 style="text-align:left">Projects:</h1>
 			<?php
 				// Check if the user has the user role, and if so add the Applicant Form link
-				if($_SESSION["role"] == "User"){
+				if($_SESSION["role"] == "jobseeker"){
 					echo "<a";
 					echo " class=\"navbar-btn btn-primary btn\"";
 					echo " href=\"./Pages/Project_Form.php\">Applicant Form</a>";
