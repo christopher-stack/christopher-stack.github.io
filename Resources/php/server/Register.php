@@ -5,9 +5,11 @@ require_once "Config.php";
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
+$fname = $lname = "";
+$fname_err = $lname_err = "";
  
-// Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+// Processing form data when form is submitted and contains data
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
  
     // Validate username
     if(empty(trim($_POST["username"]))){
@@ -60,20 +62,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $confirm_password_err = "Password did not match.";
         }
     }
+
+    // Validate first name
+    if(empty(trim($_POST["firstNameEntry"]))){
+        $fname_err = "Please enter a first name.";     
+    } else{
+        $fname = trim($_POST["firstNameEntry"]);
+    }
+    // Validate last name
+    if(empty(trim($_POST["lastNameEntry"]))){
+        $lname_err = "Please enter a last name.";     
+    } else{
+        $lname = trim($_POST["lastNameEntry"]);
+    }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($fname_err) && empty($lname_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO people (username, phash) VALUES (?, ?)";
+        $sql = "INSERT INTO people (username, phash, fname, lname) VALUES (?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password, $param_fname, $param_lname);
             
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+            $param_fname = $fname;
+            $param_lname = $lname;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -121,7 +138,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	<!-- END FAVICON CODE -->
 </head>
 <body>
-    <div class="wrapper">
+    <div class="register-wrapper">
         <h2>Sign Up</h2>
         <p>Please fill out this form to create an account.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
@@ -139,6 +156,50 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label>Confirm Password</label>
                 <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
+            </div>
+            <div class="input-group mb-4">
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($fname_err)) ? 'has-error' : ''; ?>">
+                    <label for="firstNameEntry">First Name</label>
+                    <input type="text" class="form-control" name="firstNameEntry" required="required" data-error="This field is required." placeholder="Tom">
+                    <span class="help-block"><?php echo $fname_err; ?></span>
+                </div>
+                <div class="form-group col-md-5 <?php echo (!empty($lname_err)) ? 'has-error' : ''; ?>">
+                    <label for="lastNameEntry">Last Name</label>
+                    <input type="text" class="form-control" name="lastNameEntry" required="required" data-error="This field is required." placeholder="Smith">
+                    <span class="help-block"><?php echo $lname_err; ?></span>
+                </div>
+            </div>
+            <div class="input-group mb-4">
+                <div class="form-group mr-3 col-md-5">
+                    <label for="emailEntry">Email Address</label>
+                    <input type="email" class="form-control" name="emailEntry" required="required" data-error="This field is required." placeholder="example@yahoo.com">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="phoneEntry">Phone Number</label>
+                    <input type="tel" class="form-control" name="phoneEntry" required="required" data-error="This field is required." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}">
+                </div>
+            </div>
+            <div class="form-group mb-2">
+                <label for="inputAddress">Address</label>
+                <input type="text" class="form-control" name="inputAddress" required="required" data-error="This field is required." placeholder="1234 Main St">
+            </div>
+            <div class="input-group mb-4">
+                <div class="form-group mr-3 col-md-3">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" name="inputCity" required="required" data-error="This field is required.">
+                </div>
+                <div class="form-group mr-3 col-md-3">
+                    <label for="inputState">State</label>
+                    <input type="text" class="form-control" name="inputState" required="required" data-error="This field is required.">
+                </div>
+                <div class="form-group mr-3 col-md-2">
+                    <label for="inputZip">Zip</label>
+                    <input type="text" class="form-control" name="inputZip" required="required" data-error="This field is required.">
+                </div>
+                <div class="form-group mr-3 col-md-2">
+                    <label for="inputCountry">Country</label>
+                    <input type="text" class="form-control" name="inputCountry" required="required" data-error="This field is required.">
+                </div>
             </div>
             <div class="bottom-padding form-group">
                 <span>Already have an account? <a href="Login.php">Login here</a>.</span>

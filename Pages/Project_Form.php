@@ -138,7 +138,7 @@ Please fill out the below form with as much details as possible.
 Further details about your selected fields will be shown after you've filled out an application.
         </p>
         <hr />
-        <!--Get/Post and submit Example-->
+        <!--Form Data-->
         <form method="post" action="../Resources/php/Project_Form_Submit.php">
           <div class="form-row mb-4">
             <label for="positionSelect">Select Position</label>
