@@ -7,6 +7,8 @@ $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
 $fname = $lname = "";
 $fname_err = $lname_err = "";
+$email = "";
+$email_err = "";
  
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
@@ -75,22 +77,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     } else{
         $lname = trim($_POST["lastNameEntry"]);
     }
+    // Validate email address
+    if(empty(trim($_POST["emailEntry"]))){
+        $email_err = "Please enter a valid email address.";     
+    } else{
+        $email = trim($_POST["emailEntry"]);
+    }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($fname_err) && empty($lname_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($fname_err) && empty($lname_err) && empty($email_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO people (username, phash, fname, lname) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO people (username, phash, fname, lname, email) VALUES (?, ?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password, $param_fname, $param_lname);
+            mysqli_stmt_bind_param($stmt, "sssss", $param_username, $param_password, $param_fname, $param_lname, $param_email);
             
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
             $param_fname = $fname;
             $param_lname = $lname;
+            $param_email = $email;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -170,9 +179,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 </div>
             </div>
             <div class="input-group mb-4">
-                <div class="form-group mr-3 col-md-5">
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                     <label for="emailEntry">Email Address</label>
                     <input type="email" class="form-control" name="emailEntry" required="required" data-error="This field is required." placeholder="example@yahoo.com">
+                    <span class="help-block"><?php echo $email_err; ?></span>
                 </div>
                 <div class="form-group col-md-5">
                     <label for="phoneEntry">Phone Number</label>
