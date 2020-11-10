@@ -134,11 +134,15 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 			<br />
 			<h1 style="text-align:left">Projects:</h1>
 			<?php
-				// Check if the user has the user role, and if so add the Applicant Form link
+				// Dedicated Links, based on role
 				if($_SESSION["role"] == "jobseeker"){
 					echo "<a";
 					echo " class=\"navbar-btn btn-primary btn\"";
 					echo " href=\"./Pages/Project_Form.php\">Applicant Form</a>";
+				} else if ($_SESSION["role"] == "admin") {
+					echo "<a";
+					echo " class=\"navbar-btn btn-primary btn\"";
+					echo " href=\"./Resources/php/server/RegisterCompany.php\">Register Company</a>";
 				}
 			?>
 			<br />

@@ -120,7 +120,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     if(empty(trim($_POST["inputCity"]))){
         //$city_err = "Please enter a valid city.";
     } else{
-        $address = trim($_POST["inputCity"]);
+        $city = trim($_POST["inputCity"]);
     }
     // Validate state (not-required)
     if(empty(trim($_POST["inputState"]))){
@@ -274,7 +274,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             </div>
             <div class="form-group mb-2 <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
                 <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" name="inputAddress" data-error="TThis field is optional but must be valid." placeholder="1234 Main St">
+                <input type="text" class="form-control" name="inputAddress" data-error="This field is optional but must be valid." placeholder="1234 Main St">
                 <span class="help-block"><?php echo $address_err; ?></span>
             </div>
             <div class="input-group mb-4">

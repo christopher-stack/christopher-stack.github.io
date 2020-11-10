@@ -10,7 +10,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
   // If user satisfied the above condition, we'll also check their role.
   // If they lack permission, navigate them to the role error page
   if ($_SESSION["role"] !== "jobseeker") {
-    header("location: ../Resources/php/server/Error_Permission.html");
+    header("location: ../Resources/static/error/Error_Permission.html");
     exit;
   }
 }
