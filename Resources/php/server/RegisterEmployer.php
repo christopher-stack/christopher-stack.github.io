@@ -1,11 +1,23 @@
 <?php
 // Include the config file
 require_once "Config.php";
+
+// function to get data
+function getData($link, $query) {
+    $result = mysqli_query($link, $query);
+    while($row = mysqli_fetch_assoc($result)) {
+        $resultArr[] = $row;
+    }
+    if (!empty($resultArr)) {
+        return $resultArr;
+    }
+}
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
 $role = $role_err = "";
+$company = $company_err = "";
 $fname = $lname = "";
 $fname_err = $lname_err = "";
 $email = $phone = "";
@@ -16,7 +28,7 @@ $city = $city_err = "";
 $state = $state_err = "";
 $postal = $postal_err = "";
 $country = $country_err = "";
- 
+
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
  
@@ -77,6 +89,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         $role_err = "Please enter/select a valid role.";
     } else{
         $role = trim($_POST["roleEntry"]);
+    }
+    // Validate company data
+    if(empty(trim($_POST["companyEntry"]))){
+        $company_err = "Please enter/select a valid company.";
+    } else{
+        $company = trim($_POST["companyEntry"]);
     }
     // Validate first name
     if(empty(trim($_POST["firstNameEntry"]))){
@@ -240,6 +258,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                     <option value="admin">admin</option>
                 </select>
                 <span class="help-block"><?php echo $role_err; ?></span>
+            </div>
+            <div class="form-group row mb-4 <?php echo (!empty($company_err)) ? 'has-error' : ''; ?>">
+                <label for="companyEntry">Select Company</label>
+                <div class="input-group mb-2">
+                <select class="form-select" name="companyEntry">
+                    <option selected="true" disabled>Choose one ...</option>
+                    <?php
+                    $query = "SELECT * FROM companies";
+                    $row = getData($link, $query);
+                    ?>
+                    <?php
+                    foreach($row as $row) { ?>
+                    <option>
+                        <?php
+                        echo $row['name'];
+                        ?>
+                    </option>
+                    <?php
+                    }
+                    ?>
+                </select>
+                <span class="help-block"><?php echo $company_err; ?></span>
             </div>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($fname_err)) ? 'has-error' : ''; ?>">
