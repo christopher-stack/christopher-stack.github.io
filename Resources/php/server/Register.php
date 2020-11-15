@@ -5,7 +5,7 @@ require_once "Config.php";
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
-$role = $role_err = "";
+$role = $role_err = "jobseeker";
 $fname = $lname = "";
 $fname_err = $lname_err = "";
 $email = $phone = "";
@@ -231,7 +231,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
-            <div class="form-group row mb-4 <?php echo (!empty($role_err)) ? 'has-error' : ''; ?>">
+            <!-- <div class="form-group row mb-4 <?php echo (!empty($role_err)) ? 'has-error' : ''; ?>">
                 <label for="roleEntry">Select Role</label>
                 <div class="input-group mb-2">
                 <select class="form-select" name="roleEntry">
@@ -240,7 +240,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                     <option>admin</option>
                 </select>
                 <span class="help-block"><?php echo $role_err; ?></span>
-            </div>
+            </div> -->
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($fname_err)) ? 'has-error' : ''; ?>">
                     <label for="firstNameEntry">First Name</label>
