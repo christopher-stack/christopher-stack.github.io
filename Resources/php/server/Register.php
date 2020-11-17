@@ -5,7 +5,8 @@ require_once "Config.php";
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
-$role = $role_err = "jobseeker";
+$role = "jobseeker";
+$role_err = "";
 $fname = $lname = "";
 $fname_err = $lname_err = "";
 $email = $phone = "";
@@ -73,11 +74,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     }
 
     // Validate role data
-    if(empty(trim($_POST["roleEntry"]))){
+    /*if(empty(trim($_POST["roleEntry"]))){
         $role_err = "Please enter/select a valid role.";
     } else{
         $role = trim($_POST["roleEntry"]);
-    }
+    }*/
     // Validate first name
     if(empty(trim($_POST["firstNameEntry"]))){
         $fname_err = "Please enter a first name.";
