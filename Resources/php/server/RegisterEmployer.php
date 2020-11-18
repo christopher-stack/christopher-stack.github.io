@@ -135,6 +135,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     } else{
         $email = trim($_POST["emailEntry"]);
     }
+
+    // Validate company selection
+    if(empty(trim($_POST["companyEntry"]))){
+        $company_err = "Please select a company from list.";
+    } else{
+        $company = trim($_POST["companyEntry"]);
+    }
+
     // Validate phone number (not-required)
     if(empty(trim($_POST["phoneEntry"]))){
         //$phone_err = "Please enter a valid phone number.";
@@ -183,11 +191,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($role_err) && empty($fname_err) && empty($lname_err) && empty($email_err) && empty($phone_err) && empty($dob_err) && empty($address_err) && empty($city_err) && empty($state_err) && empty($postal_err) && empty($country_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO people (username, phash, usertype, fname, lname, email, phone, dob, street, city, state, postal, country) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO people (username, phash, usertype, fname, lname, email, phone, dob, street, city, state, postal, country, employing_company) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssssssssssss", $param_username, $param_password, $param_role, $param_fname, $param_lname, $param_email, $param_phone, $param_dob, $param_address, $param_city, $param_state, $param_postal, $param_country);
+            mysqli_stmt_bind_param($stmt, "ssssssssssssss", $param_username, $param_password, $param_role, $param_fname, $param_lname, $param_email, $param_phone, $param_dob, $param_address, $param_city, $param_state, $param_postal, $param_country, $param_company);
             
             // Set parameters
             $param_username = $username;
@@ -203,6 +211,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             $param_state = $state;
             $param_postal = $postal;
             $param_country = $country;
+            $param_company = $company;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
