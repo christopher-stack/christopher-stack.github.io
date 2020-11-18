@@ -203,19 +203,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             $param_state = $state;
             $param_postal = $postal;
             $param_country = $country;
-
-            // Store input data in SESSION variables to persist information if submit fails
-            $_SESSION["reUsername"] = $username;
-            $_SESSION["reFname"] = $fname;
-            $_SESSION["reLname"] = $lname;
-            $_SESSION["reEmail"] = $email;
-            $_SESSION["rePhone"] = $phone;
-            $_SESSION["reDob"] = $dob;
-            $_SESSION["reAddress"] = $address;
-            $_SESSION["reCity"] = $city;
-            $_SESSION["reState"] = $state;
-            $_SESSION["rePostal"] = $postal;
-            $_SESSION["reCountry"] = $country;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
