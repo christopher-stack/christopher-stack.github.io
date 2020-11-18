@@ -203,6 +203,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             $param_state = $state;
             $param_postal = $postal;
             $param_country = $country;
+
+            // Store input data in SESSION variables to persist information if submit fails
+            $_SESSION["reUsername"] = $username;
+            $_SESSION["reFname"] = $fname;
+            $_SESSION["reLname"] = $lname;
+            $_SESSION["reEmail"] = $email;
+            $_SESSION["rePhone"] = $phone;
+            $_SESSION["reDob"] = $dob;
+            $_SESSION["reAddress"] = $address;
+            $_SESSION["reCity"] = $city;
+            $_SESSION["reState"] = $state;
+            $_SESSION["rePostal"] = $postal;
+            $_SESSION["reCountry"] = $country;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -304,58 +317,58 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($fname_err)) ? 'has-error' : ''; ?>">
                     <label for="firstNameEntry">First Name</label>
-                    <input type="text" class="form-control" name="firstNameEntry" required="required" data-error="This field is required." placeholder="Tom">
+                    <input type="text" class="form-control" name="firstNameEntry" required="required" data-error="This field is required." placeholder="Tom" value="<?php echo $fname; ?>">
                     <span class="help-block"><?php echo $fname_err; ?></span>
                 </div>
                 <div class="form-group col-md-5 <?php echo (!empty($lname_err)) ? 'has-error' : ''; ?>">
                     <label for="lastNameEntry">Last Name</label>
-                    <input type="text" class="form-control" name="lastNameEntry" required="required" data-error="This field is required." placeholder="Smith">
+                    <input type="text" class="form-control" name="lastNameEntry" required="required" data-error="This field is required." placeholder="Smith" value="<?php echo $lname; ?>">
                     <span class="help-block"><?php echo $lname_err; ?></span>
                 </div>
             </div>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                     <label for="emailEntry">Email Address</label>
-                    <input type="email" class="form-control" name="emailEntry" required="required" data-error="This field is required." placeholder="example@yahoo.com">
+                    <input type="email" class="form-control" name="emailEntry" required="required" data-error="This field is required." placeholder="example@yahoo.com" value="<?php echo $email; ?>">
                     <span class="help-block"><?php echo $email_err; ?></span>
                 </div>
                 <div class="form-group col-md-5 <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
                     <label for="phoneEntry">Phone Number</label>
-                    <input type="tel" class="form-control" name="phoneEntry" data-error="This field is optional but must be valid." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}">
+                    <input type="tel" class="form-control" name="phoneEntry" data-error="This field is optional but must be valid." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}" value="<?php echo $phone; ?>">
                     <span class="help-block"><?php echo $phone_err; ?></span>
                 </div>
             </div>
             <div class="form-group row mb-4 <?php echo (!empty($dob_err)) ? 'has-error' : ''; ?>">
                 <label for="dateOfBirthEntry">Date of Birth</label>
                 <div class="input-group date" data-date-format="dd.mm.yyyy">
-                    <input type="date" class="form-control" name="dateOfBirthEntry" placeholder="dd.mm.yyyy">
+                    <input type="date" class="form-control" name="dateOfBirthEntry" placeholder="dd.mm.yyyy" value="<?php echo $dob; ?>">
                 </div>
                 <span class="help-block"><?php echo $dob_err; ?></span>
             </div>
             <div class="form-group mb-2 <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
                 <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" name="inputAddress" data-error="This field is optional but must be valid." placeholder="1234 Main St">
+                <input type="text" class="form-control" name="inputAddress" data-error="This field is optional but must be valid." placeholder="1234 Main St" value="<?php echo $address; ?>">
                 <span class="help-block"><?php echo $address_err; ?></span>
             </div>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-3 <?php echo (!empty($city_err)) ? 'has-error' : ''; ?>">
                     <label for="inputCity">City</label>
-                    <input type="text" class="form-control" name="inputCity" data-error="This field is optional but must be valid.">
+                    <input type="text" class="form-control" name="inputCity" data-error="This field is optional but must be valid." value="<?php echo $city; ?>">
                     <span class="help-block"><?php echo $city_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-3 <?php echo (!empty($state_err)) ? 'has-error' : ''; ?>">
                     <label for="inputState">State</label>
-                    <input type="text" class="form-control" name="inputState" data-error="This field is optional but must be valid.">
+                    <input type="text" class="form-control" name="inputState" data-error="This field is optional but must be valid." value="<?php echo $state; ?>">
                     <span class="help-block"><?php echo $state_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-2 <?php echo (!empty($postal_err)) ? 'has-error' : ''; ?>">
                     <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" name="inputZip" data-error="This field is optional but must be valid.">
+                    <input type="text" class="form-control" name="inputZip" data-error="This field is optional but must be valid." value="<?php echo $postal; ?>">
                     <span class="help-block"><?php echo $postal_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-2 <?php echo (!empty($country_err)) ? 'has-error' : ''; ?>">
                     <label for="inputCountry">Country</label>
-                    <input type="text" class="form-control" name="inputCountry" data-error="This field is optional but must be valid.">
+                    <input type="text" class="form-control" name="inputCountry" data-error="This field is optional but must be valid." value="<?php echo $country; ?>">
                     <span class="help-block"><?php echo $country_err; ?></span>
                 </div>
             </div>
