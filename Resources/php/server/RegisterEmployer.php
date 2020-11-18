@@ -1,6 +1,7 @@
 <?php
 // Include the config file
 require_once "Config.php";
+require_once "ControllerFunc.php";
 
 // Initialize the session
 session_start();
@@ -18,15 +19,15 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin"){
 }
 
 // function to get data
-function getData($link, $query) {
-    $result = mysqli_query($link, $query);
-    while($row = mysqli_fetch_assoc($result)) {
-        $resultArr[] = $row;
-    }
-    if (!empty($resultArr)) {
-        return $resultArr;
-    }
-}
+// function getData($link, $query) {
+//     $result = mysqli_query($link, $query);
+//     while($row = mysqli_fetch_assoc($result)) {
+//         $resultArr[] = $row;
+//     }
+//     if (!empty($resultArr)) {
+//         return $resultArr;
+//     }
+// }
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
