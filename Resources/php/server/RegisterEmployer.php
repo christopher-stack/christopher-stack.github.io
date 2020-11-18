@@ -45,6 +45,10 @@ $state = $state_err = "";
 $postal = $postal_err = "";
 $country = $country_err = "";
 
+// Fetch and store associative list of companies in SESSION variable
+$query = "SELECT * FROM companies";
+$_SESSION["companiesList"] = getData($link, $query);
+
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
  
@@ -281,11 +285,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <select class="form-select" name="companyEntry">
                     <option selected="true" disabled>Choose one ...</option>
                     <?php
-                    $query = "SELECT * FROM companies";
-                    $row = getData($link, $query);
+                    // $query = "SELECT * FROM companies";
+                    // $row = getData($link, $query);
                     ?>
                     <?php
-                    foreach($row as $row) { ?>
+                    foreach($_SESSION["companiesList"] as $row) { ?>
                     <option>
                         <?php
                         echo $row['name'];
