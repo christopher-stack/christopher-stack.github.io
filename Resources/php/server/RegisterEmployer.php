@@ -16,7 +16,8 @@ function getData($link, $query) {
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
-$role = $role_err = "";
+$role = "employer";
+$role_err = "";
 $company = $company_err = "";
 $fname = $lname = "";
 $fname_err = $lname_err = "";
@@ -85,11 +86,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     }
 
     // Validate role data
-    if(empty(trim($_POST["roleEntry"]))){
-        $role_err = "Please enter/select a valid role.";
-    } else{
-        $role = trim($_POST["roleEntry"]);
-    }
+    // if(empty(trim($_POST["roleEntry"]))){
+    //     $role_err = "Please enter/select a valid role.";
+    // } else{
+    //     $role = trim($_POST["roleEntry"]);
+    // }
     // Validate company data
     if(empty(trim($_POST["companyEntry"]))){
         $company_err = "Please enter/select a valid company.";
@@ -249,7 +250,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
-            <div class="form-group row mb-4 <?php echo (!empty($role_err)) ? 'has-error' : ''; ?>">
+            <!-- <div class="form-group row mb-4 <?php //echo (!empty($role_err)) ? 'has-error' : ''; ?>">
                 <label for="roleEntry">Select Role</label>
                 <div class="input-group mb-2">
                 <select class="form-select" name="roleEntry" disabled>
@@ -257,8 +258,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                     <option value="employer" selected>employer</option>
                     <option value="admin">admin</option>
                 </select>
-                <span class="help-block"><?php echo $role_err; ?></span>
-            </div>
+                <span class="help-block"><?php //echo $role_err; ?></span>
+            </div> -->
             <div class="form-group row mb-4 <?php echo (!empty($company_err)) ? 'has-error' : ''; ?>">
                 <label for="companyEntry">Select Company</label>
                 <div class="input-group mb-2">
