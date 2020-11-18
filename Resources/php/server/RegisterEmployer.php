@@ -457,6 +457,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <input type="reset" class="btn btn-secondary float-right" value="Reset">
             </div>
         </form>
+        <!-- NAVIGATION FOOTER START -->
+        <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-btn btn-primary btn" href="https://twitter.com/CDA_Gamers"><i class="fab fa-twitter"></i> Twitter </a>
+                <a class="navbar-btn btn-primary btn" href="https://t.co/gvolbJr5ng"><i class="fab fa-youtube"></i> YouTube </a>
+            </div>
+        </nav>
+        <!-- NAVIGATION FOOTER END -->
     </div>    
 </body>
 </html>
