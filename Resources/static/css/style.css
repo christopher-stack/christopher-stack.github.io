@@ -22,6 +22,12 @@ html, body {
 	padding-right: 20%;
 	padding-bottom: 5%;
 }
+.registerEmp-wrapper {
+	padding-top: 12%;
+    padding-left: 20%;
+	padding-right: 20%;
+	padding-bottom: 5%;
+}
 table {
     border-collapse: collapse;
     width: 75%;
