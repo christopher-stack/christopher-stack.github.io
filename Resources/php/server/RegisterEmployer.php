@@ -2,6 +2,21 @@
 // Include the config file
 require_once "Config.php";
 
+// Initialize the session
+session_start();
+ 
+// Check if the user is logged in, if not then redirect him to login page
+if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
+    header("location: ./Login.php");
+    exit;
+}
+
+// Check if user is "admin"
+if(!isset($_SESSION["role"]) || $_SESSION["role"] !== true){
+    header("location: ../../static/error/Error_Permission.html");
+    exit;
+}
+
 // function to get data
 function getData($link, $query) {
     $result = mysqli_query($link, $query);
