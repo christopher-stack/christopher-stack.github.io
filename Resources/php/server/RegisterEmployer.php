@@ -12,7 +12,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 }
 
 // Check if user is "admin"
-if(!isset($_SESSION["role"]) || $_SESSION["role"] !== true){
+if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin"){
     header("location: ../../static/error/Error_Permission.html");
     exit;
 }
