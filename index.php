@@ -85,6 +85,9 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 									echo " href=\"./Pages/Project_Form.php\">Profile</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
+									echo " href=\"./Pages/Project_Form.php\">Edit Profile</a>";
+									echo "<a";
+									echo " class=\"dropdown-item\"";
 									echo " href=\"./Resources/static/error/404.html\">Application history</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
