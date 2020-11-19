@@ -1,4 +1,8 @@
 <?php
+// Includes
+require_once "../Resources/php/server/Config.php";
+require_once "../Resources/php/server/ControllerFunc.php";
+
 // Initialize the session
 session_start();
  
@@ -13,6 +17,23 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
     header("location: ../Resources/static/error/Error_Permission.html");
     exit;
   }
+}
+
+// Fetch data of user and store in SESSION variables
+$currentUser = $_SESSION["username"];
+$query = "SELECT * FROM `people` WHERE username = '$currentUser'";
+function getOneRow($link, $query) {
+  $result = mysqli_query($link, $query);
+  while ($row = mysqli_fetch_row($result)) {
+    $resultArr[] = $row;
+  }
+  if (!empty($resultArr)) {
+    return $resultArr;
+  }
+}
+$userData = getOneRow($link, $query);
+foreach ($userData[0] as $item) {
+  echo $item." | ";
 }
 ?>
 
