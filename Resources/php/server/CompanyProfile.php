@@ -1,5 +1,8 @@
 <?php
 // Include the config file
+
+use function PHPSTORM_META\type;
+
 require_once "Config.php";
 require_once "ControllerFunc.php";
 
@@ -19,200 +22,132 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "employer"){
 }
 
 // Define variables and initialize with empty values
-$name = $name_err = "";
-$location = $location_err = "";
-$contFname = $contFname_err = "";
-$contLname = $contLname_err = "";
-$contStreet = $contStreet_err = "";
-$contCity = $contCity_err = "";
-$contState = $contState_err = "";
-$contPostal = $contPostal_err = "";
-$contCountry = $contCountry_err = "";
-$contEmail = $contEmail_err = "";
-$contPhone = $contPhone_err = "";
+$currCompany = "";
+$currName = $newName = $name_err = "";
+$currLocation = $newLocation = $location_err = "";
+$currContFname = $newContFname = $contFname_err = "";
+$currContLname = $newContLname = $contLname_err = "";
+$currContStreet = $newContStreet = $contStreet_err = "";
+$currContCity = $newContCity = $contCity_err = "";
+$newContState = $contState_err = "";
+$newContPostal = $contPostal_err = "";
+$newContCountry = $contCountry_err = "";
+$newContEmail = $contEmail_err = "";
+$newContPhone = $contPhone_err = "";
 
 // Fetch company info from current user
-$currentUser = $_SESSION["username"];
+$currUser = $_SESSION["username"];
+$sql = "SELECT employing_company FROM people WHERE username=? limit 1";
+if ($stmt = mysqli_prepare($link, $sql)) {
+    mysqli_stmt_bind_param($stmt, "s", $currUser);
+    if (mysqli_stmt_execute($stmt)) {
+        $res = mysqli_stmt_get_result($stmt);
+        $currCompany = mysqli_fetch_assoc($res)["employing_company"];
+    }
+    mysqli_stmt_close($stmt);
+}
+$currLocation = "north dakota";
+$sql = "SELECT * FROM companies WHERE name=? AND location=? limit 1";
+if ($stmt = mysqli_prepare($link, $sql)) {
+    mysqli_stmt_bind_param($stmt, "ss", $currCompany, $currLocation);
+    if (mysqli_stmt_execute($stmt)) {
+        $res = mysqli_stmt_get_result($stmt);
+        $companyDetails = mysqli_fetch_assoc($res);
+    }
+    mysqli_stmt_close($stmt);
+}
+
+$currName = $companyDetails["name"];
+$currLocation = $companyDetails["location"];
+$currContFname = $companyDetails["contact_fname"];
+$currContLname = $companyDetails["contact_lname"];
+$currContEmail = $companyDetails["contact_email"];
+$currContPhone = $companyDetails["contact_phone"];
+$currContStreet = $companyDetails["contact_street"];
+$currContCity = $companyDetails["contact_city"];
+$currContState = $companyDetails["contact_state"];
+$currContPostal = $companyDetails["contact_postal"];
+$currContCountry = $companyDetails["contact_country"];
 
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
- 
-    // Validate username
-    if(empty(trim($_POST["username"]))){
-        $username_err = "Please enter a username.";
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT username FROM people WHERE username = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-            
-            // Set parameters
-            $param_username = trim($_POST["username"]);
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "This username is already taken.";
-                } else{
-                    $username = trim($_POST["username"]);
-                }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
 
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
-    
-    // Validate password
-    if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter a password.";
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have at least 6 characters.";
-    } else{
-        $password = trim($_POST["password"]);
-    }
-    
-    // Validate confirm password
-    if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = "Please confirm password.";
-    } else{
-        $confirm_password = trim($_POST["confirm_password"]);
-        if(empty($password_err) && ($password != $confirm_password)){
-            $confirm_password_err = "Password did not match.";
-        }
+    // Validate company name (nameEntry)
+    if (empty(trim($_POST["nameEntry"]))) {
+        $name_err = "Please enter company name.";
+    } else {
+        $newName = trim($_POST["nameEntry"]);
     }
 
-    // Validate role data
-    // if(empty(trim($_POST["roleEntry"]))){
-    //     $role_err = "Please enter/select a valid role.";
-    // } else{
-    //     $role = trim($_POST["roleEntry"]);
-    // }
-    // Validate company data
-    if(empty(trim($_POST["companyEntry"]))){
-        $company_err = "Please enter/select a valid company.";
-    } else{
-        $company = trim($_POST["companyEntry"]);
-    }
-    // Validate first name
-    if(empty(trim($_POST["firstNameEntry"]))){
-        $fname_err = "Please enter a first name.";
-    } else{
-        $fname = trim($_POST["firstNameEntry"]);
-    }
-    // Validate last name
-    if(empty(trim($_POST["lastNameEntry"]))){
-        $lname_err = "Please enter a last name.";
-    } else{
-        $lname = trim($_POST["lastNameEntry"]);
+    // Validate location (locationEntry)
+    if (empty(trim($_POST["locationEntry"]))) {
+        $location_err = "Please enter company location.";
+    } else {
+        $newLocation = trim($_POST["locationEntry"]);
     }
 
-    // Validate email address
-    if(empty(trim($_POST["emailEntry"]))){
-        $email_err = "Please enter a valid email address.";
-    } else{
-        $email = trim($_POST["emailEntry"]);
+    // Validate contact first name (contFnameEntry)
+    if (empty(trim($_POST["contFnameEntry"]))) {
+        $contFname__err = "Please enter company contact's first name.";
+    } else {
+        $newContFname = trim($_POST["contFnameEntry"]);
     }
 
-    // Validate company selection
-    if(empty(trim($_POST["companyEntry"]))){
-        $company_err = "Please select a company from list.";
-    } else{
-        $company = trim($_POST["companyEntry"]);
+    // Validate contact last name (contLnameEntry)
+    if (empty(trim($_POST["contLnameEntry"]))) {
+        $contLname_err = "Please enter company contact's last name.";
+    } else {
+        $newContLname = trim($_POST["contLnameEntry"]);
     }
 
-    // Validate phone number (not-required)
-    if(empty(trim($_POST["phoneEntry"]))){
-        //$phone_err = "Please enter a valid phone number.";
-    } else{
-        $phone = trim($_POST["phoneEntry"]);
-    }
-    // Validate date of birth (not-required)
-    if(empty(trim($_POST["dateOfBirthEntry"]))){
-        //$dob_err = "Please enter a valid date of birth.";
-    } else{
-        $dob = trim($_POST["dateOfBirthEntry"]);
+    // Validate contact email (contEmailEntry)
+    if (empty(trim($_POST["contEmailEntry"]))) {
+        $contEmail_err = "Please enter company contact's email.";
+    } else {
+        $newContEmail = trim($_POST["contEmailEntry"]);
     }
 
-    // Validate address (not-required)
-    if(empty(trim($_POST["inputAddress"]))){
-        //$address_err = "Please enter a valid address.";
-    } else{
-        $address = trim($_POST["inputAddress"]);
+    // Validate contact phone (contPhoneEntry)
+    if (empty(trim($_POST["contPhoneEntry"]))) {
+        $contPhone_err = "Please enter company contact's phone number.";
+    } else {
+        $newContPhone = trim($_POST["contPhoneEntry"]);
     }
-    // Validate city (not-required)
-    if(empty(trim($_POST["inputCity"]))){
-        //$city_err = "Please enter a valid city.";
-    } else{
-        $city = trim($_POST["inputCity"]);
-    }
-    // Validate state (not-required)
-    if(empty(trim($_POST["inputState"]))){
-        //$state_err = "Please enter a valid state.";
-    } else{
-        $state = trim($_POST["inputState"]);
-    }
-    // Validate zip (not-required)
-    if(empty(trim($_POST["inputZip"]))){
-        //$postal_err = "Please enter a valid zip.";
-    } else{
-        $postal = trim($_POST["inputZip"]);
-    }
-    // Validate country (not-required)
-    if(empty(trim($_POST["inputCountry"]))){
-        //$country_err = "Please enter a valid country.";
-    } else{
-        $country = trim($_POST["inputCountry"]);
-    }
-    
-    // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($role_err) && empty($fname_err) && empty($lname_err) && empty($email_err) && empty($phone_err) && empty($dob_err) && empty($address_err) && empty($city_err) && empty($state_err) && empty($postal_err) && empty($country_err)){
-        
-        // Prepare an insert statement
-        $sql = "INSERT INTO people (username, phash, usertype, fname, lname, email, phone, dob, street, city, state, postal, country, employing_company) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssssssssssssss", $param_username, $param_password, $param_role, $param_fname, $param_lname, $param_email, $param_phone, $param_dob, $param_address, $param_city, $param_state, $param_postal, $param_country, $param_company);
-            
-            // Set parameters
-            $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_role = $role;
-            $param_fname = $fname;
-            $param_lname = $lname;
-            $param_email = $email;
-            $param_phone = $phone;
-            $param_dob = $dob;
-            $param_address = $address;
-            $param_city = $city;
-            $param_state = $state;
-            $param_postal = $postal;
-            $param_country = $country;
-            $param_company = $company;
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: Login.php");
-            } else{
+
+    // OPTIONAL INPUTS
+    $newContStreet = trim($_POST["contStreetEntry"]);
+    $newContCity = trim($_POST["contCityEntry"]);
+    $newContState = trim($_POST["contStateEntry"]);
+    $newContPostal = trim($_POST["contPostalEntry"]);
+    $newContCountry = trim($_POST["contCountryEntry"]);
+
+    // Check if current values are different from new values; update if different
+    if ($currName != $newName ||
+    $currLocation != $newLocation ||
+    $currContFname != $newContFname ||
+    $currContLname != $newContLname ||
+    $currContEmail != $newContEmail ||
+    $currContPhone != $newContPhone ||
+    $currContStreet != $newContStreet ||
+    $currContCity != $newContCity ||
+    $currContState != $newContState ||
+    $currContPostal != $newContPostal ||
+    $currContCountry != $newContCountry) {
+        // side note: another check could potentially be done here to see if a company of a the same name already exists in new location
+        $sql = "UPDATE companies SET name=?, location=?, contact_fname=?, contact_lname=?, contact_street=?, contact_city=?, contact_state=?, contact_postal=?, contact_country=?, contact_email=?, contact_phone=? WHERE name=? AND location=?";
+        if ($stmt = mysqli_prepare($link, $sql)) {
+            mysqli_stmt_bind_param($stmt, "sssssssssssss", $newName, $newLocation, $newContFname, $newContLname, $newContStreet, $newContCity, $newContState, $newContPostal, $newContCountry, $newContEmail, $newContPhone, $currName, $currLocation);
+            if (mysqli_stmt_execute($stmt)) {
+                echo "Updated successfully";
+                header("location: ../../../index.php");
+            } else {
                 echo "Something went wrong. Please try again later.";
             }
-
-            // Close statement
             mysqli_stmt_close($stmt);
         }
     }
-    
-    // Close connection
     mysqli_close($link);
+    header("location: ../../../index.php");
 }
 ?>
  
@@ -332,63 +267,63 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="bottom-padding form-group <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
                 <label>Company Name</label>
-                <input type="text" name="nameEntry" class="form-control" value="<?php echo $name; ?>">
+                <input type="text" name="nameEntry" class="form-control" value="<?php echo $currName; ?>">
                 <span class="help-block"><?php echo $name_err; ?></span>
             </div>
             <div class="bottom-padding form-group <?php echo (!empty($location_err)) ? 'has-error' : ''; ?>">
                 <label>Location</label>
-                <input type="text" name="locationEntry" class="form-control" value="<?php echo $location; ?>">
+                <input type="text" name="locationEntry" class="form-control" value="<?php echo $currLocation; ?>">
                 <span class="help-block"><?php echo $location_err; ?></span>
             </div>
             <span><p class="form-subheader">COMPANY CONTACT PERSON INFORMATION</p></span>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($contFname_err)) ? 'has-error' : ''; ?>">
                     <label for="contFnameEntry">First Name</label>
-                    <input type="text" class="form-control" name="contFnameEntry" required="required" data-error="This field is required." placeholder="Tom" value="<?php echo $contFname; ?>">
+                    <input type="text" class="form-control" name="contFnameEntry" required="required" data-error="This field is required." placeholder="Tom" value="<?php echo $currContFname; ?>">
                     <span class="help-block"><?php echo $contFname_err; ?></span>
                 </div>
                 <div class="form-group col-md-5 <?php echo (!empty($contLname_err)) ? 'has-error' : ''; ?>">
                     <label for="contLnameEntry">Last Name</label>
-                    <input type="text" class="form-control" name="contLnameEntry" required="required" data-error="This field is required." placeholder="Smith" value="<?php echo $contLname; ?>">
+                    <input type="text" class="form-control" name="contLnameEntry" required="required" data-error="This field is required." placeholder="Smith" value="<?php echo $currContLname; ?>">
                     <span class="help-block"><?php echo $contLname_err; ?></span>
                 </div>
             </div>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($contEmail_err)) ? 'has-error' : ''; ?>">
                     <label for="contEmailEntry">Email Address</label>
-                    <input type="email" class="form-control" name="contEmailEntry" required="required" data-error="This field is required." placeholder="example@yahoo.com" value="<?php echo $contEmail; ?>">
+                    <input type="email" class="form-control" name="contEmailEntry" required="required" data-error="This field is required." placeholder="example@yahoo.com" value="<?php echo $currContEmail; ?>">
                     <span class="help-block"><?php echo $contEmail_err; ?></span>
                 </div>
                 <div class="form-group col-md-5 <?php echo (!empty($contPhone_err)) ? 'has-error' : ''; ?>">
                     <label for="contPhoneEntry">Phone Number</label>
-                    <input type="tel" class="form-control" name="contPhoneEntry" data-error="This field is optional but must be valid." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}" value="<?php echo $contPhone; ?>">
+                    <input type="tel" class="form-control" name="contPhoneEntry" data-error="This field is optional but must be valid." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}" value="<?php echo $currContPhone; ?>">
                     <span class="help-block"><?php echo $contPhone_err; ?></span>
                 </div>
             </div>
             <div class="form-group mb-2 <?php echo (!empty($contStreet_err)) ? 'has-error' : ''; ?>">
                 <label for="contStreetEntry">Street</label>
-                <input type="text" class="form-control" name="contStreetEntry" data-error="This field is optional but must be valid." placeholder="1234 Main St" value="<?php echo $contStreet; ?>">
+                <input type="text" class="form-control" name="contStreetEntry" data-error="This field is optional but must be valid." placeholder="1234 Main St" value="<?php echo $currContStreet; ?>">
                 <span class="help-block"><?php echo $contStreet_err; ?></span>
             </div>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-3 <?php echo (!empty($contCity_err)) ? 'has-error' : ''; ?>">
                     <label for="contCityEntry">City</label>
-                    <input type="text" class="form-control" name="contCityEntry" data-error="This field is optional but must be valid." value="<?php echo $contCity; ?>">
+                    <input type="text" class="form-control" name="contCityEntry" data-error="This field is optional but must be valid." value="<?php echo $currContCity; ?>">
                     <span class="help-block"><?php echo $contCity_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-3 <?php echo (!empty($contState_err)) ? 'has-error' : ''; ?>">
                     <label for="contStateEntry">State</label>
-                    <input type="text" class="form-control" name="contStateEntry" data-error="This field is optional but must be valid." value="<?php echo $contState; ?>">
+                    <input type="text" class="form-control" name="contStateEntry" data-error="This field is optional but must be valid." value="<?php echo $currContState; ?>">
                     <span class="help-block"><?php echo $contState_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-2 <?php echo (!empty($contPostal_err)) ? 'has-error' : ''; ?>">
                     <label for="contPostalEntry">Zip</label>
-                    <input type="text" class="form-control" name="contPostalEntry" data-error="This field is optional but must be valid." value="<?php echo $contPostal; ?>">
+                    <input type="text" class="form-control" name="contPostalEntry" data-error="This field is optional but must be valid." value="<?php echo $currContPostal; ?>">
                     <span class="help-block"><?php echo $contPostal_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-2 <?php echo (!empty($contCountry_err)) ? 'has-error' : ''; ?>">
                     <label for="contCountryEntry">Country</label>
-                    <input type="text" class="form-control" name="contCountryEntry" data-error="This field is optional but must be valid." value="<?php echo $contCountry; ?>">
+                    <input type="text" class="form-control" name="contCountryEntry" data-error="This field is optional but must be valid." value="<?php echo $currContCountry; ?>">
                     <span class="help-block"><?php echo $contCountry_err; ?></span>
                 </div>
             </div>
