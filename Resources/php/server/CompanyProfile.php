@@ -29,11 +29,11 @@ $currContFname = $newContFname = $contFname_err = "";
 $currContLname = $newContLname = $contLname_err = "";
 $currContStreet = $newContStreet = $contStreet_err = "";
 $currContCity = $newContCity = $contCity_err = "";
-$newContState = $contState_err = "";
-$newContPostal = $contPostal_err = "";
-$newContCountry = $contCountry_err = "";
-$newContEmail = $contEmail_err = "";
-$newContPhone = $contPhone_err = "";
+$currContState = $newContState = $contState_err = "";
+$currContPostal = $newContPostal = $contPostal_err = "";
+$currContCountry = $newContCountry = $contCountry_err = "";
+$currContEmail = $newContEmail = $contEmail_err = "";
+$currContPhone = $newContPhone = $contPhone_err = "";
 
 // Fetch company info from current user
 $currUser = $_SESSION["username"];
@@ -46,28 +46,29 @@ if ($stmt = mysqli_prepare($link, $sql)) {
     }
     mysqli_stmt_close($stmt);
 }
-$currLocation = $_SESSION["userLocation"];
+$currUserLocation = $_SESSION["userLocation"];
 $sql = "SELECT * FROM companies WHERE name=? AND location=? limit 1";
 if ($stmt = mysqli_prepare($link, $sql)) {
-    mysqli_stmt_bind_param($stmt, "ss", $currCompany, $currLocation);
+    mysqli_stmt_bind_param($stmt, "ss", $currCompany, $currUserLocation);
     if (mysqli_stmt_execute($stmt)) {
         $res = mysqli_stmt_get_result($stmt);
         $companyDetails = mysqli_fetch_assoc($res);
+        if ($companyDetails) {
+            $currName = $companyDetails["name"];
+            $currLocation = $companyDetails["location"];
+            $currContFname = $companyDetails["contact_fname"];
+            $currContLname = $companyDetails["contact_lname"];
+            $currContEmail = $companyDetails["contact_email"];
+            $currContPhone = $companyDetails["contact_phone"];
+            $currContStreet = $companyDetails["contact_street"];
+            $currContCity = $companyDetails["contact_city"];
+            $currContState = $companyDetails["contact_state"];
+            $currContPostal = $companyDetails["contact_postal"];
+            $currContCountry = $companyDetails["contact_country"];
+        }
     }
     mysqli_stmt_close($stmt);
 }
-
-$currName = $companyDetails["name"];
-$currLocation = $companyDetails["location"];
-$currContFname = $companyDetails["contact_fname"];
-$currContLname = $companyDetails["contact_lname"];
-$currContEmail = $companyDetails["contact_email"];
-$currContPhone = $companyDetails["contact_phone"];
-$currContStreet = $companyDetails["contact_street"];
-$currContCity = $companyDetails["contact_city"];
-$currContState = $companyDetails["contact_state"];
-$currContPostal = $companyDetails["contact_postal"];
-$currContCountry = $companyDetails["contact_country"];
 
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
@@ -121,8 +122,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     $newContPostal = trim($_POST["contPostalEntry"]);
     $newContCountry = trim($_POST["contCountryEntry"]);
 
+    // Check if current name is empty (Possible use case: company not registered yet); go ahead and register company
+    if ($currName == '' && $newName != '') {
+        $sql = "INSERT INTO companies (name, location, contact_fname, contact_lname, contact_street, contact_city, contact_state, contact_postal, contact_country, contact_email, contact_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        if ($stmt = mysqli_prepare($link, $sql)) {
+            mysqli_stmt_bind_param($stmt, "sssssssssss", $newName, $newLocation, $newContFname, $newContLname, $newContStreet, $newContCity, $newContState, $newContPostal, $newContCountry, $newContEmail, $newContPhone);
+            if (mysqli_stmt_execute($stmt)) {
+                header("Location: ../../../index.php");
+            }
+        }
+        mysqli_stmt_close($stmt);
+    }
     // Check if current values are different from new values; update if different
-    if ($currName != $newName ||
+    elseif ($currName != $newName ||
     $currLocation != $newLocation ||
     $currContFname != $newContFname ||
     $currContLname != $newContLname ||
@@ -263,12 +275,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="bottom-padding form-group <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
                 <label>Company Name</label>
-                <input type="text" name="nameEntry" class="form-control" value="<?php echo $currName; ?>" disabled>
+                <?php
+                if ($currName == '') {
+                    echo "<input type=\"text\" name=\"nameEntry\" class=\"form-control\" value='$currName'>";
+                } else {
+                    echo "<input type=\"text\" name=\"nameEntry\" class=\"form-control\" value='$currName' disabled>";
+                }
+                ?>
                 <span class="help-block"><?php echo $name_err; ?></span>
             </div>
             <div class="bottom-padding form-group <?php echo (!empty($location_err)) ? 'has-error' : ''; ?>">
                 <label>Location</label>
-                <input type="text" name="locationEntry" class="form-control" value="<?php echo $currLocation; ?>" disabled>
+                <input type="text" name="locationEntry" class="form-control" value="<?php echo $currLocation; ?>">
                 <span class="help-block"><?php echo $location_err; ?></span>
             </div>
             <span><p class="form-subheader">COMPANY CONTACT PERSON INFORMATION</p></span>
