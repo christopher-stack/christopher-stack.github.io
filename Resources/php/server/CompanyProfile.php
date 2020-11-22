@@ -340,19 +340,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <input type="text" name="locationEntry" class="form-control" value="<?php echo $location; ?>">
                 <span class="help-block"><?php echo $location_err; ?></span>
             </div>
+            <span><p class="form-subheader">COMPANY CONTACT PERSON INFORMATION</p></span>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($contFname_err)) ? 'has-error' : ''; ?>">
-                    <label for="contFnameEntry">Contact First Name</label>
+                    <label for="contFnameEntry">First Name</label>
                     <input type="text" class="form-control" name="contFnameEntry" required="required" data-error="This field is required." placeholder="Tom" value="<?php echo $contFname; ?>">
                     <span class="help-block"><?php echo $contFname_err; ?></span>
                 </div>
                 <div class="form-group col-md-5 <?php echo (!empty($contLname_err)) ? 'has-error' : ''; ?>">
-                    <label for="contLnameEntry">Contact Last Name</label>
+                    <label for="contLnameEntry">Last Name</label>
                     <input type="text" class="form-control" name="contLnameEntry" required="required" data-error="This field is required." placeholder="Smith" value="<?php echo $contLname; ?>">
                     <span class="help-block"><?php echo $contLname_err; ?></span>
                 </div>
             </div>
-            <span><p class="form-subheader">CONTACT INFORMATION</p></span>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($contEmail_err)) ? 'has-error' : ''; ?>">
                     <label for="contEmailEntry">Email Address</label>
