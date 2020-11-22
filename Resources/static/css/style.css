@@ -113,6 +113,9 @@ a {
 .help-block {
 	color: #ff2626;
 }
+.form-subheader {
+	margin-top: 2.8rem;
+}
 
 /* Center the loader */
 

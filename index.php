@@ -101,7 +101,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 								} else if($_SESSION["role"] == "employer"){
 									echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/static/error/404.html\">Company profile</a>";
+									echo " href=\"./Resources/php/server/CompanyProfile.php\">Company profile</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
 									echo " href=\"./Resources/static/error/404.html\">Post new position</a>";
