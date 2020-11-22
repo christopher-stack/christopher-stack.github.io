@@ -138,16 +138,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         if ($stmt = mysqli_prepare($link, $sql)) {
             mysqli_stmt_bind_param($stmt, "sssssssssssss", $newName, $newLocation, $newContFname, $newContLname, $newContStreet, $newContCity, $newContState, $newContPostal, $newContCountry, $newContEmail, $newContPhone, $currName, $currLocation);
             if (mysqli_stmt_execute($stmt)) {
-                echo "Updated successfully";
-                header("location: ../../../index.php");
+                header("Location: ../../../index.php");
             } else {
-                echo "Something went wrong. Please try again later.";
+                header("Location: ".$_SERVER['REQUEST_URI']);
             }
             mysqli_stmt_close($stmt);
         }
     }
     mysqli_close($link);
-    header("location: ../../../index.php");
 }
 ?>
  
