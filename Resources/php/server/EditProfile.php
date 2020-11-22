@@ -22,18 +22,20 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "jobseeker"){
 }
 
 // Define variables and initialize with empty values
-$currCompany = "";
-$currName = $newName = $name_err = "";
-$currLocation = $newLocation = $location_err = "";
-$currContFname = $newContFname = $contFname_err = "";
-$currContLname = $newContLname = $contLname_err = "";
-$currContStreet = $newContStreet = $contStreet_err = "";
-$currContCity = $newContCity = $contCity_err = "";
-$currContState = $newContState = $contState_err = "";
-$currContPostal = $newContPostal = $contPostal_err = "";
-$currContCountry = $newContCountry = $contCountry_err = "";
-$currContEmail = $newContEmail = $contEmail_err = "";
-$currContPhone = $newContPhone = $contPhone_err = "";
+// === USER (jobseeker) VARIABLES
+$currUser = "";
+$currUserFname = $newUserFname = $userFname_err = "";
+$currUserLname = $newUserLname = $userLname_err = "";
+$currUserEmail = $newUserEmail = $userEmail_err = "";
+$currUserPhone = $newUserPhone = $userPhone_err = "";
+$currUserDob = $newUserDob = $userDob = "";
+$currUserStreet = $newUserStreet = $userStreet = "";
+$currUserCity = $newUserCity = $userCity = "";
+$currUserState = $newUserState = $userState = "";
+$currUserPostal = $newUserPostal = $userPostal = "";
+$currUserCountry = $newUserCountry = $userCountry = "";
+// === JOB HIST VARIABLES
+
 
 // Fetch company info from current user
 $currUser = $_SESSION["username"];
