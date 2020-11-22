@@ -236,7 +236,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 							} else if($_SESSION["role"] == "employer"){
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Resources/static/error/404.html\">Company profile</a>";
+								echo " href=\"\">Company profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Resources/static/error/404.html\">Post new position</a>";
