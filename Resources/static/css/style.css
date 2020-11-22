@@ -15,6 +15,9 @@ html, body {
 .bottom-padding {
 	padding-bottom: 10px;
 }
+.btm-space {
+	height: 100px;
+}
 .wrapper{ padding: 20%; }
 .register-wrapper {
 	padding-top: 5%;

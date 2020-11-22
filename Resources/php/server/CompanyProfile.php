@@ -331,6 +331,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <input type="submit" class="btn btn-primary float-right ml-2" value="Submit">
                 <input type="reset" class="btn btn-secondary float-right" value="Reset">
             </div>
+            <div class="btm-space"></div>
         </form>
         <!-- NAVIGATION FOOTER START -->
         <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary">
