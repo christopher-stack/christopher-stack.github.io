@@ -139,8 +139,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             mysqli_stmt_bind_param($stmt, "sssssssssssss", $newName, $newLocation, $newContFname, $newContLname, $newContStreet, $newContCity, $newContState, $newContPostal, $newContCountry, $newContEmail, $newContPhone, $currName, $currLocation);
             if (mysqli_stmt_execute($stmt)) {
                 header("Location: ../../../index.php");
-            } else {
-                header("Location: ".$_SERVER['REQUEST_URI']);
             }
             mysqli_stmt_close($stmt);
         }
@@ -265,12 +263,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="bottom-padding form-group <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
                 <label>Company Name</label>
-                <input type="text" name="nameEntry" class="form-control" value="<?php echo $currName; ?>">
+                <input type="text" name="nameEntry" class="form-control" value="<?php echo $currName; ?>" disabled>
                 <span class="help-block"><?php echo $name_err; ?></span>
             </div>
             <div class="bottom-padding form-group <?php echo (!empty($location_err)) ? 'has-error' : ''; ?>">
                 <label>Location</label>
-                <input type="text" name="locationEntry" class="form-control" value="<?php echo $currLocation; ?>">
+                <input type="text" name="locationEntry" class="form-control" value="<?php echo $currLocation; ?>" disabled>
                 <span class="help-block"><?php echo $location_err; ?></span>
             </div>
             <span><p class="form-subheader">COMPANY CONTACT PERSON INFORMATION</p></span>
