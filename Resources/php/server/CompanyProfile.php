@@ -46,7 +46,7 @@ if ($stmt = mysqli_prepare($link, $sql)) {
     }
     mysqli_stmt_close($stmt);
 }
-$currLocation = "north dakota";
+$currLocation = $_SESSION["userLocation"];
 $sql = "SELECT * FROM companies WHERE name=? AND location=? limit 1";
 if ($stmt = mysqli_prepare($link, $sql)) {
     mysqli_stmt_bind_param($stmt, "ss", $currCompany, $currLocation);
