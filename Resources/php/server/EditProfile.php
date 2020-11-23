@@ -61,8 +61,8 @@ $eduHistFacilityState = $eduHistFacilityState_err = "";
 $eduHistFacilityPostal = $eduHistFacilityPostal_err = "";
 $eduHistFacilityType = $eduHistFacilityType_err = "";
 
-// Fetch jobseeker personal details
 $currUser = $_SESSION["username"];
+// Fetch jobseeker personal details
 $sql = "SELECT fname, lname, email, phone, dob, street, city, state, postal, country FROM people WHERE username=? limit 1";
 if ($stmt = mysqli_prepare($link, $sql)) {
     mysqli_stmt_bind_param($stmt, "s", $currUser);
@@ -82,10 +82,25 @@ if ($stmt = mysqli_prepare($link, $sql)) {
             $currUserCountry = $userDetails["country"];
         }
     }
+    mysqli_stmt_close($stmt);
+}
+
+// Fetch current user's job history
+$sql = "SELECT * FROM `job_history` WHERE jobseeker=?";
+if ($stmt = mysqli_prepare($link, $sql)) {
+    mysqli_stmt_bind_param($stmt, "s", $currUser);
+    if (mysqli_stmt_execute($stmt)) {
+        $res = mysqli_stmt_get_result($stmt);
+        $numJobs = 0;
+        while ($jobAssocArray = mysqli_fetch_assoc($res)) {
+            $currJobHistory[$numJobs++] = $jobAssocArray;
+        }
+    }
 }
 
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
+    // PERSONAL DETAILS VALIDATION
     // Validate First name
     if (empty(trim($_POST["userFnameEntry"]))) {
         $userFname_err = "Please enter first name.";
@@ -147,6 +162,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         $newUserCountry = trim($_POST["userCountryEntry"]);
     }
 
+    
+
     if ($currUserFname != $newUserFname ||
     $currUserLname != $newUserLname ||
     $currUserEmail != $newUserEmail ||
@@ -170,11 +187,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 }
 
 // ========== TEMP VALUES FOR ARRAYS ABOVE (MOCK DB RESULTS)
-$currJobHistory = [
-    array("company"=>"company xyz", "start_date"=>"1985-11-13", "end_date"=>"2000-11-18", "position"=>"junior software engineer", "supervisor_fname"=>"john", "supervisor_lname"=>"doe", "supervisor_email"=>"john@email.com", "supervisor_phone"=>"1010101010"),
-    array("company"=>"company abc", "start_date"=>"2001-11-13", "end_date"=>"2005-11-18", "position"=>"senior software engineer", "supervisor_fname"=>"jane", "supervisor_lname"=>"doe", "supervisor_email"=>"jane@email.com", "supervisor_phone"=>"2020202020"),
-    array("company"=>"company def", "start_date"=>"2006-11-13", "end_date"=>"2020-11-18", "position"=>"cto", "supervisor_fname"=>"tom", "supervisor_lname"=>"doe", "supervisor_email"=>"tom@email.com", "supervisor_phone"=>"3030303030")
-];
 $currEduHistory = [
     array("areaofstudy"=>"mathematics", "degree"=>"Bachelors", "start_date"=>"1985-11-13", "end_date"=>"2000-11-18", "gpa"=>"4.000", "ed_facility_name"=>"mit", "ed_facility_city"=>"cambridge"),
     array("areaofstudy"=>"data science", "degree"=>"Masters", "start_date"=>"2001-11-13", "end_date"=>"2005-11-18", "gpa"=>"4.000", "ed_facility_name"=>"stanford", "ed_facility_city"=>"stanford university")
