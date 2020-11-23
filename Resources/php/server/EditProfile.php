@@ -4,7 +4,6 @@
 use function PHPSTORM_META\type;
 
 require_once "Config.php";
-require_once "ControllerFunc.php";
 
 // Initialize the session
 session_start();
@@ -100,7 +99,6 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 }
 
 // Fetch current user's education history
-//$sql = "SELECT * FROM education WHERE jobseeker=?";
 $sql = "SELECT jobseeker, areaofstudy, degree, start_date, end_date, gpa, name, city, state, postal, type
     FROM education
     INNER JOIN education_facilities
@@ -118,7 +116,6 @@ if ($stmt = mysqli_prepare($link, $sql)) {
     }
     mysqli_stmt_close($stmt);
 }
-
 
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
@@ -208,17 +205,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 
     mysqli_close($link);
 }
-
-// ========== TEMP VALUES FOR ARRAYS ABOVE (MOCK DB RESULTS)
-// $currEduHistory = [
-//     array("areaofstudy"=>"mathematics", "degree"=>"Bachelors", "start_date"=>"1985-11-13", "end_date"=>"2000-11-18", "gpa"=>"4.000", "ed_facility_name"=>"mit", "ed_facility_city"=>"cambridge"),
-//     array("areaofstudy"=>"data science", "degree"=>"Masters", "start_date"=>"2001-11-13", "end_date"=>"2005-11-18", "gpa"=>"4.000", "ed_facility_name"=>"stanford", "ed_facility_city"=>"stanford university")
-// ];
-$currEduHistFacility = [
-    array("name"=>"mit", "city"=>"cambridge", "state"=>"massachusetts", "postal"=>"02139"),
-    array("name"=>"stanford university", "city"=>"stanford", "state"=>"california", "postal"=>"94305")
-];
-
 
 ?>
  
@@ -361,41 +347,41 @@ $currEduHistFacility = [
                 </div>
                 <div class="form-group col-md-5 <?php echo (!empty($userPhone_err)) ? 'has-error' : ''; ?>">
                     <label for="userPhoneEntry">Phone Number</label>
-                    <input type="tel" class="form-control" name="userPhoneEntry" data-error="This field is optional but must be valid." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}" value="<?php echo $currUserPhone; ?>">
+                    <input type="tel" class="form-control" name="userPhoneEntry" required="required" data-error="This field is required." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}" value="<?php echo $currUserPhone; ?>">
                     <span class="help-block"><?php echo $userPhone_err; ?></span>
                 </div>
             </div>
             <div class="form-group row mb-4 <?php echo (!empty($userDob_err)) ? 'has-error' : ''; ?>">
                 <label for="userDobEntry">Date of Birth</label>
                 <div class="input-group date" data-date-format="dd.mm.yyyy">
-                    <input type="date" class="form-control" name="userDobEntry" placeholder="dd.mm.yyyy" value="<?php echo $currUserDob; ?>">
+                    <input type="date" class="form-control" name="userDobEntry" required="required" data-error="This field is required." placeholder="dd.mm.yyyy" value="<?php echo $currUserDob; ?>">
                 </div>
                 <span class="help-block"><?php echo $userDob_err; ?></span>
             </div>
             <div class="form-group mb-2 <?php echo (!empty($userStreet_err)) ? 'has-error' : ''; ?>">
                 <label for="userStreetEntry">Street</label>
-                <input type="text" class="form-control" name="userStreetEntry" data-error="This field is optional but must be valid." placeholder="1234 Main St" value="<?php echo $currUserStreet; ?>">
+                <input type="text" class="form-control" name="userStreetEntry" required="required" data-error="This field is required." placeholder="1234 Main St" value="<?php echo $currUserStreet; ?>">
                 <span class="help-block"><?php echo $userStreet_err; ?></span>
             </div>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-3 <?php echo (!empty($userCity_err)) ? 'has-error' : ''; ?>">
                     <label for="userCityEntry">City</label>
-                    <input type="text" class="form-control" name="userCityEntry" data-error="This field is optional but must be valid." value="<?php echo $currUserCity; ?>">
+                    <input type="text" class="form-control" name="userCityEntry" required="required" data-error="This field is required." value="<?php echo $currUserCity; ?>">
                     <span class="help-block"><?php echo $userCity_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-3 <?php echo (!empty($userState_err)) ? 'has-error' : ''; ?>">
                     <label for="userStateEntry">State</label>
-                    <input type="text" class="form-control" name="userStateEntry" data-error="This field is optional but must be valid." value="<?php echo $currUserState; ?>">
+                    <input type="text" class="form-control" name="userStateEntry" required="required" data-error="This field is required." value="<?php echo $currUserState; ?>">
                     <span class="help-block"><?php echo $userState_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-2 <?php echo (!empty($userPostal_err)) ? 'has-error' : ''; ?>">
                     <label for="userPostalEntry">Zip</label>
-                    <input type="text" class="form-control" name="userPostalEntry" data-error="This field is optional but must be valid." value="<?php echo $currUserPostal; ?>">
+                    <input type="text" class="form-control" name="userPostalEntry" required="required" data-error="This field is required." value="<?php echo $currUserPostal; ?>">
                     <span class="help-block"><?php echo $userPostal_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-2 <?php echo (!empty($userCountry_err)) ? 'has-error' : ''; ?>">
                     <label for="userCountryEntry">Country</label>
-                    <input type="text" class="form-control" name="userCountryEntry" data-error="This field is optional but must be valid." value="<?php echo $currUserCountry; ?>">
+                    <input type="text" class="form-control" name="userCountryEntry" required="required" data-error="This field is required." value="<?php echo $currUserCountry; ?>">
                     <span class="help-block"><?php echo $userCountry_err; ?></span>
                 </div>
             </div>
@@ -418,51 +404,51 @@ $currEduHistFacility = [
                 <span><p class=\"form-subheader2\">[ JOB #$jobHistCount ]</p></span>
                 <div class=\"form-group mb-2 <?php echo (!empty($jobHistCompany_err)) ? 'has-error' : ''; ?>\">
                     <label for=\"jobHistCompanyEntry$jobHistCount\">Company</label>
-                    <input type=\"text\" class=\"form-control\" name=\"jobHistCompanyEntry$jobHistCount\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistCompany\">
+                    <input type=\"text\" class=\"form-control\" name=\"jobHistCompanyEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistCompany\">
                     <span class=\"help-block\">$jobHistCompany_err</span>
                 </div>
                 <div class=\"input-group mb-4\">
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistStart_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"jobHistStartEntry$jobHistCount\">Start Date</label>
                         <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
-                            <input type=\"date\" class=\"form-control\" name=\"jobHistStartEntry$jobHistCount\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistStart\">
+                            <input type=\"date\" class=\"form-control\" name=\"jobHistStartEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistStart\">
                         </div>
                         <span class=\"help-block\">$jobHistStart_err</span>
                     </div>
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistEnd_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"jobHistEndEntry$jobHistCount\">End Date</label>
                         <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
-                            <input type=\"date\" class=\"form-control\" name=\"jobHistEndEntry$jobHistCount\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistEnd\">
+                            <input type=\"date\" class=\"form-control\" name=\"jobHistEndEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistEnd\">
                         </div>
                         <span class=\"help-block\">$jobHistEnd_err</span>
                     </div>
                 </div>
                 <div class=\"form-group mb-2 <?php echo (!empty($jobHistPos_err)) ? 'has-error' : ''; ?>\">
                     <label for=\"jobHistPosEntry$jobHistCount\">Position</label>
-                    <input type=\"text\" class=\"form-control\" name=\"jobHistPosEntry$jobHistCount\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistPos\">
+                    <input type=\"text\" class=\"form-control\" name=\"jobHistPosEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistPos\">
                     <span class=\"help-block\">$jobHistPos_err</span>
                 </div>
                 <div class=\"input-group mb-4\">
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupFname_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"jobHistSupFnameEntry$jobHistCount\">Supervisor's First Name</label>
-                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupFnameEntry$jobHistCount\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupFname\">
+                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupFnameEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistSupFname\">
                         <span class=\"help-block\">$jobHistSupFname_err</span>
                     </div>
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupLname_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"jobHistSupLnameEntry$jobHistCount\">Supervisor's Last Name</label>
-                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupLnameEntry$jobHistCount\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupLname\">
+                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupLnameEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistSupLname\">
                         <span class=\"help-block\">$jobHistSupLname_err</span>
                     </div>
                 </div>
                 <div class=\"input-group mb-4\">
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupEmail_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"jobHistSupEmailEntry$jobHistCount\">Supervisor's Email</label>
-                        <input type=\"email\" class=\"form-control\" name=\"jobHistSupEmailEntry$jobHistCount\" placeholder=\"example@yahoo.com\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupEmail\">
+                        <input type=\"email\" class=\"form-control\" name=\"jobHistSupEmailEntry$jobHistCount\" placeholder=\"example@yahoo.com\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistSupEmail\">
                         <span class=\"help-block\">$jobHistSupEmail_err</span>
                     </div>
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupPhone_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"jobHistSupEmailEntry$jobHistCount\">Supervisor's Phone</label>
-                        <input type=\"tel\" class=\"form-control\" name=\"jobHistSupPhoneEntry$jobHistCount\" placeholder=\"xxx-xxx-xxxx\" pattern=\"\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupPhone\">
+                        <input type=\"tel\" class=\"form-control\" name=\"jobHistSupPhoneEntry$jobHistCount\" placeholder=\"xxx-xxx-xxxx\" pattern=\"\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistSupPhone\">
                         <span class=\"help-block\">$jobHistSupPhone_err</span>
                     </div>
                 </div>
@@ -492,13 +478,13 @@ $currEduHistFacility = [
                 <div class=\"input-group mb-4\">
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($eduHistAreaOfStudy_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"eduHistAreaOfStudyEntry\">Area Of Study</label>
-                        <input type=\"text\" class=\"form-control\" name=\"eduHistAreaOfStudyEntry\" data-error=\"This field is optional but must be valid.\" value=\"$eduHistAreaOfStudy\">
+                        <input type=\"text\" class=\"form-control\" name=\"eduHistAreaOfStudyEntry\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistAreaOfStudy\">
                         <span class=\"help-block\">$eduHistAreaOfStudy_err</span>
                     </div>
                     <div class=\"form-group row mr-3 col-md-5 <?php echo (!empty($eduHistDegree_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"eduHistDegreeEntry\">Degree</label>
                         <div class=\"input-group mb-2\">
-                            <select class=\"form-select\" name=\"eduHistDegreeEntry\">
+                            <select class=\"form-select\" name=\"eduHistDegreeEntry\" required=\"required\" data-error=\"This field is required.\">
                                 <option selected disabled value=\"\">Please select degree</option>
                                 <option value=\"High School\" <?php if($eduHistDegree == \"High School\") { echo \"SELECTED\"; } ?>>High School</option>
                                 <option value=\"Bachelors\" <?php if($eduHistDegree == \"Bachelors\") { echo \"SELECTED\"; } ?>>Bachelors</option>
@@ -514,14 +500,14 @@ $currEduHistFacility = [
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($eduHistStart_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"eduHistStartEntry\">Start Date</label>
                         <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
-                            <input type=\"date\" class=\"form-control\" name=\"eduHistStartEntry\" placeholder=\"dd.mm.yyyy\" value=\"$eduHistStart\">
+                            <input type=\"date\" class=\"form-control\" name=\"eduHistStartEntry\" placeholder=\"dd.mm.yyyy\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistStart\">
                         </div>
                         <span class=\"help-block\">$eduHistStart_err</span>
                     </div>
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($eduHistEnd_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"eduHistEndEntry\">End Date</label>
                         <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
-                            <input type=\"date\" class=\"form-control\" name=\"eduHistEndEntry\" placeholder=\"dd.mm.yyyy\" value=\"$eduHistEnd\">
+                            <input type=\"date\" class=\"form-control\" name=\"eduHistEndEntry\" placeholder=\"dd.mm.yyyy\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistEnd\">
                         </div>
                         <span class=\"help-block\">$eduHistEnd_err</span>
                     </div>
@@ -530,7 +516,7 @@ $currEduHistFacility = [
                     <div class=\"form-group row mr-3 col-md-5 <?php echo (!empty($eduHistFacilityType_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"eduHistFacilityTypeEntry\">Institution Type</label>
                         <div class=\"input-group mb-2\">
-                            <select class=\"form-select\" name=\"eduHistFacilityTypeEntry\">
+                            <select class=\"form-select\" name=\"eduHistFacilityTypeEntry\" required=\"required\" data-error=\"This field is required.\">
                                 <option selected disabled value=\"\">Please select institution type</option>
                                 <option value=\"University\">University</option>
                                 <option value=\"College\">College</option>
@@ -543,29 +529,29 @@ $currEduHistFacility = [
                     </div>
                     <div class=\"form-group row mr-3 col-md-5 mb-2 <?php echo (!empty($eduHistGpa_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"eduHistGpaEntry\">GPA</label>
-                        <input type=\"number\" class=\"form-control\" name=\"eduHistGpaEntry\" data-error=\"This field is optional but must be valid.\" min=\"0\" max=\"4\" step=\".001\" value=\"$eduHistGpa\">
+                        <input type=\"number\" class=\"form-control\" name=\"eduHistGpaEntry\" required=\"required\" data-error=\"This field is required.\" min=\"0\" max=\"4\" step=\".001\" value=\"$eduHistGpa\">
                         <span class=\"help-block\">$eduHistGpa_err</span>
                     </div>
                 </div>
                 <div class=\"form-group mb-4 <?php echo (!empty($eduHistFacilityName_err)) ? 'has-error' : ''; ?>\">
                     <label for=\"eduHistFacilityNameEntry\">Institution Name</label>
-                    <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityNameEntry\" data-error=\"This field is optional but must be valid.\" min=\"0\" max=\"4\" step=\".001\" value=\"$eduHistFacilityName\">
+                    <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityNameEntry\" required=\"required\" data-error=\"This field is required.\" min=\"0\" max=\"4\" step=\".001\" value=\"$eduHistFacilityName\">
                     <span class=\"help-block\">$eduHistFacilityName_err</span>
                 </div>
                 <div class=\"input-group mb-4\">
                     <div class=\"form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityCity_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"eduHistFacilityCityEntry\">City</label>
-                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityCityEntry\" data-error=\"This field is optional but must be valid.\" value=\"$eduHistFacilityCity\">
+                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityCityEntry\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistFacilityCity\">
                         <span class=\"help-block\">$eduHistFacilityCity_err</span>
                     </div>
                     <div class=\"form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityState_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"eduHistFacilityStateEntry\">State</label>
-                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityStateEntry\" data-error=\"This field is optional but must be valid.\" value=\"$eduHistFacilityState\">
+                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityStateEntry\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistFacilityState\">
                         <span class=\"help-block\">$eduHistFacilityState_err</span>
                     </div>
                     <div class=\"form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityPostal_err)) ? 'has-error' : ''; ?>\">
                         <label for=\"eduHistFacilityPostalEntry\">Zip</label>
-                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityPostalEntry\" data-error=\"This field is optional but must be valid.\" value=\"$eduHistFacilityPostal\">
+                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityPostalEntry\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistFacilityPostal\">
                         <span class=\"help-block\">$eduHistFacilityPostal_err</span>
                     </div>
                 </div>
