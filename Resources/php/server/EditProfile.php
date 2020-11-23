@@ -238,7 +238,6 @@ $currJobHistory = [
             </div>
             <!-- JOB HISTORY -->
             <span><p class="form-subheader">JOB HISTORY</p></span>
-            
             <?php
             foreach ($currJobHistory as $jobHistory) {
                 $jobHistCount++;
@@ -253,6 +252,7 @@ $currJobHistory = [
 
                 $jobHistMarkup = 
                 "
+                <span><p class=\"form-subheader2\">[ JOB #$jobHistCount ]</p></span>
                 <div class=\"form-group mb-2 <?php echo (!empty($jobHistCompany_err)) ? 'has-error' : ''; ?>\">
                     <label for=\"jobHistCompanyEntry\">Company</label>
                     <input type=\"text\" class=\"form-control\" name=\"jobHistCompanyEntry\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistCompany\">

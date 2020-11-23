@@ -119,6 +119,10 @@ a {
 .form-subheader {
 	margin-top: 2.8rem;
 }
+.form-subheader2 {
+	font-size: .85rem;
+	font-style: italic;
+}
 
 /* Center the loader */
 
