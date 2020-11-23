@@ -84,6 +84,91 @@ if ($stmt = mysqli_prepare($link, $sql)) {
     }
 }
 
+// Processing form data when form is submitted and contains data
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
+    // Validate First name
+    if (empty(trim($_POST["userFnameEntry"]))) {
+        $userFname_err = "Please enter first name.";
+    } else {
+        $newUserFname = trim($_POST["userFnameEntry"]);
+    }
+    // Validate Last name
+    if (empty(trim($_POST["userLnameEntry"]))) {
+        $userLname_err = "Please enter last name.";
+    } else {
+        $newUserLname = trim($_POST["userLnameEntry"]);
+    }
+    // Validate Email
+    if (empty(trim($_POST["userEmailEntry"]))) {
+        $userEmail_err = "Please enter email.";
+    } else {
+        $newUserEmail = trim($_POST["userEmailEntry"]);
+    }
+    // Validate Phone
+    if (empty(trim($_POST["userPhoneEntry"]))) {
+        $userPhone_err = "Please enter phone number.";
+    } else {
+        $newUserPhone = trim($_POST["userPhoneEntry"]);
+    }
+    // Validate Dob
+    if (empty(trim($_POST["userDobEntry"]))) {
+        $userDob_err = "Please enter date of birth.";
+    } else {
+        $newUserDob = trim($_POST["userDobEntry"]);
+    }
+    // Validate Street
+    if (empty(trim($_POST["userStreetEntry"]))) {
+        $userStreet_err = "Please enter street address.";
+    } else {
+        $newUserStreet = trim($_POST["userStreetEntry"]);
+    }
+    // Validate City
+    if (empty(trim($_POST["userCityEntry"]))) {
+        $userCity_err = "Please enter city address.";
+    } else {
+        $newUserCity = trim($_POST["userCityEntry"]);
+    }
+    // Validate State
+    if (empty(trim($_POST["userStateEntry"]))) {
+        $userState_err = "Please enter state.";
+    } else {
+        $newUserState = trim($_POST["userStateEntry"]);
+    }
+    // Validate Postal
+    if (empty(trim($_POST["userPostalEntry"]))) {
+        $userPostal_err = "Please enter zipcode.";
+    } else {
+        $newUserPostal = trim($_POST["userPostalEntry"]);
+    }
+    // Validate Country
+    if (empty(trim($_POST["userCountryEntry"]))) {
+        $userCountry_err = "Please enter country.";
+    } else {
+        $newUserCountry = trim($_POST["userCountryEntry"]);
+    }
+
+    if ($currUserFname != $newUserFname ||
+    $currUserLname != $newUserLname ||
+    $currUserEmail != $newUserEmail ||
+    $currUserPhone != $newUserPhone ||
+    $currUserDob != $newUserDob ||
+    $currUserStreet != $newUserStreet ||
+    $currUserCity != $newUserCity ||
+    $currUserState != $newUserState ||
+    $currUserPostal != $newUserPostal ||
+    $currUserCountry != $newUserCountry) {
+        $sql = "UPDATE people SET fname=?, lname=?, email=?, phone=?, dob=?, street=?, city=?, state=?, postal=?, country=? WHERE username=?";
+        if ($stmt = mysqli_prepare($link, $sql)) {
+            mysqli_stmt_bind_param($stmt, "sssssssssss", $newUserFname, $newUserLname, $newUserEmail, $newUserPhone, $newUserDob, $newUserStreet, $newUserCity, $newUserState, $newUserPostal, $newUserCountry, $currUser);
+            if (mysqli_stmt_execute($stmt)) {
+                echo "SUCCESS!";
+            }
+            mysqli_stmt_close($stmt);
+        }
+    }
+    mysqli_close($link);
+}
+
 // ========== TEMP VALUES FOR ARRAYS ABOVE (MOCK DB RESULTS)
 $currJobHistory = [
     array("company"=>"company xyz", "start_date"=>"1985-11-13", "end_date"=>"2000-11-18", "position"=>"junior software engineer", "supervisor_fname"=>"john", "supervisor_lname"=>"doe", "supervisor_email"=>"john@email.com", "supervisor_phone"=>"1010101010"),
