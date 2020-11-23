@@ -96,7 +96,29 @@ if ($stmt = mysqli_prepare($link, $sql)) {
             $currJobHistory[$numJobs++] = $jobAssocArray;
         }
     }
+    mysqli_stmt_close($stmt);
 }
+
+// Fetch current user's education history
+//$sql = "SELECT * FROM education WHERE jobseeker=?";
+$sql = "SELECT jobseeker, areaofstudy, degree, start_date, end_date, gpa, name, city, state, postal, type
+    FROM education
+    INNER JOIN education_facilities
+    ON education.ed_facility_name=education_facilities.name AND education.ed_facility_city=education_facilities.city
+    WHERE education.jobseeker=?
+";
+if ($stmt = mysqli_prepare($link, $sql)) {
+    mysqli_stmt_bind_param($stmt, "s", $currUser);
+    if (mysqli_stmt_execute($stmt)) {
+        $res = mysqli_stmt_get_result($stmt);
+        $numEdu = 0;
+        while ($eduAssocArray = mysqli_fetch_assoc($res)) {
+            $currEduHistory[$numEdu++] = $eduAssocArray;
+        }
+    }
+    mysqli_stmt_close($stmt);
+}
+
 
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
@@ -188,10 +210,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 }
 
 // ========== TEMP VALUES FOR ARRAYS ABOVE (MOCK DB RESULTS)
-$currEduHistory = [
-    array("areaofstudy"=>"mathematics", "degree"=>"Bachelors", "start_date"=>"1985-11-13", "end_date"=>"2000-11-18", "gpa"=>"4.000", "ed_facility_name"=>"mit", "ed_facility_city"=>"cambridge"),
-    array("areaofstudy"=>"data science", "degree"=>"Masters", "start_date"=>"2001-11-13", "end_date"=>"2005-11-18", "gpa"=>"4.000", "ed_facility_name"=>"stanford", "ed_facility_city"=>"stanford university")
-];
+// $currEduHistory = [
+//     array("areaofstudy"=>"mathematics", "degree"=>"Bachelors", "start_date"=>"1985-11-13", "end_date"=>"2000-11-18", "gpa"=>"4.000", "ed_facility_name"=>"mit", "ed_facility_city"=>"cambridge"),
+//     array("areaofstudy"=>"data science", "degree"=>"Masters", "start_date"=>"2001-11-13", "end_date"=>"2005-11-18", "gpa"=>"4.000", "ed_facility_name"=>"stanford", "ed_facility_city"=>"stanford university")
+// ];
 $currEduHistFacility = [
     array("name"=>"mit", "city"=>"cambridge", "state"=>"massachusetts", "postal"=>"02139"),
     array("name"=>"stanford university", "city"=>"stanford", "state"=>"california", "postal"=>"94305")
@@ -459,6 +481,10 @@ $currEduHistFacility = [
                 $eduHistStart = $eduHistory['start_date'];
                 $eduHistEnd = $eduHistory['end_date'];
                 $eduHistGpa = $eduHistory['gpa'];
+                $eduHistFacilityName = $eduHistory['name'];
+                $eduHistFacilityCity = $eduHistory['city'];
+                $eduHistFacilityState = $eduHistory['state'];
+                $eduHistFacilityPostal = $eduHistory['postal'];
 
                 $eduHistMarkup = 
                 "
@@ -474,11 +500,11 @@ $currEduHistFacility = [
                         <div class=\"input-group mb-2\">
                             <select class=\"form-select\" name=\"eduHistDegreeEntry\">
                                 <option selected disabled value=\"\">Please select degree</option>
-                                <option value=\"High School\">High School</option>
-                                <option value=\"Bachelors\">Bachelors</option>
-                                <option value=\"Associates\">Associates</option>
-                                <option value=\"Masters\">Masters</option>
-                                <option value=\"Doctorate\">Doctorate</option>
+                                <option value=\"High School\" <?php if($eduHistDegree == \"High School\") { echo \"SELECTED\"; } ?>>High School</option>
+                                <option value=\"Bachelors\" <?php if($eduHistDegree == \"Bachelors\") { echo \"SELECTED\"; } ?>>Bachelors</option>
+                                <option value=\"Associates\" <?php if($eduHistDegree == \"Associates\") { echo \"SELECTED\"; } ?>>Associates</option>
+                                <option value=\"Masters\" <?php if($eduHistDegree == \"Masters\") { echo \"SELECTED\"; } ?>>Masters</option>
+                                <option value=\"Doctorate\" <?php if($eduHistDegree == \"Doctorate\") { echo \"SELECTED\"; } ?>>Doctorate</option>
                             </select>
                         </div>
                         <span class=\"help-block\"><?php echo $eduHistDegree_err; ?></span>
