@@ -28,137 +28,35 @@ $currUserFname = $newUserFname = $userFname_err = "";
 $currUserLname = $newUserLname = $userLname_err = "";
 $currUserEmail = $newUserEmail = $userEmail_err = "";
 $currUserPhone = $newUserPhone = $userPhone_err = "";
-$currUserDob = $newUserDob = $userDob = "";
-$currUserStreet = $newUserStreet = $userStreet = "";
-$currUserCity = $newUserCity = $userCity = "";
-$currUserState = $newUserState = $userState = "";
-$currUserPostal = $newUserPostal = $userPostal = "";
-$currUserCountry = $newUserCountry = $userCountry = "";
+$currUserDob = $newUserDob = $userDob_err = "";
+$currUserStreet = $newUserStreet = $userStreet_err = "";
+$currUserCity = $newUserCity = $userCity_err = "";
+$currUserState = $newUserState = $userState_err = "";
+$currUserPostal = $newUserPostal = $userPostal_err = "";
+$currUserCountry = $newUserCountry = $userCountry_err = "";
 // === JOB HIST VARIABLES
+$jobHistCount = 0;
+$currJobHistory = $newJobHistory = [];
+$jobHistCompany = $jobHistCompany_err = "";
+$jobHistStart = $jobHistStart_err = "";
+$jobHistEnd = $jobHistEnd_err = "";
+$jobHistPos = $jobHistPos_err = "";
+$jobHistSupFname = $jobHistSupFname_err = "";
+$jobHistSupLname = $jobHistSupLname_err = "";
+$jobHistSupEmail = $jobHistSupEmail_err = "";
+$jobHistSupPhone = $jobHistSupPhone_err = "";
+$jobHistMarkup = "";
+// === EDU HISTORY & EDU FACILITIES VARIABLES
+$currEduHistory = $newEduHistory = [];
+
+// ========== TEMP VALUES FOR ARRAYS ABOVE
+$currJobHistory = [
+    array("company"=>"company xyz", "start_date"=>"1985-11-13", "end_date"=>"2000-11-18", "position"=>"junior software engineer", "supervisor_fname"=>"john", "supervisor_lname"=>"doe", "supervisor_email"=>"john@email.com", "supervisor_phone"=>"1010101010"),
+    array("company"=>"company abc", "start_date"=>"2001-11-13", "end_date"=>"2005-11-18", "position"=>"senior software engineer", "supervisor_fname"=>"jane", "supervisor_lname"=>"doe", "supervisor_email"=>"jane@email.com", "supervisor_phone"=>"2020202020"),
+    array("company"=>"company def", "start_date"=>"2006-11-13", "end_date"=>"2020-11-18", "position"=>"cto", "supervisor_fname"=>"tom", "supervisor_lname"=>"doe", "supervisor_email"=>"tom@email.com", "supervisor_phone"=>"3030303030")
+];
 
 
-// Fetch company info from current user
-$currUser = $_SESSION["username"];
-$sql = "SELECT employing_company FROM people WHERE username=? limit 1";
-if ($stmt = mysqli_prepare($link, $sql)) {
-    mysqli_stmt_bind_param($stmt, "s", $currUser);
-    if (mysqli_stmt_execute($stmt)) {
-        $res = mysqli_stmt_get_result($stmt);
-        $currCompany = mysqli_fetch_assoc($res)["employing_company"];
-    }
-    mysqli_stmt_close($stmt);
-}
-$currUserLocation = $_SESSION["userLocation"];
-$sql = "SELECT * FROM companies WHERE name=? AND location=? limit 1";
-if ($stmt = mysqli_prepare($link, $sql)) {
-    mysqli_stmt_bind_param($stmt, "ss", $currCompany, $currUserLocation);
-    if (mysqli_stmt_execute($stmt)) {
-        $res = mysqli_stmt_get_result($stmt);
-        $companyDetails = mysqli_fetch_assoc($res);
-        if ($companyDetails) {
-            $currName = $companyDetails["name"];
-            $currLocation = $companyDetails["location"];
-            $currContFname = $companyDetails["contact_fname"];
-            $currContLname = $companyDetails["contact_lname"];
-            $currContEmail = $companyDetails["contact_email"];
-            $currContPhone = $companyDetails["contact_phone"];
-            $currContStreet = $companyDetails["contact_street"];
-            $currContCity = $companyDetails["contact_city"];
-            $currContState = $companyDetails["contact_state"];
-            $currContPostal = $companyDetails["contact_postal"];
-            $currContCountry = $companyDetails["contact_country"];
-        }
-    }
-    mysqli_stmt_close($stmt);
-}
-
-// Processing form data when form is submitted and contains data
-if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
-
-    // Validate company name (nameEntry)
-    if (empty(trim($_POST["nameEntry"]))) {
-        $name_err = "Please enter company name.";
-    } else {
-        $newName = trim($_POST["nameEntry"]);
-    }
-
-    // Validate location (locationEntry)
-    if (empty(trim($_POST["locationEntry"]))) {
-        $location_err = "Please enter company location.";
-    } else {
-        $newLocation = trim($_POST["locationEntry"]);
-    }
-
-    // Validate contact first name (contFnameEntry)
-    if (empty(trim($_POST["contFnameEntry"]))) {
-        $contFname__err = "Please enter company contact's first name.";
-    } else {
-        $newContFname = trim($_POST["contFnameEntry"]);
-    }
-
-    // Validate contact last name (contLnameEntry)
-    if (empty(trim($_POST["contLnameEntry"]))) {
-        $contLname_err = "Please enter company contact's last name.";
-    } else {
-        $newContLname = trim($_POST["contLnameEntry"]);
-    }
-
-    // Validate contact email (contEmailEntry)
-    if (empty(trim($_POST["contEmailEntry"]))) {
-        $contEmail_err = "Please enter company contact's email.";
-    } else {
-        $newContEmail = trim($_POST["contEmailEntry"]);
-    }
-
-    // Validate contact phone (contPhoneEntry)
-    if (empty(trim($_POST["contPhoneEntry"]))) {
-        $contPhone_err = "Please enter company contact's phone number.";
-    } else {
-        $newContPhone = trim($_POST["contPhoneEntry"]);
-    }
-
-    // OPTIONAL INPUTS
-    $newContStreet = trim($_POST["contStreetEntry"]);
-    $newContCity = trim($_POST["contCityEntry"]);
-    $newContState = trim($_POST["contStateEntry"]);
-    $newContPostal = trim($_POST["contPostalEntry"]);
-    $newContCountry = trim($_POST["contCountryEntry"]);
-
-    // Check if current name is empty (Possible use case: company not registered yet); go ahead and register company
-    if ($currName == '' && $newName != '') {
-        $sql = "INSERT INTO companies (name, location, contact_fname, contact_lname, contact_street, contact_city, contact_state, contact_postal, contact_country, contact_email, contact_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        if ($stmt = mysqli_prepare($link, $sql)) {
-            mysqli_stmt_bind_param($stmt, "sssssssssss", $newName, $newLocation, $newContFname, $newContLname, $newContStreet, $newContCity, $newContState, $newContPostal, $newContCountry, $newContEmail, $newContPhone);
-            if (mysqli_stmt_execute($stmt)) {
-                header("Location: ../../../index.php");
-            }
-        }
-        mysqli_stmt_close($stmt);
-    }
-    // Check if current values are different from new values; update if different
-    elseif ($currName != $newName ||
-    $currLocation != $newLocation ||
-    $currContFname != $newContFname ||
-    $currContLname != $newContLname ||
-    $currContEmail != $newContEmail ||
-    $currContPhone != $newContPhone ||
-    $currContStreet != $newContStreet ||
-    $currContCity != $newContCity ||
-    $currContState != $newContState ||
-    $currContPostal != $newContPostal ||
-    $currContCountry != $newContCountry) {
-        // side note: another check could potentially be done here to see if a company of a the same name already exists in new location
-        $sql = "UPDATE companies SET name=?, location=?, contact_fname=?, contact_lname=?, contact_street=?, contact_city=?, contact_state=?, contact_postal=?, contact_country=?, contact_email=?, contact_phone=? WHERE name=? AND location=?";
-        if ($stmt = mysqli_prepare($link, $sql)) {
-            mysqli_stmt_bind_param($stmt, "sssssssssssss", $newName, $newLocation, $newContFname, $newContLname, $newContStreet, $newContCity, $newContState, $newContPostal, $newContCountry, $newContEmail, $newContPhone, $currName, $currLocation);
-            if (mysqli_stmt_execute($stmt)) {
-                header("Location: ../../../index.php");
-            }
-            mysqli_stmt_close($stmt);
-        }
-    }
-    mysqli_close($link);
-}
 ?>
  
 <!DOCTYPE html>
@@ -278,74 +176,140 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         <h2>Edit Profile</h2>
         <p>Edit your profile below.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="bottom-padding form-group <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
-                <label>Company Name</label>
-                <?php
-                if ($currName == '') {
-                    echo "<input type=\"text\" name=\"nameEntry\" class=\"form-control\" value='$currName'>";
-                } else {
-                    echo "<input type=\"text\" name=\"nameEntry\" class=\"form-control\" value='$currName' disabled>";
-                }
-                ?>
-                <span class="help-block"><?php echo $name_err; ?></span>
-            </div>
-            <div class="bottom-padding form-group <?php echo (!empty($location_err)) ? 'has-error' : ''; ?>">
-                <label>Location</label>
-                <input type="text" name="locationEntry" class="form-control" value="<?php echo $currLocation; ?>">
-                <span class="help-block"><?php echo $location_err; ?></span>
-            </div>
-            <span><p class="form-subheader">COMPANY CONTACT PERSON INFORMATION</p></span>
+            <!-- PERSONAL DETAILS -->
+            <span><p class="form-subheader">PERSONAL DETAILS</p></span>
             <div class="input-group mb-4">
-                <div class="form-group mr-3 col-md-5 <?php echo (!empty($contFname_err)) ? 'has-error' : ''; ?>">
-                    <label for="contFnameEntry">First Name</label>
-                    <input type="text" class="form-control" name="contFnameEntry" required="required" data-error="This field is required." placeholder="Tom" value="<?php echo $currContFname; ?>">
-                    <span class="help-block"><?php echo $contFname_err; ?></span>
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($userFname_err)) ? 'has-error' : ''; ?>">
+                    <label for="userFnameEntry">First Name</label>
+                    <input type="text" class="form-control" name="userFnameEntry" required="required" data-error="This field is required." placeholder="Tom" value="<?php echo $currUserFname; ?>">
+                    <span class="help-block"><?php echo $userFname_err; ?></span>
                 </div>
-                <div class="form-group col-md-5 <?php echo (!empty($contLname_err)) ? 'has-error' : ''; ?>">
-                    <label for="contLnameEntry">Last Name</label>
-                    <input type="text" class="form-control" name="contLnameEntry" required="required" data-error="This field is required." placeholder="Smith" value="<?php echo $currContLname; ?>">
-                    <span class="help-block"><?php echo $contLname_err; ?></span>
+                <div class="form-group col-md-5 <?php echo (!empty($userLname_err)) ? 'has-error' : ''; ?>">
+                    <label for="userLnameEntry">Last Name</label>
+                    <input type="text" class="form-control" name="userLnameEntry" required="required" data-error="This field is required." placeholder="Smith" value="<?php echo $currUserLname; ?>">
+                    <span class="help-block"><?php echo $userLname_err; ?></span>
                 </div>
             </div>
             <div class="input-group mb-4">
-                <div class="form-group mr-3 col-md-5 <?php echo (!empty($contEmail_err)) ? 'has-error' : ''; ?>">
-                    <label for="contEmailEntry">Email Address</label>
-                    <input type="email" class="form-control" name="contEmailEntry" required="required" data-error="This field is required." placeholder="example@yahoo.com" value="<?php echo $currContEmail; ?>">
-                    <span class="help-block"><?php echo $contEmail_err; ?></span>
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($userEmail_err)) ? 'has-error' : ''; ?>">
+                    <label for="userEmailEntry">Email Address</label>
+                    <input type="email" class="form-control" name="userEmailEntry" required="required" data-error="This field is required." placeholder="example@yahoo.com" value="<?php echo $currUserEmail; ?>">
+                    <span class="help-block"><?php echo $userEmail_err; ?></span>
                 </div>
-                <div class="form-group col-md-5 <?php echo (!empty($contPhone_err)) ? 'has-error' : ''; ?>">
-                    <label for="contPhoneEntry">Phone Number</label>
-                    <input type="tel" class="form-control" name="contPhoneEntry" data-error="This field is optional but must be valid." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}" value="<?php echo $currContPhone; ?>">
-                    <span class="help-block"><?php echo $contPhone_err; ?></span>
+                <div class="form-group col-md-5 <?php echo (!empty($userPhone_err)) ? 'has-error' : ''; ?>">
+                    <label for="userPhoneEntry">Phone Number</label>
+                    <input type="tel" class="form-control" name="userPhoneEntry" data-error="This field is optional but must be valid." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}" value="<?php echo $currUserPhone; ?>">
+                    <span class="help-block"><?php echo $userPhone_err; ?></span>
                 </div>
             </div>
-            <div class="form-group mb-2 <?php echo (!empty($contStreet_err)) ? 'has-error' : ''; ?>">
-                <label for="contStreetEntry">Street</label>
-                <input type="text" class="form-control" name="contStreetEntry" data-error="This field is optional but must be valid." placeholder="1234 Main St" value="<?php echo $currContStreet; ?>">
-                <span class="help-block"><?php echo $contStreet_err; ?></span>
+            <div class="form-group row mb-4 <?php echo (!empty($userDob_err)) ? 'has-error' : ''; ?>">
+                <label for="userDobEntry">Date of Birth</label>
+                <div class="input-group date" data-date-format="dd.mm.yyyy">
+                    <input type="date" class="form-control" name="userDobEntry" placeholder="dd.mm.yyyy" value="<?php echo $currUserDob; ?>">
+                </div>
+                <span class="help-block"><?php echo $userDob_err; ?></span>
+            </div>
+            <div class="form-group mb-2 <?php echo (!empty($userStreet_err)) ? 'has-error' : ''; ?>">
+                <label for="userStreetEntry">Street</label>
+                <input type="text" class="form-control" name="userStreetEntry" data-error="This field is optional but must be valid." placeholder="1234 Main St" value="<?php echo $currUserStreet; ?>">
+                <span class="help-block"><?php echo $userStreet_err; ?></span>
             </div>
             <div class="input-group mb-4">
-                <div class="form-group mr-3 col-md-3 <?php echo (!empty($contCity_err)) ? 'has-error' : ''; ?>">
-                    <label for="contCityEntry">City</label>
-                    <input type="text" class="form-control" name="contCityEntry" data-error="This field is optional but must be valid." value="<?php echo $currContCity; ?>">
-                    <span class="help-block"><?php echo $contCity_err; ?></span>
+                <div class="form-group mr-3 col-md-3 <?php echo (!empty($userCity_err)) ? 'has-error' : ''; ?>">
+                    <label for="userCityEntry">City</label>
+                    <input type="text" class="form-control" name="userCityEntry" data-error="This field is optional but must be valid." value="<?php echo $currUserCity; ?>">
+                    <span class="help-block"><?php echo $userCity_err; ?></span>
                 </div>
-                <div class="form-group mr-3 col-md-3 <?php echo (!empty($contState_err)) ? 'has-error' : ''; ?>">
-                    <label for="contStateEntry">State</label>
-                    <input type="text" class="form-control" name="contStateEntry" data-error="This field is optional but must be valid." value="<?php echo $currContState; ?>">
-                    <span class="help-block"><?php echo $contState_err; ?></span>
+                <div class="form-group mr-3 col-md-3 <?php echo (!empty($userState_err)) ? 'has-error' : ''; ?>">
+                    <label for="userStateEntry">State</label>
+                    <input type="text" class="form-control" name="userStateEntry" data-error="This field is optional but must be valid." value="<?php echo $currUserState; ?>">
+                    <span class="help-block"><?php echo $userState_err; ?></span>
                 </div>
-                <div class="form-group mr-3 col-md-2 <?php echo (!empty($contPostal_err)) ? 'has-error' : ''; ?>">
-                    <label for="contPostalEntry">Zip</label>
-                    <input type="text" class="form-control" name="contPostalEntry" data-error="This field is optional but must be valid." value="<?php echo $currContPostal; ?>">
-                    <span class="help-block"><?php echo $contPostal_err; ?></span>
+                <div class="form-group mr-3 col-md-2 <?php echo (!empty($userPostal_err)) ? 'has-error' : ''; ?>">
+                    <label for="userPostalEntry">Zip</label>
+                    <input type="text" class="form-control" name="userPostalEntry" data-error="This field is optional but must be valid." value="<?php echo $currUserPostal; ?>">
+                    <span class="help-block"><?php echo $userPostal_err; ?></span>
                 </div>
-                <div class="form-group mr-3 col-md-2 <?php echo (!empty($contCountry_err)) ? 'has-error' : ''; ?>">
-                    <label for="contCountryEntry">Country</label>
-                    <input type="text" class="form-control" name="contCountryEntry" data-error="This field is optional but must be valid." value="<?php echo $currContCountry; ?>">
-                    <span class="help-block"><?php echo $contCountry_err; ?></span>
+                <div class="form-group mr-3 col-md-2 <?php echo (!empty($userCountry_err)) ? 'has-error' : ''; ?>">
+                    <label for="userCountryEntry">Country</label>
+                    <input type="text" class="form-control" name="userCountryEntry" data-error="This field is optional but must be valid." value="<?php echo $currUserCountry; ?>">
+                    <span class="help-block"><?php echo $userCountry_err; ?></span>
                 </div>
             </div>
+            <!-- JOB HISTORY -->
+            <span><p class="form-subheader">JOB HISTORY</p></span>
+            
+            <?php
+            foreach ($currJobHistory as $jobHistory) {
+                $jobHistCount++;
+                $jobHistCompany = $jobHistory['company'];
+                $jobHistStart = $jobHistory['start_date'];
+                $jobHistEnd = $jobHistory['end_date'];
+                $jobHistPos = $jobHistory['position'];
+                $jobHistSupFname = $jobHistory['supervisor_fname'];
+                $jobHistSupLname = $jobHistory['supervisor_lname'];
+                $jobHistSupEmail = $jobHistory['supervisor_email'];
+                $jobHistSupPhone = $jobHistory['supervisor_phone'];
+
+                $jobHistMarkup = 
+                "
+                <div class=\"form-group mb-2 <?php echo (!empty($jobHistCompany_err)) ? 'has-error' : ''; ?>\">
+                    <label for=\"jobHistCompanyEntry\">Company</label>
+                    <input type=\"text\" class=\"form-control\" name=\"jobHistCompanyEntry\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistCompany\">
+                    <span class=\"help-block\">$jobHistCompany_err</span>
+                </div>
+                <div class=\"input-group mb-4\">
+                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistStart_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"jobHistStartEntry\">Start Date</label>
+                        <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
+                            <input type=\"date\" class=\"form-control\" name=\"jobHistStartEntry\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistStart\">
+                        </div>
+                        <span class=\"help-block\">$jobHistStart_err</span>
+                    </div>
+                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistEnd_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"jobHistEndEntry\">End Date</label>
+                        <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
+                            <input type=\"date\" class=\"form-control\" name=\"jobHistEndEntry\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistEnd\">
+                        </div>
+                        <span class=\"help-block\">$jobHistEnd_err</span>
+                    </div>
+                </div>
+                <div class=\"form-group mb-2 <?php echo (!empty($jobHistPos_err)) ? 'has-error' : ''; ?>\">
+                    <label for=\"jobHistPosEntry\">Position</label>
+                    <input type=\"text\" class=\"form-control\" name=\"jobHistPosEntry\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistPos\">
+                    <span class=\"help-block\">$jobHistPos_err</span>
+                </div>
+                <div class=\"input-group mb-4\">
+                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupFname_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"jobHistSupFnameEntry\">Supervisor's First Name</label>
+                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupFnameEntry\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupFname\">
+                        <span class=\"help-block\">$jobHistSupFname_err</span>
+                    </div>
+                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupLname_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"jobHistSupLnameEntry\">Supervisor's Last Name</label>
+                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupLnameEntry\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupLname\">
+                        <span class=\"help-block\">$jobHistSupLname_err</span>
+                    </div>
+                </div>
+                <div class=\"input-group mb-4\">
+                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupEmail_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"jobHistSupEmailEntry\">Supervisor's Email</label>
+                        <input type=\"email\" class=\"form-control\" name=\"jobHistSupEmailEntry\" placeholder=\"example@yahoo.com\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupEmail\">
+                        <span class=\"help-block\">$jobHistSupEmail_err</span>
+                    </div>
+                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupPhone_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"jobHistSupEmailEntry\">Supervisor's Phone</label>
+                        <input type=\"tel\" class=\"form-control\" name=\"jobHistSupPhoneEntry\" placeholder=\"xxx-xxx-xxxx\" pattern=\"\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupPhone\">
+                        <span class=\"help-block\">$jobHistSupPhone_err</span>
+                    </div>
+                </div>
+                ";
+
+                echo $jobHistMarkup;
+            }
+            ?>
+            
+            <!-- SUBMIT BUTTON -->
             <div class="bottom-padding form-group">
                 <input type="submit" class="btn btn-primary float-right ml-2" value="Submit">
                 <input type="reset" class="btn btn-secondary float-right" value="Reset">
