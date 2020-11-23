@@ -37,14 +37,14 @@ $currUserCountry = $newUserCountry = $userCountry_err = "";
 // === JOB HIST VARIABLES
 $jobHistCount = 0;
 $currJobHistory = $newJobHistory = [];
-$jobHistCompany = $jobHistCompany_err = "";
-$jobHistStart = $jobHistStart_err = "";
-$jobHistEnd = $jobHistEnd_err = "";
-$jobHistPos = $jobHistPos_err = "";
-$jobHistSupFname = $jobHistSupFname_err = "";
-$jobHistSupLname = $jobHistSupLname_err = "";
-$jobHistSupEmail = $jobHistSupEmail_err = "";
-$jobHistSupPhone = $jobHistSupPhone_err = "";
+$jobHistCompany = $newJobHistCompany = $jobHistCompany_err = "";
+$jobHistStart = $newJobHistStart = $jobHistStart_err = "";
+$jobHistEnd = $newJobHistEnd = $jobHistEnd_err = "";
+$jobHistPos = $newJobHistPos = $jobHistPos_err = "";
+$jobHistSupFname = $newJobHistSupFname = $jobHistSupFname_err = "";
+$jobHistSupLname = $newJobHistSupLname = $jobHistSupLname_err = "";
+$jobHistSupEmail = $newJobHistSupEmail = $jobHistSupEmail_err = "";
+$jobHistSupPhone = $newJobHistSupPhone = $jobHistSupPhone_err = "";
 $jobHistMarkup = "";
 // === EDU HISTORY & EDU FACILITIES VARIABLES
 $eduHistCount = 0;
@@ -100,6 +100,7 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
+    
     // PERSONAL DETAILS VALIDATION
     // Validate First name
     if (empty(trim($_POST["userFnameEntry"]))) {
@@ -162,8 +163,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         $newUserCountry = trim($_POST["userCountryEntry"]);
     }
 
-    
-
+    // UPDATE PERSONAL DETAILS
     if ($currUserFname != $newUserFname ||
     $currUserLname != $newUserLname ||
     $currUserEmail != $newUserEmail ||
@@ -183,6 +183,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             mysqli_stmt_close($stmt);
         }
     }
+
     mysqli_close($link);
 }
 
@@ -394,52 +395,52 @@ $currEduHistFacility = [
                 "
                 <span><p class=\"form-subheader2\">[ JOB #$jobHistCount ]</p></span>
                 <div class=\"form-group mb-2 <?php echo (!empty($jobHistCompany_err)) ? 'has-error' : ''; ?>\">
-                    <label for=\"jobHistCompanyEntry\">Company</label>
-                    <input type=\"text\" class=\"form-control\" name=\"jobHistCompanyEntry\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistCompany\">
+                    <label for=\"jobHistCompanyEntry$jobHistCount\">Company</label>
+                    <input type=\"text\" class=\"form-control\" name=\"jobHistCompanyEntry$jobHistCount\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistCompany\">
                     <span class=\"help-block\">$jobHistCompany_err</span>
                 </div>
                 <div class=\"input-group mb-4\">
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistStart_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistStartEntry\">Start Date</label>
+                        <label for=\"jobHistStartEntry$jobHistCount\">Start Date</label>
                         <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
-                            <input type=\"date\" class=\"form-control\" name=\"jobHistStartEntry\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistStart\">
+                            <input type=\"date\" class=\"form-control\" name=\"jobHistStartEntry$jobHistCount\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistStart\">
                         </div>
                         <span class=\"help-block\">$jobHistStart_err</span>
                     </div>
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistEnd_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistEndEntry\">End Date</label>
+                        <label for=\"jobHistEndEntry$jobHistCount\">End Date</label>
                         <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
-                            <input type=\"date\" class=\"form-control\" name=\"jobHistEndEntry\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistEnd\">
+                            <input type=\"date\" class=\"form-control\" name=\"jobHistEndEntry$jobHistCount\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistEnd\">
                         </div>
                         <span class=\"help-block\">$jobHistEnd_err</span>
                     </div>
                 </div>
                 <div class=\"form-group mb-2 <?php echo (!empty($jobHistPos_err)) ? 'has-error' : ''; ?>\">
-                    <label for=\"jobHistPosEntry\">Position</label>
-                    <input type=\"text\" class=\"form-control\" name=\"jobHistPosEntry\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistPos\">
+                    <label for=\"jobHistPosEntry$jobHistCount\">Position</label>
+                    <input type=\"text\" class=\"form-control\" name=\"jobHistPosEntry$jobHistCount\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistPos\">
                     <span class=\"help-block\">$jobHistPos_err</span>
                 </div>
                 <div class=\"input-group mb-4\">
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupFname_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistSupFnameEntry\">Supervisor's First Name</label>
-                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupFnameEntry\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupFname\">
+                        <label for=\"jobHistSupFnameEntry$jobHistCount\">Supervisor's First Name</label>
+                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupFnameEntry$jobHistCount\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupFname\">
                         <span class=\"help-block\">$jobHistSupFname_err</span>
                     </div>
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupLname_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistSupLnameEntry\">Supervisor's Last Name</label>
-                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupLnameEntry\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupLname\">
+                        <label for=\"jobHistSupLnameEntry$jobHistCount\">Supervisor's Last Name</label>
+                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupLnameEntry$jobHistCount\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupLname\">
                         <span class=\"help-block\">$jobHistSupLname_err</span>
                     </div>
                 </div>
                 <div class=\"input-group mb-4\">
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupEmail_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistSupEmailEntry\">Supervisor's Email</label>
-                        <input type=\"email\" class=\"form-control\" name=\"jobHistSupEmailEntry\" placeholder=\"example@yahoo.com\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupEmail\">
+                        <label for=\"jobHistSupEmailEntry$jobHistCount\">Supervisor's Email</label>
+                        <input type=\"email\" class=\"form-control\" name=\"jobHistSupEmailEntry$jobHistCount\" placeholder=\"example@yahoo.com\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupEmail\">
                         <span class=\"help-block\">$jobHistSupEmail_err</span>
                     </div>
                     <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupPhone_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistSupEmailEntry\">Supervisor's Phone</label>
-                        <input type=\"tel\" class=\"form-control\" name=\"jobHistSupPhoneEntry\" placeholder=\"xxx-xxx-xxxx\" pattern=\"\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupPhone\">
+                        <label for=\"jobHistSupEmailEntry$jobHistCount\">Supervisor's Phone</label>
+                        <input type=\"tel\" class=\"form-control\" name=\"jobHistSupPhoneEntry$jobHistCount\" placeholder=\"xxx-xxx-xxxx\" pattern=\"\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}\" data-error=\"This field is optional but must be valid.\" value=\"$jobHistSupPhone\">
                         <span class=\"help-block\">$jobHistSupPhone_err</span>
                     </div>
                 </div>
