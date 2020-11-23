@@ -61,6 +61,29 @@ $eduHistFacilityState = $eduHistFacilityState_err = "";
 $eduHistFacilityPostal = $eduHistFacilityPostal_err = "";
 $eduHistFacilityType = $eduHistFacilityType_err = "";
 
+// Fetch jobseeker personal details
+$currUser = $_SESSION["username"];
+$sql = "SELECT fname, lname, email, phone, dob, street, city, state, postal, country FROM people WHERE username=? limit 1";
+if ($stmt = mysqli_prepare($link, $sql)) {
+    mysqli_stmt_bind_param($stmt, "s", $currUser);
+    if (mysqli_stmt_execute($stmt)) {
+        $res = mysqli_stmt_get_result($stmt);
+        $userDetails = mysqli_fetch_assoc($res);
+        if ($userDetails) {
+            $currUserFname = $userDetails["fname"];
+            $currUserLname = $userDetails["lname"];
+            $currUserEmail = $userDetails["email"];
+            $currUserPhone = $userDetails["phone"];
+            $currUserDob = $userDetails["dob"];
+            $currUserStreet = $userDetails["street"];
+            $currUserCity = $userDetails["city"];
+            $currUserState = $userDetails["state"];
+            $currUserPostal = $userDetails["postal"];
+            $currUserCountry = $userDetails["country"];
+        }
+    }
+}
+
 // ========== TEMP VALUES FOR ARRAYS ABOVE (MOCK DB RESULTS)
 $currJobHistory = [
     array("company"=>"company xyz", "start_date"=>"1985-11-13", "end_date"=>"2000-11-18", "position"=>"junior software engineer", "supervisor_fname"=>"john", "supervisor_lname"=>"doe", "supervisor_email"=>"john@email.com", "supervisor_phone"=>"1010101010"),
@@ -338,7 +361,7 @@ $currEduHistFacility = [
                 $eduHistStart = $eduHistory['start_date'];
                 $eduHistEnd = $eduHistory['end_date'];
                 $eduHistGpa = $eduHistory['gpa'];
-                
+
                 $eduHistMarkup = 
                 "
                 <span><p class=\"form-subheader2\">[ EDU #$eduHistCount ]</p></span>
