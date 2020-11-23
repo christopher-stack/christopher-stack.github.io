@@ -471,93 +471,90 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 $eduHistFacilityCity = $eduHistory['city'];
                 $eduHistFacilityState = $eduHistory['state'];
                 $eduHistFacilityPostal = $eduHistory['postal'];
-
-                $eduHistMarkup = 
-                "
-                <span><p class=\"form-subheader2\">[ EDU #$eduHistCount ]</p></span>
-                <div class=\"input-group mb-4\">
-                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($eduHistAreaOfStudy_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"eduHistAreaOfStudyEntry\">Area Of Study</label>
-                        <input type=\"text\" class=\"form-control\" name=\"eduHistAreaOfStudyEntry\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistAreaOfStudy\">
-                        <span class=\"help-block\">$eduHistAreaOfStudy_err</span>
-                    </div>
-                    <div class=\"form-group row mr-3 col-md-5 <?php echo (!empty($eduHistDegree_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"eduHistDegreeEntry\">Degree</label>
-                        <div class=\"input-group mb-2\">
-                            <select class=\"form-select\" name=\"eduHistDegreeEntry\" required=\"required\" data-error=\"This field is required.\">
-                                <option selected disabled value=\"\">Please select degree</option>
-                                <option value=\"High School\" <?php if($eduHistDegree == \"High School\") { echo \"SELECTED\"; } ?>>High School</option>
-                                <option value=\"Bachelors\" <?php if($eduHistDegree == \"Bachelors\") { echo \"SELECTED\"; } ?>>Bachelors</option>
-                                <option value=\"Associates\" <?php if($eduHistDegree == \"Associates\") { echo \"SELECTED\"; } ?>>Associates</option>
-                                <option value=\"Masters\" <?php if($eduHistDegree == \"Masters\") { echo \"SELECTED\"; } ?>>Masters</option>
-                                <option value=\"Doctorate\" <?php if($eduHistDegree == \"Doctorate\") { echo \"SELECTED\"; } ?>>Doctorate</option>
-                            </select>
-                        </div>
-                        <span class=\"help-block\"><?php echo $eduHistDegree_err; ?></span>
-                    </div>
+                $eduHistFacilityType = $eduHistory['type'];
+            ?>
+            <span><p class="form-subheader2">[ EDU #<?php echo $eduHistCount; ?> ]</p></span>
+            <div class="input-group mb-4">
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($eduHistAreaOfStudy_err)) ? 'has-error' : ''; ?>">
+                    <label for="eduHistAreaOfStudyEntry">Area Of Study</label>
+                    <input type="text" class="form-control" name="eduHistAreaOfStudyEntry" required data-error="This field is required." value="<?php echo $eduHistAreaOfStudy; ?>">
+                    <span class="help-block"><?php echo $eduHistAreaOfStudy_err; ?></span>
                 </div>
-                <div class=\"input-group mb-4\">
-                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($eduHistStart_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"eduHistStartEntry\">Start Date</label>
-                        <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
-                            <input type=\"date\" class=\"form-control\" name=\"eduHistStartEntry\" placeholder=\"dd.mm.yyyy\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistStart\">
-                        </div>
-                        <span class=\"help-block\">$eduHistStart_err</span>
+                <div class="form-group row mr-3 col-md-5 <?php echo (!empty($eduHistDegree_err)) ? 'has-error' : ''; ?>">
+                    <label for="eduHistDegreeEntry">Degree</label>
+                    <div class="input-group mb-2">
+                        <select class="form-select" name="eduHistDegreeEntry" required data-error="This field is required.">
+                            <option selected disabled value="">Please select degree</option>
+                            <option value="High School" <?php if($eduHistDegree == "High School") { echo "selected"; } ?>>High School</option>
+                            <option value="Bachelors" <?php if($eduHistDegree == "Bachelors") { echo "selected"; } ?>>Bachelors</option>
+                            <option value="Associates" <?php if($eduHistDegree == "Associates") { echo "selected"; } ?>>Associates</option>
+                            <option value="Masters" <?php if($eduHistDegree == "Masters") { echo "selected"; } ?>>Masters</option>
+                            <option value="Doctorate" <?php if($eduHistDegree == "Doctorate") { echo "selected"; } ?>>Doctorate</option>
+                        </select>
                     </div>
-                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($eduHistEnd_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"eduHistEndEntry\">End Date</label>
-                        <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
-                            <input type=\"date\" class=\"form-control\" name=\"eduHistEndEntry\" placeholder=\"dd.mm.yyyy\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistEnd\">
-                        </div>
-                        <span class=\"help-block\">$eduHistEnd_err</span>
-                    </div>
+                    <span class="help-block"><?php echo $eduHistDegree_err; ?></span>
                 </div>
-                <div class=\"input-group mb-4\">
-                    <div class=\"form-group row mr-3 col-md-5 <?php echo (!empty($eduHistFacilityType_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"eduHistFacilityTypeEntry\">Institution Type</label>
-                        <div class=\"input-group mb-2\">
-                            <select class=\"form-select\" name=\"eduHistFacilityTypeEntry\" required=\"required\" data-error=\"This field is required.\">
-                                <option selected disabled value=\"\">Please select institution type</option>
-                                <option value=\"University\">University</option>
-                                <option value=\"College\">College</option>
-                                <option value=\"Technical School\">Technical School</option>
-                                <option value=\"High School\">High School</option>
-                                <option value=\"Crade School\">Grade School</option>
-                            </select>
-                        </div>
-                        <span class=\"help-block\"><?php echo $eduHistFacilityType_err; ?></span>
+            </div>
+            <div class="input-group mb-4">
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($eduHistStart_err)) ? 'has-error' : ''; ?>">
+                    <label for="eduHistStartEntry">Start Date</label>
+                    <div class="input-group date" data-date-format="dd.mm.yyyy">
+                        <input type="date" class="form-control" name="eduHistStartEntry" placeholder="dd.mm.yyyy" required data-error="This field is required." value="<?php echo $eduHistStart; ?>">
                     </div>
-                    <div class=\"form-group row mr-3 col-md-5 mb-2 <?php echo (!empty($eduHistGpa_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"eduHistGpaEntry\">GPA</label>
-                        <input type=\"number\" class=\"form-control\" name=\"eduHistGpaEntry\" required=\"required\" data-error=\"This field is required.\" min=\"0\" max=\"4\" step=\".001\" value=\"$eduHistGpa\">
-                        <span class=\"help-block\">$eduHistGpa_err</span>
-                    </div>
+                    <span class="help-block"><?php echo $eduHistStart_err; ?></span>
                 </div>
-                <div class=\"form-group mb-4 <?php echo (!empty($eduHistFacilityName_err)) ? 'has-error' : ''; ?>\">
-                    <label for=\"eduHistFacilityNameEntry\">Institution Name</label>
-                    <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityNameEntry\" required=\"required\" data-error=\"This field is required.\" min=\"0\" max=\"4\" step=\".001\" value=\"$eduHistFacilityName\">
-                    <span class=\"help-block\">$eduHistFacilityName_err</span>
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($eduHistEnd_err)) ? 'has-error' : ''; ?>">
+                    <label for="eduHistEndEntry">End Date</label>
+                    <div class="input-group date" data-date-format="dd.mm.yyyy">
+                        <input type="date" class="form-control" name="eduHistEndEntry" placeholder="dd.mm.yyyy" required data-error="This field is required." value="<?php echo $eduHistEnd; ?>">
+                    </div>
+                    <span class="help-block"><?php echo $eduHistEnd_err; ?></span>
                 </div>
-                <div class=\"input-group mb-4\">
-                    <div class=\"form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityCity_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"eduHistFacilityCityEntry\">City</label>
-                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityCityEntry\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistFacilityCity\">
-                        <span class=\"help-block\">$eduHistFacilityCity_err</span>
+            </div>
+            <div class="input-group mb-4">
+                <div class="form-group row mr-3 col-md-5 <?php echo (!empty($eduHistFacilityType_err)) ? 'has-error' : ''; ?>">
+                    <label for="eduHistFacilityTypeEntry">Institution Type</label>
+                    <div class="input-group mb-2">
+                        <select class="form-select" name="eduHistFacilityTypeEntry" required data-error="This field is required.">
+                            <option selected disabled value="">Please select institution type</option>
+                            <option value="University" <?php if($eduHistFacilityType == "University") { echo "selected"; } ?>>University</option>
+                            <option value="College" <?php if($eduHistFacilityType == "College") { echo "selected"; } ?>>College</option>
+                            <option value="Technical School" <?php if($eduHistFacilityType == "Technical School") { echo "selected"; } ?>>Technical School</option>
+                            <option value="High School" <?php if($eduHistFacilityType == "High School") { echo "selected"; } ?>>High School</option>
+                            <option value="Grade School" <?php if($eduHistFacilityType == "Grade School") { echo "selected"; } ?>>Grade School</option>
+                        </select>
                     </div>
-                    <div class=\"form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityState_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"eduHistFacilityStateEntry\">State</label>
-                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityStateEntry\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistFacilityState\">
-                        <span class=\"help-block\">$eduHistFacilityState_err</span>
-                    </div>
-                    <div class=\"form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityPostal_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"eduHistFacilityPostalEntry\">Zip</label>
-                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityPostalEntry\" required=\"required\" data-error=\"This field is required.\" value=\"$eduHistFacilityPostal\">
-                        <span class=\"help-block\">$eduHistFacilityPostal_err</span>
-                    </div>
+                    <span class="help-block"><?php echo $eduHistFacilityType_err; ?></span>
                 </div>
-                ";
-
-                echo $eduHistMarkup;
+                <div class="form-group row mr-3 col-md-5 mb-2 <?php echo (!empty($eduHistGpa_err)) ? 'has-error' : ''; ?>">
+                    <label for="eduHistGpaEntry">GPA</label>
+                    <input type="number" class="form-control" name="eduHistGpaEntry" required data-error="This field is required." min="0" max="4" step=".001" value="<?php echo $eduHistGpa; ?>">
+                    <span class="help-block"><?php echo $eduHistGpa_err; ?></span>
+                </div>
+            </div>
+            <div class="form-group mb-4 <?php echo (!empty($eduHistFacilityName_err)) ? 'has-error' : ''; ?>">
+                <label for="eduHistFacilityNameEntry">Institution Name</label>
+                <input type="text" class="form-control" name="eduHistFacilityNameEntry" required data-error="This field is required." value="<?php echo $eduHistFacilityName; ?>">
+                <span class="help-block"><?php echo $eduHistFacilityName_err; ?></span>
+            </div>
+            <div class="input-group mb-4">
+                <div class="form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityCity_err)) ? 'has-error' : ''; ?>">
+                    <label for="eduHistFacilityCityEntry">City</label>
+                    <input type="text" class="form-control" name="eduHistFacilityCityEntry" required data-error="This field is required." value="<?php echo $eduHistFacilityCity; ?>">
+                    <span class="help-block"><?php echo $eduHistFacilityCity_err; ?></span>
+                </div>
+                <div class="form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityState_err)) ? 'has-error' : ''; ?>">
+                    <label for="eduHistFacilityStateEntry">State</label>
+                    <input type="text" class="form-control" name="eduHistFacilityStateEntry" required data-error="This field is required." value="<?php echo $eduHistFacilityState; ?>">
+                    <span class="help-block"><?php echo $eduHistFacilityState_err; ?></span>
+                </div>
+                <div class="form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityPostal_err)) ? 'has-error' : ''; ?>">
+                    <label for="eduHistFacilityPostalEntry">Zip</label>
+                    <input type="text" class="form-control" name="eduHistFacilityPostalEntry" required data-error="This field is required." value="<?php echo $eduHistFacilityPostal; ?>">
+                    <span class="help-block"><?php echo $eduHistFacilityPostal_err; ?></span>
+                </div>
+            </div>
+            <?php
             }
             ?>
             <!-- SUBMIT BUTTON -->
