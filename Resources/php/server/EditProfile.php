@@ -47,13 +47,33 @@ $jobHistSupEmail = $jobHistSupEmail_err = "";
 $jobHistSupPhone = $jobHistSupPhone_err = "";
 $jobHistMarkup = "";
 // === EDU HISTORY & EDU FACILITIES VARIABLES
+$eduHistCount = 0;
 $currEduHistory = $newEduHistory = [];
+$eduHistAreaOfStudy = $eduHistAreaOfStudy_err = "";
+$eduHistDegree = $eduHistDegree_err = "";
+$eduHistStart = $eduHistStart_err = "";
+$eduHistEnd = $eduHistEnd_err = "";
+$eduHistGpa = $eduHistGpa_err = "";
+$currEduHistFacility = $newEduHistFacility = [];
+$eduHistFacilityName = $eduHistFacilityName_err = "";
+$eduHistFacilityCity = $eduHistFacilityCity_err = "";
+$eduHistFacilityState = $eduHistFacilityState_err = "";
+$eduHistFacilityPostal = $eduHistFacilityPostal_err = "";
+$eduHistFacilityType = $eduHistFacilityType_err = "";
 
-// ========== TEMP VALUES FOR ARRAYS ABOVE
+// ========== TEMP VALUES FOR ARRAYS ABOVE (MOCK DB RESULTS)
 $currJobHistory = [
     array("company"=>"company xyz", "start_date"=>"1985-11-13", "end_date"=>"2000-11-18", "position"=>"junior software engineer", "supervisor_fname"=>"john", "supervisor_lname"=>"doe", "supervisor_email"=>"john@email.com", "supervisor_phone"=>"1010101010"),
     array("company"=>"company abc", "start_date"=>"2001-11-13", "end_date"=>"2005-11-18", "position"=>"senior software engineer", "supervisor_fname"=>"jane", "supervisor_lname"=>"doe", "supervisor_email"=>"jane@email.com", "supervisor_phone"=>"2020202020"),
     array("company"=>"company def", "start_date"=>"2006-11-13", "end_date"=>"2020-11-18", "position"=>"cto", "supervisor_fname"=>"tom", "supervisor_lname"=>"doe", "supervisor_email"=>"tom@email.com", "supervisor_phone"=>"3030303030")
+];
+$currEduHistory = [
+    array("areaofstudy"=>"mathematics", "degree"=>"Bachelors", "start_date"=>"1985-11-13", "end_date"=>"2000-11-18", "gpa"=>"4.000", "ed_facility_name"=>"mit", "ed_facility_city"=>"cambridge"),
+    array("areaofstudy"=>"data science", "degree"=>"Masters", "start_date"=>"2001-11-13", "end_date"=>"2005-11-18", "gpa"=>"4.000", "ed_facility_name"=>"stanford", "ed_facility_city"=>"stanford university")
+];
+$currEduHistFacility = [
+    array("name"=>"mit", "city"=>"cambridge", "state"=>"massachusetts", "postal"=>"02139"),
+    array("name"=>"stanford university", "city"=>"stanford", "state"=>"california", "postal"=>"94305")
 ];
 
 
@@ -308,7 +328,105 @@ $currJobHistory = [
                 echo $jobHistMarkup;
             }
             ?>
-            
+            <!-- EDUCATION HISTORY -->
+            <span><p class="form-subheader">EDUCATION HISTORY</p></span>
+            <?php
+            foreach ($currEduHistory as $eduHistory) {
+                $eduHistCount++;
+                $eduHistAreaOfStudy = $eduHistory['areaofstudy'];
+                $eduHistDegree = $eduHistory['degree'];
+                $eduHistStart = $eduHistory['start_date'];
+                $eduHistEnd = $eduHistory['end_date'];
+                $eduHistGpa = $eduHistory['gpa'];
+                
+                $eduHistMarkup = 
+                "
+                <span><p class=\"form-subheader2\">[ EDU #$eduHistCount ]</p></span>
+                <div class=\"input-group mb-4\">
+                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($eduHistAreaOfStudy_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"eduHistAreaOfStudyEntry\">Area Of Study</label>
+                        <input type=\"text\" class=\"form-control\" name=\"eduHistAreaOfStudyEntry\" data-error=\"This field is optional but must be valid.\" value=\"$eduHistAreaOfStudy\">
+                        <span class=\"help-block\">$eduHistAreaOfStudy_err</span>
+                    </div>
+                    <div class=\"form-group row mr-3 col-md-5 <?php echo (!empty($eduHistDegree_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"eduHistDegreeEntry\">Degree</label>
+                        <div class=\"input-group mb-2\">
+                            <select class=\"form-select\" name=\"eduHistDegreeEntry\">
+                                <option selected disabled value=\"\">Please select degree</option>
+                                <option value=\"High School\">High School</option>
+                                <option value=\"Bachelors\">Bachelors</option>
+                                <option value=\"Associates\">Associates</option>
+                                <option value=\"Masters\">Masters</option>
+                                <option value=\"Doctorate\">Doctorate</option>
+                            </select>
+                        </div>
+                        <span class=\"help-block\"><?php echo $eduHistDegree_err; ?></span>
+                    </div>
+                </div>
+                <div class=\"input-group mb-4\">
+                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($eduHistStart_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"eduHistStartEntry\">Start Date</label>
+                        <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
+                            <input type=\"date\" class=\"form-control\" name=\"eduHistStartEntry\" placeholder=\"dd.mm.yyyy\" value=\"$eduHistStart\">
+                        </div>
+                        <span class=\"help-block\">$eduHistStart_err</span>
+                    </div>
+                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($eduHistEnd_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"eduHistEndEntry\">End Date</label>
+                        <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
+                            <input type=\"date\" class=\"form-control\" name=\"eduHistEndEntry\" placeholder=\"dd.mm.yyyy\" value=\"$eduHistEnd\">
+                        </div>
+                        <span class=\"help-block\">$eduHistEnd_err</span>
+                    </div>
+                </div>
+                <div class=\"input-group mb-4\">
+                    <div class=\"form-group row mr-3 col-md-5 <?php echo (!empty($eduHistFacilityType_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"eduHistFacilityTypeEntry\">Institution Type</label>
+                        <div class=\"input-group mb-2\">
+                            <select class=\"form-select\" name=\"eduHistFacilityTypeEntry\">
+                                <option selected disabled value=\"\">Please select institution type</option>
+                                <option value=\"University\">University</option>
+                                <option value=\"College\">College</option>
+                                <option value=\"Technical School\">Technical School</option>
+                                <option value=\"High School\">High School</option>
+                                <option value=\"Crade School\">Grade School</option>
+                            </select>
+                        </div>
+                        <span class=\"help-block\"><?php echo $eduHistFacilityType_err; ?></span>
+                    </div>
+                    <div class=\"form-group row mr-3 col-md-5 mb-2 <?php echo (!empty($eduHistGpa_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"eduHistGpaEntry\">GPA</label>
+                        <input type=\"number\" class=\"form-control\" name=\"eduHistGpaEntry\" data-error=\"This field is optional but must be valid.\" min=\"0\" max=\"4\" step=\".001\" value=\"$eduHistGpa\">
+                        <span class=\"help-block\">$eduHistGpa_err</span>
+                    </div>
+                </div>
+                <div class=\"form-group mb-4 <?php echo (!empty($eduHistFacilityName_err)) ? 'has-error' : ''; ?>\">
+                    <label for=\"eduHistFacilityNameEntry\">Institution Name</label>
+                    <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityNameEntry\" data-error=\"This field is optional but must be valid.\" min=\"0\" max=\"4\" step=\".001\" value=\"$eduHistFacilityName\">
+                    <span class=\"help-block\">$eduHistFacilityName_err</span>
+                </div>
+                <div class=\"input-group mb-4\">
+                    <div class=\"form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityCity_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"eduHistFacilityCityEntry\">City</label>
+                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityCityEntry\" data-error=\"This field is optional but must be valid.\" value=\"$eduHistFacilityCity\">
+                        <span class=\"help-block\">$eduHistFacilityCity_err</span>
+                    </div>
+                    <div class=\"form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityState_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"eduHistFacilityStateEntry\">State</label>
+                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityStateEntry\" data-error=\"This field is optional but must be valid.\" value=\"$eduHistFacilityState\">
+                        <span class=\"help-block\">$eduHistFacilityState_err</span>
+                    </div>
+                    <div class=\"form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityPostal_err)) ? 'has-error' : ''; ?>\">
+                        <label for=\"eduHistFacilityPostalEntry\">Zip</label>
+                        <input type=\"text\" class=\"form-control\" name=\"eduHistFacilityPostalEntry\" data-error=\"This field is optional but must be valid.\" value=\"$eduHistFacilityPostal\">
+                        <span class=\"help-block\">$eduHistFacilityPostal_err</span>
+                    </div>
+                </div>
+                ";
+
+                echo $eduHistMarkup;
+            }
+            ?>
             <!-- SUBMIT BUTTON -->
             <div class="bottom-padding form-group">
                 <input type="submit" class="btn btn-primary float-right ml-2" value="Submit">
