@@ -85,7 +85,7 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 }
 
 // Fetch current user's job history
-$sql = "SELECT * FROM `job_history` WHERE jobseeker=?";
+$sql = "SELECT * FROM `job_history` WHERE jobseeker=? ORDER BY start_date DESC LIMIT 3";
 if ($stmt = mysqli_prepare($link, $sql)) {
     mysqli_stmt_bind_param($stmt, "s", $currUser);
     if (mysqli_stmt_execute($stmt)) {
@@ -204,61 +204,61 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     }
 
     // JOB HISTORY VALIDATION
-    if ($currJobHistory) { // if already have data (update)
-        $numJobs = 0;
-        foreach ($currJobHistory as $job) {
-            $numJobs++;
+    $numJobs = 0;
+    foreach ($currJobHistory as $job) {
+        $numJobs++;
+    }
+    for ($i = 0; $i < $numJobs; $i++) {
+        // Validate company
+        if (empty(trim($_POST["jobHistCompanyEntry".($i + 1)]))) {
+            $jobHistCompany_err = "Please enter company.";
+        } else {
+            $newJobHistCompany = trim($_POST["jobHistCompanyEntry".($i + 1)]);
         }
-        for ($i = 0; $i < $numJobs; $i++) {
-            // Validate company
-            if (empty(trim($_POST["jobHistCompanyEntry".($i + 1)]))) {
-                $jobHistCompany_err = "Please enter company.";
-            } else {
-                $newJobHistCompany = trim($_POST["jobHistCompanyEntry".($i + 1)]);
-            }
-            // Validate start date
-            if (empty(trim($_POST["jobHistStartEntry".($i + 1)]))) {
-                $jobHistStart_err = "Please enter start date.";
-            } else {
-                $newJobHistStart = trim($_POST["jobHistStartEntry".($i + 1)]);
-            }
-            // Validate end date
-            if (empty(trim($_POST["jobHistEndEntry".($i + 1)]))) {
-                $jobHistEnd_err = "Please enter end date.";
-            } else {
-                $newJobHistEnd = trim($_POST["jobHistEndEntry".($i + 1)]);
-            }
-            // Validate position
-            if (empty(trim($_POST["jobHistPosEntry".($i + 1)]))) {
-                $jobHistPos_err = "Please enter position.";
-            } else {
-                $newJobHistPos = trim($_POST["jobHistPosEntry".($i + 1)]);
-            }
-            // Validate sup fname
-            if (empty(trim($_POST["jobHistSupFnameEntry".($i + 1)]))) {
-                $jobHistSupFname_err = "Please enter supervisor's first name.";
-            } else {
-                $newJobHistSupFname = trim($_POST["jobHistSupFnameEntry".($i + 1)]);
-            }
-            // Validate sup lname
-            if (empty(trim($_POST["jobHistSupLnameEntry".($i + 1)]))) {
-                $jobHistSupLname_err = "Please enter supervisor's last name.";
-            } else {
-                $newJobHistSupLname = trim($_POST["jobHistSupLnameEntry".($i + 1)]);
-            }
-            // Validate sup email
-            if (empty(trim($_POST["jobHistSupEmailEntry".($i + 1)]))) {
-                $jobHistSupEmail_err = "Please enter supervisor's email.";
-            } else {
-                $newJobHistSupEmail = trim($_POST["jobHistSupEmailEntry".($i + 1)]);
-            }
-            // Validate sup phone
-            if (empty(trim($_POST["jobHistSupPhoneEntry".($i + 1)]))) {
-                $jobHistSupPhone_err = "Please enter supervisor's phone number.";
-            } else {
-                $newJobHistSupPhone = trim($_POST["jobHistSupPhoneEntry".($i + 1)]);
-            }
-            // Update
+        // Validate start date
+        if (empty(trim($_POST["jobHistStartEntry".($i + 1)]))) {
+            $jobHistStart_err = "Please enter start date.";
+        } else {
+            $newJobHistStart = trim($_POST["jobHistStartEntry".($i + 1)]);
+        }
+        // Validate end date
+        if (empty(trim($_POST["jobHistEndEntry".($i + 1)]))) {
+            $jobHistEnd_err = "Please enter end date.";
+        } else {
+            $newJobHistEnd = trim($_POST["jobHistEndEntry".($i + 1)]);
+        }
+        // Validate position
+        if (empty(trim($_POST["jobHistPosEntry".($i + 1)]))) {
+            $jobHistPos_err = "Please enter position.";
+        } else {
+            $newJobHistPos = trim($_POST["jobHistPosEntry".($i + 1)]);
+        }
+        // Validate sup fname
+        if (empty(trim($_POST["jobHistSupFnameEntry".($i + 1)]))) {
+            $jobHistSupFname_err = "Please enter supervisor's first name.";
+        } else {
+            $newJobHistSupFname = trim($_POST["jobHistSupFnameEntry".($i + 1)]);
+        }
+        // Validate sup lname
+        if (empty(trim($_POST["jobHistSupLnameEntry".($i + 1)]))) {
+            $jobHistSupLname_err = "Please enter supervisor's last name.";
+        } else {
+            $newJobHistSupLname = trim($_POST["jobHistSupLnameEntry".($i + 1)]);
+        }
+        // Validate sup email
+        if (empty(trim($_POST["jobHistSupEmailEntry".($i + 1)]))) {
+            $jobHistSupEmail_err = "Please enter supervisor's email.";
+        } else {
+            $newJobHistSupEmail = trim($_POST["jobHistSupEmailEntry".($i + 1)]);
+        }
+        // Validate sup phone
+        if (empty(trim($_POST["jobHistSupPhoneEntry".($i + 1)]))) {
+            $jobHistSupPhone_err = "Please enter supervisor's phone number.";
+        } else {
+            $newJobHistSupPhone = trim($_POST["jobHistSupPhoneEntry".($i + 1)]);
+        }
+
+        if ($currJobHistory) { // if already have data (update)
             $currCompany = $currJobHistory[$i]["company"];
             $currStart = $currJobHistory[$i]["start_date"];
             $sql = "UPDATE job_history 
@@ -272,11 +272,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 }
                 mysqli_stmt_close($stmt);
             }
+        } else { // no data yet / new user (insert)
+            $sql = "INSERT INTO job_history (jobseeker, company, start_date, end_date, position, supervisor_fname, supervisor_lname, supervisor_email, supervisor_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            if ($stmt = mysqli_prepare($link, $sql)) {
+                mysqli_stmt_bind_param($stmt, "sssssssss", $currUser, $newJobHistCompany, $newJobHistStart, $newJobHistEnd, $newJobHistPos, $newJobHistSupFname, $newJobHistSupLname, $newJobHistSupEmail, $newJobHistSupPhone);
+                if (mysqli_stmt_execute($stmt)) {
+                    header("Location: ./EditProfile.php");
+                }
+                else {
+                    echo "Something went wrong. Please try again.";
+                }
+                mysqli_stmt_close($stmt);
+            }
         }
-    }
-    else { // no data yet / new user (insert)
 
     }
+    
 
     // EDUCATION HISTORY VALIDATION
     if ($currEduHistory) { // if already have data (update)
@@ -368,8 +379,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     }
 
     mysqli_close($link);
-}
 
+}
 ?>
  
 <!DOCTYPE html>
