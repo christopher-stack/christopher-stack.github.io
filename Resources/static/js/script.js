@@ -17,3 +17,6 @@ function showPage() {
 	document.getElementById("loader").style.display = "none";
 	document.getElementById("webDiv").style.display = "block";
 }
+function addEdu(eduHistCount) {
+	
+}
