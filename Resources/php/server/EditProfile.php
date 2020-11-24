@@ -203,6 +203,81 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         }
     }
 
+    // JOB HISTORY VALIDATION
+    if ($currJobHistory) { // if already have data (update)
+        $numJobs = 0;
+        foreach ($currJobHistory as $job) {
+            $numJobs++;
+        }
+        for ($i = 0; $i < $numJobs; $i++) {
+            // Validate company
+            if (empty(trim($_POST["jobHistCompanyEntry".($i + 1)]))) {
+                $jobHistCompany_err = "Please enter company.";
+            } else {
+                $newJobHistCompany = trim($_POST["jobHistCompanyEntry".($i + 1)]);
+            }
+            // Validate start date
+            if (empty(trim($_POST["jobHistStartEntry".($i + 1)]))) {
+                $jobHistStart_err = "Please enter start date.";
+            } else {
+                $newJobHistStart = trim($_POST["jobHistStartEntry".($i + 1)]);
+            }
+            // Validate end date
+            if (empty(trim($_POST["jobHistEndEntry".($i + 1)]))) {
+                $jobHistEnd_err = "Please enter end date.";
+            } else {
+                $newJobHistEnd = trim($_POST["jobHistEndEntry".($i + 1)]);
+            }
+            // Validate position
+            if (empty(trim($_POST["jobHistPosEntry".($i + 1)]))) {
+                $jobHistPos_err = "Please enter position.";
+            } else {
+                $newJobHistPos = trim($_POST["jobHistPosEntry".($i + 1)]);
+            }
+            // Validate sup fname
+            if (empty(trim($_POST["jobHistSupFnameEntry".($i + 1)]))) {
+                $jobHistSupFname_err = "Please enter supervisor's first name.";
+            } else {
+                $newJobHistSupFname = trim($_POST["jobHistSupFnameEntry".($i + 1)]);
+            }
+            // Validate sup lname
+            if (empty(trim($_POST["jobHistSupLnameEntry".($i + 1)]))) {
+                $jobHistSupLname_err = "Please enter supervisor's last name.";
+            } else {
+                $newJobHistSupLname = trim($_POST["jobHistSupLnameEntry".($i + 1)]);
+            }
+            // Validate sup email
+            if (empty(trim($_POST["jobHistSupEmailEntry".($i + 1)]))) {
+                $jobHistSupEmail_err = "Please enter supervisor's email.";
+            } else {
+                $newJobHistSupEmail = trim($_POST["jobHistSupEmailEntry".($i + 1)]);
+            }
+            // Validate sup phone
+            if (empty(trim($_POST["jobHistSupPhoneEntry".($i + 1)]))) {
+                $jobHistSupPhone_err = "Please enter supervisor's phone number.";
+            } else {
+                $newJobHistSupPhone = trim($_POST["jobHistSupPhoneEntry".($i + 1)]);
+            }
+            // Update
+            $currCompany = $currJobHistory[$i]["company"];
+            $currStart = $currJobHistory[$i]["start_date"];
+            $sql = "UPDATE job_history 
+                SET company=?, start_date=?, end_date=?, position=?, supervisor_fname=?, supervisor_lname=?, supervisor_email=?, supervisor_phone=?
+                WHERE jobseeker=? AND company=? AND start_date=?
+            ";
+            if ($stmt = mysqli_prepare($link, $sql)) {
+                mysqli_stmt_bind_param($stmt, "sssssssssss", $newJobHistCompany, $newJobHistStart, $newJobHistEnd, $newJobHistPos, $newJobHistSupFname, $newJobHistSupLname, $newJobHistSupEmail, $newJobHistSupPhone, $currUser, $currCompany, $currStart);
+                if (mysqli_stmt_execute($stmt)) {
+                    echo "SUCCESS!";
+                }
+                mysqli_stmt_close($stmt);
+            }
+        }
+    }
+    else { // no data yet / new user (insert)
+
+    }
+
     mysqli_close($link);
 }
 
@@ -473,14 +548,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             <span><p class="form-subheader2">[ EDU #<?php echo $eduHistCount; ?> ]</p></span>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($eduHistAreaOfStudy_err)) ? 'has-error' : ''; ?>">
-                    <label for="eduHistAreaOfStudyEntry">Area Of Study</label>
-                    <input type="text" class="form-control" name="eduHistAreaOfStudyEntry" required data-error="This field is required." value="<?php echo $eduHistAreaOfStudy; ?>">
+                    <label for="eduHistAreaOfStudyEntry<?php echo $eduHistCount; ?>">Area Of Study</label>
+                    <input type="text" class="form-control" name="eduHistAreaOfStudyEntry<?php echo $eduHistCount; ?>" required data-error="This field is required." value="<?php echo $eduHistAreaOfStudy; ?>">
                     <span class="help-block"><?php echo $eduHistAreaOfStudy_err; ?></span>
                 </div>
                 <div class="form-group row mr-3 col-md-5 <?php echo (!empty($eduHistDegree_err)) ? 'has-error' : ''; ?>">
-                    <label for="eduHistDegreeEntry">Degree</label>
+                    <label for="eduHistDegreeEntry<?php echo $eduHistCount; ?>">Degree</label>
                     <div class="input-group mb-2">
-                        <select class="form-select" name="eduHistDegreeEntry" required data-error="This field is required.">
+                        <select class="form-select" name="eduHistDegreeEntry<?php echo $eduHistCount; ?>" required data-error="This field is required.">
                             <option selected disabled value="">Please select degree</option>
                             <option value="High School" <?php if($eduHistDegree == "High School") { echo "selected"; } ?>>High School</option>
                             <option value="Bachelors" <?php if($eduHistDegree == "Bachelors") { echo "selected"; } ?>>Bachelors</option>
@@ -494,25 +569,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             </div>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($eduHistStart_err)) ? 'has-error' : ''; ?>">
-                    <label for="eduHistStartEntry">Start Date</label>
+                    <label for="eduHistStartEntry<?php echo $eduHistCount; ?>">Start Date</label>
                     <div class="input-group date" data-date-format="dd.mm.yyyy">
-                        <input type="date" class="form-control" name="eduHistStartEntry" placeholder="dd.mm.yyyy" required data-error="This field is required." value="<?php echo $eduHistStart; ?>">
+                        <input type="date" class="form-control" name="eduHistStartEntry<?php echo $eduHistCount; ?>" placeholder="dd.mm.yyyy" required data-error="This field is required." value="<?php echo $eduHistStart; ?>">
                     </div>
                     <span class="help-block"><?php echo $eduHistStart_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-5 <?php echo (!empty($eduHistEnd_err)) ? 'has-error' : ''; ?>">
-                    <label for="eduHistEndEntry">End Date</label>
+                    <label for="eduHistEndEntry<?php echo $eduHistCount; ?>">End Date</label>
                     <div class="input-group date" data-date-format="dd.mm.yyyy">
-                        <input type="date" class="form-control" name="eduHistEndEntry" placeholder="dd.mm.yyyy" required data-error="This field is required." value="<?php echo $eduHistEnd; ?>">
+                        <input type="date" class="form-control" name="eduHistEndEntry<?php echo $eduHistCount; ?>" placeholder="dd.mm.yyyy" required data-error="This field is required." value="<?php echo $eduHistEnd; ?>">
                     </div>
                     <span class="help-block"><?php echo $eduHistEnd_err; ?></span>
                 </div>
             </div>
             <div class="input-group mb-4">
                 <div class="form-group row mr-3 col-md-5 <?php echo (!empty($eduHistFacilityType_err)) ? 'has-error' : ''; ?>">
-                    <label for="eduHistFacilityTypeEntry">Institution Type</label>
+                    <label for="eduHistFacilityTypeEntry<?php echo $eduHistCount; ?>">Institution Type</label>
                     <div class="input-group mb-2">
-                        <select class="form-select" name="eduHistFacilityTypeEntry" required data-error="This field is required.">
+                        <select class="form-select" name="eduHistFacilityTypeEntry<?php echo $eduHistCount; ?>" required data-error="This field is required.">
                             <option selected disabled value="">Please select institution type</option>
                             <option value="University" <?php if($eduHistFacilityType == "University") { echo "selected"; } ?>>University</option>
                             <option value="College" <?php if($eduHistFacilityType == "College") { echo "selected"; } ?>>College</option>
@@ -524,30 +599,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                     <span class="help-block"><?php echo $eduHistFacilityType_err; ?></span>
                 </div>
                 <div class="form-group row mr-3 col-md-5 mb-2 <?php echo (!empty($eduHistGpa_err)) ? 'has-error' : ''; ?>">
-                    <label for="eduHistGpaEntry">GPA</label>
-                    <input type="number" class="form-control" name="eduHistGpaEntry" required data-error="This field is required." min="0" max="4" step=".001" value="<?php echo $eduHistGpa; ?>">
+                    <label for="eduHistGpaEntry<?php echo $eduHistCount; ?>">GPA</label>
+                    <input type="number" class="form-control" name="eduHistGpaEntry<?php echo $eduHistCount; ?>" required data-error="This field is required." min="0" max="4" step=".001" value="<?php echo $eduHistGpa; ?>">
                     <span class="help-block"><?php echo $eduHistGpa_err; ?></span>
                 </div>
             </div>
             <div class="form-group mb-4 <?php echo (!empty($eduHistFacilityName_err)) ? 'has-error' : ''; ?>">
-                <label for="eduHistFacilityNameEntry">Institution Name</label>
-                <input type="text" class="form-control" name="eduHistFacilityNameEntry" required data-error="This field is required." value="<?php echo $eduHistFacilityName; ?>">
+                <label for="eduHistFacilityNameEntry<?php echo $eduHistCount; ?>">Institution Name</label>
+                <input type="text" class="form-control" name="eduHistFacilityNameEntry<?php echo $eduHistCount; ?>" required data-error="This field is required." value="<?php echo $eduHistFacilityName; ?>">
                 <span class="help-block"><?php echo $eduHistFacilityName_err; ?></span>
             </div>
             <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityCity_err)) ? 'has-error' : ''; ?>">
-                    <label for="eduHistFacilityCityEntry">City</label>
-                    <input type="text" class="form-control" name="eduHistFacilityCityEntry" required data-error="This field is required." value="<?php echo $eduHistFacilityCity; ?>">
+                    <label for="eduHistFacilityCityEntry<?php echo $eduHistCount; ?>">City</label>
+                    <input type="text" class="form-control" name="eduHistFacilityCityEntry<?php echo $eduHistCount; ?>" required data-error="This field is required." value="<?php echo $eduHistFacilityCity; ?>">
                     <span class="help-block"><?php echo $eduHistFacilityCity_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityState_err)) ? 'has-error' : ''; ?>">
-                    <label for="eduHistFacilityStateEntry">State</label>
-                    <input type="text" class="form-control" name="eduHistFacilityStateEntry" required data-error="This field is required." value="<?php echo $eduHistFacilityState; ?>">
+                    <label for="eduHistFacilityStateEntry<?php echo $eduHistCount; ?>">State</label>
+                    <input type="text" class="form-control" name="eduHistFacilityStateEntry<?php echo $eduHistCount; ?>" required data-error="This field is required." value="<?php echo $eduHistFacilityState; ?>">
                     <span class="help-block"><?php echo $eduHistFacilityState_err; ?></span>
                 </div>
                 <div class="form-group mr-3 col-md-3 <?php echo (!empty($eduHistFacilityPostal_err)) ? 'has-error' : ''; ?>">
-                    <label for="eduHistFacilityPostalEntry">Zip</label>
-                    <input type="text" class="form-control" name="eduHistFacilityPostalEntry" required data-error="This field is required." value="<?php echo $eduHistFacilityPostal; ?>">
+                    <label for="eduHistFacilityPostalEntry<?php echo $eduHistCount; ?>">Zip</label>
+                    <input type="text" class="form-control" name="eduHistFacilityPostalEntry<?php echo $eduHistCount; ?>" required data-error="This field is required." value="<?php echo $eduHistFacilityPostal; ?>">
                     <span class="help-block"><?php echo $eduHistFacilityPostal_err; ?></span>
                 </div>
             </div>
