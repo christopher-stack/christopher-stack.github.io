@@ -204,11 +204,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     }
 
     // JOB HISTORY VALIDATION
-    $numJobs = 0;
-    foreach ($currJobHistory as $job) {
-        $numJobs++;
-    }
-    for ($i = 0; $i < $numJobs; $i++) {
+    for ($i = 0; $i < 3; $i++) {
         // Validate company
         if (empty(trim($_POST["jobHistCompanyEntry".($i + 1)]))) {
             $jobHistCompany_err = "Please enter company.";
@@ -258,7 +254,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             $newJobHistSupPhone = trim($_POST["jobHistSupPhoneEntry".($i + 1)]);
         }
 
-        if ($currJobHistory) { // if already have data (update)
+        if (empty($currJobHistory)) {
+            $sql = "INSERT INTO job_history (jobseeker, company, start_date, end_date, position, supervisor_fname, supervisor_lname, supervisor_email, supervisor_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            if ($stmt = mysqli_prepare($link, $sql)) {
+                mysqli_stmt_bind_param($stmt, "sssssssss", $currUser, $newJobHistCompany, $newJobHistStart, $newJobHistEnd, $newJobHistPos, $newJobHistSupFname, $newJobHistSupLname, $newJobHistSupEmail, $newJobHistSupPhone);
+                if (mysqli_stmt_execute($stmt)) {
+                    header("Location: ./EditProfile.php");
+                }
+                else {
+                    echo "Something went wrong. Please try again.";
+                }
+            }
+        } else {
             $currCompany = $currJobHistory[$i]["company"];
             $currStart = $currJobHistory[$i]["start_date"];
             $sql = "UPDATE job_history 
@@ -270,24 +277,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 if (mysqli_stmt_execute($stmt)) {
                     header("Location: ./EditProfile.php");
                 }
-                mysqli_stmt_close($stmt);
-            }
-        } else { // no data yet / new user (insert)
-            $sql = "INSERT INTO job_history (jobseeker, company, start_date, end_date, position, supervisor_fname, supervisor_lname, supervisor_email, supervisor_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            if ($stmt = mysqli_prepare($link, $sql)) {
-                mysqli_stmt_bind_param($stmt, "sssssssss", $currUser, $newJobHistCompany, $newJobHistStart, $newJobHistEnd, $newJobHistPos, $newJobHistSupFname, $newJobHistSupLname, $newJobHistSupEmail, $newJobHistSupPhone);
-                if (mysqli_stmt_execute($stmt)) {
-                    header("Location: ./EditProfile.php");
-                }
-                else {
-                    echo "Something went wrong. Please try again.";
-                }
-                mysqli_stmt_close($stmt);
             }
         }
-
     }
-    
 
     // EDUCATION HISTORY VALIDATION
     if ($currEduHistory) { // if already have data (update)
@@ -356,21 +348,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             } else {
                 $newEduHistFacilityType = trim($_POST["eduHistFacilityTypeEntry".($i + 1)]);
             }
-            // Update
-            $currAreaOfStudy = $currEduHistory[$i]["areaofstudy"];
-            $currDegree = $currEduHistory[$i]["degree"];
-            $sql = "UPDATE education
-                INNER JOIN education_facilities
-                ON education.ed_facility_name=education_facilities.name AND education.ed_facility_city=education_facilities.city
-                SET areaofstudy=?, degree=?, start_date=?, end_date=?, gpa=?, name=?, city=?, state=?, postal=?, type=?
-                WHERE jobseeker=? AND areaofstudy=? AND degree=?
-            ";
-            if ($stmt = mysqli_prepare($link, $sql)) {
-                mysqli_stmt_bind_param($stmt, "sssssssssssss", $newEduHistAreaOfStudy, $newEduHistDegree, $newEduHistStart, $newEduHistEnd, $newEduHistGpa, $newEduHistFacilityName, $newEduHistFacilityCity, $newEduHistFacilityState, $newEduHistFacilityPostal, $newEduHistFacilityType, $currUser, $currAreaOfStudy, $currDegree);
-                if (mysqli_stmt_execute($stmt)) {
-                    header("Location: ./EditProfile.php");
+
+            if (empty($currEduHistory)) {
+                // insert
+                
+            } else {
+                // Update
+                $currAreaOfStudy = $currEduHistory[$i]["areaofstudy"];
+                $currDegree = $currEduHistory[$i]["degree"];
+                $sql = "UPDATE education
+                    INNER JOIN education_facilities
+                    ON education.ed_facility_name=education_facilities.name AND education.ed_facility_city=education_facilities.city
+                    SET areaofstudy=?, degree=?, start_date=?, end_date=?, gpa=?, name=?, city=?, state=?, postal=?, type=?
+                    WHERE jobseeker=? AND areaofstudy=? AND degree=?
+                ";
+                if ($stmt = mysqli_prepare($link, $sql)) {
+                    mysqli_stmt_bind_param($stmt, "sssssssssssss", $newEduHistAreaOfStudy, $newEduHistDegree, $newEduHistStart, $newEduHistEnd, $newEduHistGpa, $newEduHistFacilityName, $newEduHistFacilityCity, $newEduHistFacilityState, $newEduHistFacilityPostal, $newEduHistFacilityType, $currUser, $currAreaOfStudy, $currDegree);
+                    if (mysqli_stmt_execute($stmt)) {
+                        header("Location: ./EditProfile.php");
+                    }
+                    mysqli_stmt_close($stmt);
                 }
-                mysqli_stmt_close($stmt);
             }
         }
     }
