@@ -488,7 +488,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     <div class="registerEmp-wrapper">
         <h2>Edit Profile</h2>
         <p>Edit your profile below.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="profileForm">
             <!-- PERSONAL DETAILS -->
             <span><p class="form-subheader">PERSONAL DETAILS</p></span>
             <div class="input-group mb-4">
@@ -792,6 +792,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             </div>
         </nav>
         <!-- NAVIGATION FOOTER END -->
-    </div>    
+    </div>
+    <script src="../../static/js/script.js" type="text/javascript"></script>
 </body>
 </html>
