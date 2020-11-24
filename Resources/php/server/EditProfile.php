@@ -344,7 +344,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             $newEduHistFacilityType = trim($_POST["eduHistFacilityTypeEntry1"]);
         }
         // insert
-        $sql = "INSERT INTO education_faacilities (name, city, state, postal, type) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO education_facilities (name, city, state, postal, type) VALUES (?, ?, ?, ?, ?)";
         if ($stmt = mysqli_prepare($link, $sql)) {
             mysqli_stmt_bind_param($stmt, "sssss", $newEduHistFacilityName, $newEduHistFacilityCity, $newEduHistFacilityState, $newEduHistFacilityPostal, $newEduHistFacilityType);
             if (mysqli_stmt_execute($stmt)) {
