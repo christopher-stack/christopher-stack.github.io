@@ -398,63 +398,60 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 $jobHistSupLname = $jobHistory['supervisor_lname'];
                 $jobHistSupEmail = $jobHistory['supervisor_email'];
                 $jobHistSupPhone = $jobHistory['supervisor_phone'];
+            ?>
+            <span><p class="form-subheader2">[ JOB #<?php echo $jobHistCount; ?> ]</p></span>
+            <div class="form-group mb-2 <?php echo (!empty($jobHistCompany_err)) ? 'has-error' : ''; ?>">
+                <label for="jobHistCompanyEntry<?php echo $jobHistCount; ?>">Company</label>
+                <input type="text" class="form-control" name="jobHistCompanyEntry<?php echo $jobHistCount; ?>" required data-error="This field is required." value="<?php echo $jobHistCompany; ?>">
+                <span class="help-block"><?php echo $jobHistCompany_err; ?></span>
+            </div>
+            <div class="input-group mb-4">
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($jobHistStart_err)) ? 'has-error' : ''; ?>">
+                    <label for="jobHistStartEntry<?php echo $jobHistCount; ?>">Start Date</label>
+                    <div class="input-group date" data-date-format="dd.mm.yyyy">
+                        <input type="date" class="form-control" name="jobHistStartEntry<?php echo $jobHistCount; ?>" required data-error="This field is required." placeholder="dd.mm.yyyy" value="<?php echo $jobHistStart; ?>">
+                    </div>
+                    <span class="help-block"><?php echo $jobHistStart_err; ?></span>
+                </div>
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($jobHistEnd_err)) ? 'has-error' : ''; ?>">
+                    <label for="jobHistEndEntry<?php echo $jobHistCount; ?>">End Date</label>
+                    <div class="input-group date" data-date-format="dd.mm.yyyy">
+                        <input type="date" class="form-control" name="jobHistEndEntry<?php echo $jobHistCount; ?>" required data-error="This field is required." placeholder="dd.mm.yyyy" value="<?php echo $jobHistEnd; ?>">
+                    </div>
+                    <span class="help-block"><?php echo $jobHistEnd_err; ?></span>
+                </div>
+            </div>
+            <div class="form-group mb-2 <?php echo (!empty($jobHistPos_err)) ? 'has-error' : ''; ?>">
+                <label for="jobHistPosEntry<?php echo $jobHistCount; ?>">Position</label>
+                <input type="text" class="form-control" name="jobHistPosEntry<?php echo $jobHistCount; ?>" required data-error="This field is required." value="<?php echo $jobHistPos; ?>">
+                <span class="help-block"><?php echo $jobHistPos_err; ?></span>
+            </div>
+            <div class="input-group mb-4">
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupFname_err)) ? 'has-error' : ''; ?>">
+                    <label for="jobHistSupFnameEntry<?php echo $jobHistCount; ?>">Supervisor's First Name</label>
+                    <input type="text" class="form-control" name="jobHistSupFnameEntry<?php echo $jobHistCount; ?>" required data-error="This field is required." value="<?php echo $jobHistSupFname; ?>">
+                    <span class="help-block"><?php echo $jobHistSupFname_err; ?></span>
+                </div>
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupLname_err)) ? 'has-error' : ''; ?>">
+                    <label for="jobHistSupLnameEntry<?php echo $jobHistCount; ?>">Supervisor's Last Name</label>
+                    <input type="text" class="form-control" name="jobHistSupLnameEntry<?php echo $jobHistCount; ?>" required data-error="This field is required." value="<?php echo $jobHistSupLname; ?>">
+                    <span class="help-block"><?php echo $jobHistSupLname_err; ?></span>
+                </div>
+            </div>
+            <div class="input-group mb-4">
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupEmail_err)) ? 'has-error' : ''; ?>">
+                    <label for="jobHistSupEmailEntry<?php echo $jobHistCount; ?>">Supervisor's Email</label>
+                    <input type="email" class="form-control" name="jobHistSupEmailEntry<?php echo $jobHistCount; ?>" placeholder="example@yahoo.com" required data-error="This field is required." value="<?php echo $jobHistSupEmail; ?>">
+                    <span class="help-block"><?php echo $jobHistSupEmail_err; ?></span>
+                </div>
+                <div class="form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupPhone_err)) ? 'has-error' : ''; ?>">
+                    <label for="jobHistSupEmailEntry<?php echo $jobHistCount; ?>">Supervisor's Phone</label>
+                    <input type="tel" class="form-control" name="jobHistSupPhoneEntry<?php echo $jobHistCount; ?>" placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}" required data-error="This field is required." value="<?php echo $jobHistSupPhone; ?>">
+                    <span class="help-block"><?php echo $jobHistSupPhone_err; ?></span>
+                </div>
+            </div>
 
-                $jobHistMarkup = 
-                "
-                <span><p class=\"form-subheader2\">[ JOB #$jobHistCount ]</p></span>
-                <div class=\"form-group mb-2 <?php echo (!empty($jobHistCompany_err)) ? 'has-error' : ''; ?>\">
-                    <label for=\"jobHistCompanyEntry$jobHistCount\">Company</label>
-                    <input type=\"text\" class=\"form-control\" name=\"jobHistCompanyEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistCompany\">
-                    <span class=\"help-block\">$jobHistCompany_err</span>
-                </div>
-                <div class=\"input-group mb-4\">
-                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistStart_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistStartEntry$jobHistCount\">Start Date</label>
-                        <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
-                            <input type=\"date\" class=\"form-control\" name=\"jobHistStartEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistStart\">
-                        </div>
-                        <span class=\"help-block\">$jobHistStart_err</span>
-                    </div>
-                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistEnd_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistEndEntry$jobHistCount\">End Date</label>
-                        <div class=\"input-group date\" data-date-format=\"dd.mm.yyyy\">
-                            <input type=\"date\" class=\"form-control\" name=\"jobHistEndEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" placeholder=\"dd.mm.yyyy\" value=\"$jobHistEnd\">
-                        </div>
-                        <span class=\"help-block\">$jobHistEnd_err</span>
-                    </div>
-                </div>
-                <div class=\"form-group mb-2 <?php echo (!empty($jobHistPos_err)) ? 'has-error' : ''; ?>\">
-                    <label for=\"jobHistPosEntry$jobHistCount\">Position</label>
-                    <input type=\"text\" class=\"form-control\" name=\"jobHistPosEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistPos\">
-                    <span class=\"help-block\">$jobHistPos_err</span>
-                </div>
-                <div class=\"input-group mb-4\">
-                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupFname_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistSupFnameEntry$jobHistCount\">Supervisor's First Name</label>
-                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupFnameEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistSupFname\">
-                        <span class=\"help-block\">$jobHistSupFname_err</span>
-                    </div>
-                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupLname_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistSupLnameEntry$jobHistCount\">Supervisor's Last Name</label>
-                        <input type=\"text\" class=\"form-control\" name=\"jobHistSupLnameEntry$jobHistCount\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistSupLname\">
-                        <span class=\"help-block\">$jobHistSupLname_err</span>
-                    </div>
-                </div>
-                <div class=\"input-group mb-4\">
-                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupEmail_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistSupEmailEntry$jobHistCount\">Supervisor's Email</label>
-                        <input type=\"email\" class=\"form-control\" name=\"jobHistSupEmailEntry$jobHistCount\" placeholder=\"example@yahoo.com\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistSupEmail\">
-                        <span class=\"help-block\">$jobHistSupEmail_err</span>
-                    </div>
-                    <div class=\"form-group mr-3 col-md-5 <?php echo (!empty($jobHistSupPhone_err)) ? 'has-error' : ''; ?>\">
-                        <label for=\"jobHistSupEmailEntry$jobHistCount\">Supervisor's Phone</label>
-                        <input type=\"tel\" class=\"form-control\" name=\"jobHistSupPhoneEntry$jobHistCount\" placeholder=\"xxx-xxx-xxxx\" pattern=\"\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}\" required=\"required\" data-error=\"This field is required.\" value=\"$jobHistSupPhone\">
-                        <span class=\"help-block\">$jobHistSupPhone_err</span>
-                    </div>
-                </div>
-                ";
-
-                echo $jobHistMarkup;
+            <?php
             }
             ?>
             <!-- EDUCATION HISTORY -->
