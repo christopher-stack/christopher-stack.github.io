@@ -48,17 +48,17 @@ $jobHistMarkup = "";
 // === EDU HISTORY & EDU FACILITIES VARIABLES
 $eduHistCount = 0;
 $currEduHistory = $newEduHistory = [];
-$eduHistAreaOfStudy = $eduHistAreaOfStudy_err = "";
-$eduHistDegree = $eduHistDegree_err = "";
-$eduHistStart = $eduHistStart_err = "";
-$eduHistEnd = $eduHistEnd_err = "";
-$eduHistGpa = $eduHistGpa_err = "";
+$eduHistAreaOfStudy = $newEduHistAreaOfStudy = $eduHistAreaOfStudy_err = "";
+$eduHistDegree = $newEduHistDegree = $eduHistDegree_err = "";
+$eduHistStart = $newEduHistStart =  $eduHistStart_err = "";
+$eduHistEnd = $newEduHistEnd = $eduHistEnd_err = "";
+$eduHistGpa = $newEduHistGpa = $eduHistGpa_err = "";
 $currEduHistFacility = $newEduHistFacility = [];
-$eduHistFacilityName = $eduHistFacilityName_err = "";
-$eduHistFacilityCity = $eduHistFacilityCity_err = "";
-$eduHistFacilityState = $eduHistFacilityState_err = "";
-$eduHistFacilityPostal = $eduHistFacilityPostal_err = "";
-$eduHistFacilityType = $eduHistFacilityType_err = "";
+$eduHistFacilityName = $newEduHistFacilityName = $eduHistFacilityName_err = "";
+$eduHistFacilityCity = $newEduHistFacilityCity = $eduHistFacilityCity_err = "";
+$eduHistFacilityState = $newEduHistFacilityState = $eduHistFacilityState_err = "";
+$eduHistFacilityPostal = $newEduHistFacilityPostal = $eduHistFacilityPostal_err = "";
+$eduHistFacilityType = $newEduHistFacilityType = $eduHistFacilityType_err = "";
 
 $currUser = $_SESSION["username"];
 // Fetch jobseeker personal details
@@ -197,7 +197,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         if ($stmt = mysqli_prepare($link, $sql)) {
             mysqli_stmt_bind_param($stmt, "sssssssssss", $newUserFname, $newUserLname, $newUserEmail, $newUserPhone, $newUserDob, $newUserStreet, $newUserCity, $newUserState, $newUserPostal, $newUserCountry, $currUser);
             if (mysqli_stmt_execute($stmt)) {
-                echo "SUCCESS!";
+                header("Location: ./EditProfile.php");
             }
             mysqli_stmt_close($stmt);
         }
@@ -268,7 +268,96 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             if ($stmt = mysqli_prepare($link, $sql)) {
                 mysqli_stmt_bind_param($stmt, "sssssssssss", $newJobHistCompany, $newJobHistStart, $newJobHistEnd, $newJobHistPos, $newJobHistSupFname, $newJobHistSupLname, $newJobHistSupEmail, $newJobHistSupPhone, $currUser, $currCompany, $currStart);
                 if (mysqli_stmt_execute($stmt)) {
-                    echo "SUCCESS!";
+                    header("Location: ./EditProfile.php");
+                }
+                mysqli_stmt_close($stmt);
+            }
+        }
+    }
+    else { // no data yet / new user (insert)
+
+    }
+
+    // EDUCATION HISTORY VALIDATION
+    if ($currEduHistory) { // if already have data (update)
+        $numEdu = 0;
+        foreach ($currEduHistory as $edu) {
+            $numEdu++;
+        }
+        for ($i = 0; $i < $numEdu; $i++) {
+            // Validate area of study
+            if (empty(trim($_POST["eduHistAreaOfStudyEntry".($i + 1)]))) {
+                $eduHistAreaOfStudy_err = "Please enter area of study.";
+            } else {
+                $newEduHistAreaOfStudy = trim($_POST["eduHistAreaOfStudyEntry".($i + 1)]);
+            }
+            // Validate degree
+            if (empty(trim($_POST["eduHistDegreeEntry".($i + 1)]))) {
+                $eduHistDegree_err = "Please select degree.";
+            } else {
+                $newEduHistDegree = trim($_POST["eduHistDegreeEntry".($i + 1)]);
+            }
+            // Validate start date
+            if (empty(trim($_POST["eduHistStartEntry".($i + 1)]))) {
+                $eduHistStart_err = "Please enter start date.";
+            } else {
+                $newEduHistStart = trim($_POST["eduHistStartEntry".($i + 1)]);
+            }
+            // Validate end date
+            if (empty(trim($_POST["jobHistEndEntry".($i + 1)]))) {
+                $eduHistEnd_err = "Please enter end date.";
+            } else {
+                $newEduHistEnd = trim($_POST["eduHistEndEntry".($i + 1)]);
+            }
+            // Validate gpa
+            if (empty(trim($_POST["eduHistGpaEntry".($i + 1)]))) {
+                $eduHistGpa_err = "Please enter GPA.";
+            } else {
+                $newEduHistGpa = trim($_POST["eduHistGpaEntry".($i + 1)]);
+            }
+            // Validate facility name
+            if (empty(trim($_POST["eduHistFacilityNameEntry".($i + 1)]))) {
+                $eduHistFacilityName_err = "Please enter name of institution.";
+            } else {
+                $newEduHistFacilityName = trim($_POST["eduHistFacilityNameEntry".($i + 1)]);
+            }
+            // Validate facility city
+            if (empty(trim($_POST["eduHistFacilityCityEntry".($i + 1)]))) {
+                $eduHistFacilityCity_err = "Please enter city.";
+            } else {
+                $newEduHistFacilityCity = trim($_POST["eduHistFacilityCityEntry".($i + 1)]);
+            }
+            // Validate facility state
+            if (empty(trim($_POST["eduHistFacilityStateEntry".($i + 1)]))) {
+                $eduHistFacilityState_err = "Please enter state.";
+            } else {
+                $newEduHistFacilityState = trim($_POST["eduHistFacilityStateEntry".($i + 1)]);
+            }
+            // Validate facility postal
+            if (empty(trim($_POST["eduHistFacilityPostalEntry".($i + 1)]))) {
+                $eduHistFacilityPostal_err = "Please enter zipcode.";
+            } else {
+                $newEduHistFacilityPostal = trim($_POST["eduHistFacilityPostalEntry".($i + 1)]);
+            }
+            // Validate facility type
+            if (empty(trim($_POST["eduHistFacilityTypeEntry".($i + 1)]))) {
+                $eduHistFacilityType_err = "Please select type of institution.";
+            } else {
+                $newEduHistFacilityType = trim($_POST["eduHistFacilityTypeEntry".($i + 1)]);
+            }
+            // Update
+            $currAreaOfStudy = $currEduHistory[$i]["areaofstudy"];
+            $currDegree = $currEduHistory[$i]["degree"];
+            $sql = "UPDATE education
+                INNER JOIN education_facilities
+                ON education.ed_facility_name=education_facilities.name AND education.ed_facility_city=education_facilities.city
+                SET areaofstudy=?, degree=?, start_date=?, end_date=?, gpa=?, name=?, city=?, state=?, postal=?, type=?
+                WHERE jobseeker=? AND areaofstudy=? AND degree=?
+            ";
+            if ($stmt = mysqli_prepare($link, $sql)) {
+                mysqli_stmt_bind_param($stmt, "sssssssssssss", $newEduHistAreaOfStudy, $newEduHistDegree, $newEduHistStart, $newEduHistEnd, $newEduHistGpa, $newEduHistFacilityName, $newEduHistFacilityCity, $newEduHistFacilityState, $newEduHistFacilityPostal, $newEduHistFacilityType, $currUser, $currAreaOfStudy, $currDegree);
+                if (mysqli_stmt_execute($stmt)) {
+                    header("Location: ./EditProfile.php");
                 }
                 mysqli_stmt_close($stmt);
             }
