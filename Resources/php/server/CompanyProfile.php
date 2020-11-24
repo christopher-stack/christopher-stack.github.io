@@ -277,9 +277,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <label>Company Name</label>
                 <?php
                 if ($currName == '') {
-                    echo "<input type=\"text\" name=\"nameEntry\" class=\"form-control\" value='$currName'>";
+                ?>
+                    <input type="text" name="nameEntry" class="form-control" value='<?php echo $currName; ?>'>
+                <?php
                 } else {
-                    echo "<input type=\"text\" name=\"nameEntry\" class=\"form-control\" value='$currName' disabled>";
+                ?>
+                    <input type="text" name="nameEntry" class="form-control" disabled value="<?php echo $currName; ?>">
+                    <input type="hidden" name="nameEntry" value="<?php echo $currName; ?>">
+                <?php
                 }
                 ?>
                 <span class="help-block"><?php echo $name_err; ?></span>
