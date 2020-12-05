@@ -246,7 +246,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             </div>    
             <div class="form-group mb-4">
                 <label for="descriptionEntry">Position Description</label>
-                <textarea class="form-control" id="descriptionEntry" name="Position Description" required="required" rows="10" data-error="This field is required." placeholder="Please describe this position with as much detail as possible."></textarea>
+                <textarea class="form-control" name="descriptionEntry" required="required" rows="10" data-error="This field is required." placeholder="Please describe this position with as much detail as possible."></textarea>
             </div>
             <div class="form-group row mb-4">
                 <label for="salaryEntry">Salary</label>
@@ -254,14 +254,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <div class="input-group-prepend">
                     <span class="input-group-text">$</span>
                 </div>
-                <input type="text" class="form-control" id="salaryEntry" name="Salary" required="required" aria-label="Amount (to the nearest dollar)">
+                <input type="text" class="form-control" name="salaryEntry" required="required" aria-label="Amount (to the nearest dollar)">
                 <div class="input-group-append">
                     <span class="input-group-text">.00</span>
                 </div>
                 </div>
                 <label for="startDateEntry">Start Date</label>
                 <div class="input-group date" data-date-format="dd.mm.yyyy">
-                <input type="date" class="form-control" id="startDateEntry" name="Start Date" required="required" placeholder="dd.mm.yyyy">
+                <input type="date" class="form-control" name="startDateEntry" required="required" placeholder="dd.mm.yyyy">
                 </div>
             </div>
             <!-- <div class="input-group mb-4">
@@ -287,7 +287,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 </div>
             </div> -->
             <div class="bottom-padding form-group">
-                <span>Already have an account? <a href="Login.php">Login here</a>.</span>
                 <input type="submit" class="btn btn-primary float-right ml-2" value="Submit">
                 <input type="reset" class="btn btn-secondary float-right" value="Reset">
             </div>
