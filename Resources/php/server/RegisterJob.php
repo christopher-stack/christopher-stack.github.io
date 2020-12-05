@@ -13,200 +13,101 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 }
 
 // Check if user is "admin"
-if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin"){
+if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "employer"){
     header("location: ../../static/error/Error_Permission.html");
     exit;
 }
  
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = "";
-$username_err = $password_err = $confirm_password_err = "";
-$role = "employer";
-$role_err = "";
-$company = $company_err = "";
-$fname = $lname = "";
-$fname_err = $lname_err = "";
-$email = $phone = "";
-$email_err = $phone_err = "";
-$dob = $dob_err = "";
-$address = $address_err = "";
-$city = $city_err = "";
-$state = $state_err = "";
-$postal = $postal_err = "";
-$country = $country_err = "";
-
-// Fetch and store associative list of companies in SESSION variable
-$query = "SELECT * FROM companies";
-$_SESSION["companiesList"] = getData($link, $query);
+$position = $position_err = "";
+$description = $description_err = "";
+$salary = $salary_err = "";
+$start_date = $start_date_err = "";
+// Optional values
+$required_education = $required_education_err = "";
+$required_skills = $required_skills_err = "";
+$required_job_specific = $required_job_specific_err = "";
+$required_prior_experience = $required_prior_experience_err = "";
 
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
- 
-    // Validate username
-    if(empty(trim($_POST["username"]))){
-        $username_err = "Please enter a username.";
+    // Validate position title
+    if(empty(trim($_POST["positionEntry"]))){
+        $position_err = "Please enter a position title.";
     } else{
-        // Prepare a select statement
-        $sql = "SELECT username FROM people WHERE username = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-            
-            // Set parameters
-            $param_username = trim($_POST["username"]);
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "This username is already taken.";
-                } else{
-                    $username = trim($_POST["username"]);
-                }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
+        $position = trim($_POST["positionEntry"]);
     }
-    
-    // Validate password
-    if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter a password.";
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have at least 6 characters.";
+    // Validate position description
+    if(empty(trim($_POST["descriptionEntry"]))){
+        $description_err = "Please enter a description for this position.";
     } else{
-        $password = trim($_POST["password"]);
+        $description = trim($_POST["descriptionEntry"]);
     }
-    
-    // Validate confirm password
-    if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = "Please confirm password.";
+    // Validate position salary
+    if(empty(trim($_POST["salaryEntry"]))){
+        $salary_err = "Please enter a salary for this position.";
     } else{
-        $confirm_password = trim($_POST["confirm_password"]);
-        if(empty($password_err) && ($password != $confirm_password)){
-            $confirm_password_err = "Password did not match.";
-        }
+        $salary = trim($_POST["salaryEntry"]);
+    }
+    // Validate position start date
+    if(empty(trim($_POST["startDateEntry"]))){
+        $start_date_err = "Please enter a valid starting date for this position.";
+    } else{
+        $start_date = trim($_POST["startDateEntry"]);
     }
 
-    // Validate role data
-    // if(empty(trim($_POST["roleEntry"]))){
-    //     $role_err = "Please enter/select a valid role.";
-    // } else{
-    //     $role = trim($_POST["roleEntry"]);
-    // }
-    // Validate company data
-    if(empty(trim($_POST["companyEntry"]))){
-        $company_err = "Please enter/select a valid company.";
+    // Validate required education (not-required)
+    if(empty(trim($_POST["requiredEducationEntry"]))){
+        //$required_education_err = "Please enter required education for this position.";
     } else{
-        $company = trim($_POST["companyEntry"]);
+        $required_education = trim($_POST["requiredEducationEntry"]);
     }
-    // Validate first name
-    if(empty(trim($_POST["firstNameEntry"]))){
-        $fname_err = "Please enter a first name.";
+    // Validate required skills (not-required)
+    if(empty(trim($_POST["requiredSkillsEntry"]))){
+        //$required_skills_err = "Please enter required skills for this position.";
     } else{
-        $fname = trim($_POST["firstNameEntry"]);
+        $required_skills = trim($_POST["requiredSkillsEntry"]);
     }
-    // Validate last name
-    if(empty(trim($_POST["lastNameEntry"]))){
-        $lname_err = "Please enter a last name.";
+    // Validate job-specific requirements (not-required)
+    if(empty(trim($_POST["jobSpecificRequirementsEntry"]))){
+        //$required_job_specific_err = "Please enter job-specific requirements for this position.";
     } else{
-        $lname = trim($_POST["lastNameEntry"]);
+        $required_job_specific = trim($_POST["jobSpecificRequirementsEntry"]);
     }
-
-    // Validate email address
-    if(empty(trim($_POST["emailEntry"]))){
-        $email_err = "Please enter a valid email address.";
+    // Validate required prior experience (not-required)
+    if(empty(trim($_POST["priorExperienceRequirementsEntry"]))){
+        //$required_prior_experience_err = "Please enter required prior experience for this position.";
     } else{
-        $email = trim($_POST["emailEntry"]);
-    }
-
-    // Validate company selection
-    if(empty(trim($_POST["companyEntry"]))){
-        $company_err = "Please select a company from list.";
-    } else{
-        $company = trim($_POST["companyEntry"]);
-    }
-
-    // Validate phone number (not-required)
-    if(empty(trim($_POST["phoneEntry"]))){
-        //$phone_err = "Please enter a valid phone number.";
-    } else{
-        $phone = trim($_POST["phoneEntry"]);
-    }
-    // Validate date of birth (not-required)
-    if(empty(trim($_POST["dateOfBirthEntry"]))){
-        //$dob_err = "Please enter a valid date of birth.";
-    } else{
-        $dob = trim($_POST["dateOfBirthEntry"]);
-    }
-
-    // Validate address (not-required)
-    if(empty(trim($_POST["inputAddress"]))){
-        //$address_err = "Please enter a valid address.";
-    } else{
-        $address = trim($_POST["inputAddress"]);
-    }
-    // Validate city (not-required)
-    if(empty(trim($_POST["inputCity"]))){
-        //$city_err = "Please enter a valid city.";
-    } else{
-        $city = trim($_POST["inputCity"]);
-    }
-    // Validate state (not-required)
-    if(empty(trim($_POST["inputState"]))){
-        //$state_err = "Please enter a valid state.";
-    } else{
-        $state = trim($_POST["inputState"]);
-    }
-    // Validate zip (not-required)
-    if(empty(trim($_POST["inputZip"]))){
-        //$postal_err = "Please enter a valid zip.";
-    } else{
-        $postal = trim($_POST["inputZip"]);
-    }
-    // Validate country (not-required)
-    if(empty(trim($_POST["inputCountry"]))){
-        //$country_err = "Please enter a valid country.";
-    } else{
-        $country = trim($_POST["inputCountry"]);
+        $required_prior_experience = trim($_POST["priorExperienceRequirementsEntry"]);
     }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($role_err) && empty($fname_err) && empty($lname_err) && empty($email_err) && empty($phone_err) && empty($dob_err) && empty($address_err) && empty($city_err) && empty($state_err) && empty($postal_err) && empty($country_err)){
+    if(empty($position_err) && empty($description_err) && empty($salary_err) && empty($start_date_err) && empty($required_education_err) && empty($required_skills_err) && empty($required_job_specific_err) && empty($required_prior_experience_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO people (username, phash, usertype, fname, lname, email, phone, dob, street, city, state, postal, country, employing_company) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO jobs (jobid, position, description, salary, start_date, posted_date, required_education, required_skills, required_job_specific, required_prior_experience, employer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssssssssssssss", $param_username, $param_password, $param_role, $param_fname, $param_lname, $param_email, $param_phone, $param_dob, $param_address, $param_city, $param_state, $param_postal, $param_country, $param_company);
+            mysqli_stmt_bind_param($stmt, "sssssssssss", $param_jobId, $param_position, $param_description, $param_salary, $param_start_date, $param_posted_date, $param_required_education, $param_required_skills, $param_required_job_specific, $param_required_prior_experience, $param_employer);
             
             // Set parameters
-            $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_role = $role;
-            $param_fname = $fname;
-            $param_lname = $lname;
-            $param_email = $email;
-            $param_phone = $phone;
-            $param_dob = $dob;
-            $param_address = $address;
-            $param_city = $city;
-            $param_state = $state;
-            $param_postal = $postal;
-            $param_country = $country;
-            $param_company = $company;
+            $param_jobId = NULL; // set in db
+            $param_position = $position;
+            $param_description = $description;
+            $param_salary = $salary;
+            $param_start_date = $start_date;
+            $param_posted_date = date("Y-m-d"); // set upon submission
+            $param_required_education = $required_education;
+            $param_required_skills = $required_skills;
+            $param_required_job_specific = $required_job_specific;
+            $param_required_prior_experience = $required_prior_experience;
+            $param_employer = $_SESSION["username"]; // set on login; reflected in db
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: Login.php");
+                // Redirect to main page
+                header("location: ../../../index.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -225,7 +126,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 <html lang="en">
 <head>
 	<meta char="UTF-8">
-	<title> TeamCDA Website - Register Employee </title>
+	<title> TeamCDA Website - Post new Job </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
 	<!-- Style Scripts -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Roboto">

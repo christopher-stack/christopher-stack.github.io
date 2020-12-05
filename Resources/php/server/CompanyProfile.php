@@ -252,7 +252,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 								echo " href=\"\">Company profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Resources/static/error/404.html\">Post new position</a>";
+								echo " href=\"../Resources/php/server/RegisterJob.php\">Post new position</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Resources/static/error/404.html\">Edit positions</a>";

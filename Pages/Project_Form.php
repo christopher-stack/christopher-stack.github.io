@@ -132,7 +132,7 @@ foreach ($userData[0] as $item) {
                   echo " href=\"../Resources/static/error/404.html\">Company profile</a>";
                   echo "<a";
                   echo " class=\"dropdown-item\"";
-                  echo " href=\"../Resources/static/error/404.html\">Post new position</a>";
+                  echo " href=\"../Resources/php/server/RegisterJob.php\">Post new position</a>";
                   echo "<a";
                   echo " class=\"dropdown-item\"";
                   echo " href=\"../Resources/static/error/404.html\">Edit positions</a>";

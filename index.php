@@ -104,7 +104,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 									echo " href=\"./Resources/php/server/CompanyProfile.php\">Company profile</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/static/error/404.html\">Post new position</a>";
+									echo " href=\"./Resources/php/server/RegisterJob.php\">Post new position</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
 									echo " href=\"./Resources/static/error/404.html\">Edit positions</a>";
@@ -118,21 +118,6 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 									echo "<a";
 									echo " class=\"dropdown-item\"";
 									echo " href=\"./Resources/php/server/RegisterEmployer.php\">Register HR Employee</a>";
-									echo "<a";
-									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/static/error/404.html\">Company profile</a>";
-									echo "<a";
-									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/static/error/404.html\">Post new position</a>";
-									echo "<a";
-									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/static/error/404.html\">Edit positions</a>";
-									echo "<a";
-									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/static/error/404.html\">Review applicants</a>";
-									echo "<a";
-									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/static/error/404.html\">Search applicants</a>";
 								}
 							?>
 							<a class="dropdown-item" href="./Resources/php/server/Reset_Password.php">Reset password</a>
