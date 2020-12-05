@@ -17,17 +17,6 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin"){
     header("location: ../../static/error/Error_Permission.html");
     exit;
 }
-
-// function to get data
-// function getData($link, $query) {
-//     $result = mysqli_query($link, $query);
-//     while($row = mysqli_fetch_assoc($result)) {
-//         $resultArr[] = $row;
-//     }
-//     if (!empty($resultArr)) {
-//         return $resultArr;
-//     }
-// }
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
@@ -303,7 +292,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 							if($_SESSION["role"] == "jobseeker"){
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Pages/Project_Form.php\">Profile</a>";
+                                echo " href=\"../Pages/Project_Form.php\">Profile</a>";
+                                echo "<a";
+								echo " class=\"dropdown-item\"";
+								echo " href=\"../Resources/php/server/EditProfile.php\">Edit Profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Resources/static/error/404.html\">Application history</a>";
@@ -361,25 +353,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
-            <!-- <div class="form-group row mb-4 <?php //echo (!empty($role_err)) ? 'has-error' : ''; ?>">
-                <label for="roleEntry">Select Role</label>
-                <div class="input-group mb-2">
-                <select class="form-select" name="roleEntry" disabled>
-                    <option value="jobseeker">jobseeker</option>
-                    <option value="employer" selected>employer</option>
-                    <option value="admin">admin</option>
-                </select>
-                <span class="help-block"><?php //echo $role_err; ?></span>
-            </div> -->
             <div class="form-group row mb-4 <?php echo (!empty($company_err)) ? 'has-error' : ''; ?>">
                 <label for="companyEntry">Select Company</label>
                 <div class="input-group mb-2">
                 <select class="form-select" name="companyEntry">
                     <option selected="true" disabled>Choose one ...</option>
-                    <?php
-                    // $query = "SELECT * FROM companies";
-                    // $row = getData($link, $query);
-                    ?>
                     <?php
                     foreach($_SESSION["companiesList"] as $row) { ?>
                     <option>

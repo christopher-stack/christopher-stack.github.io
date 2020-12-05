@@ -525,8 +525,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 								echo " class=\"dropdown-item\"";
                                 echo " href=\"../Pages/Project_Form.php\">Profile</a>";
                                 echo "<a";
-                                echo " class=\"dropdown-item\"";
-                                echo " href=\"\">Edit Profile</a>";
+								echo " class=\"dropdown-item\"";
+								echo " href=\"../Resources/php/server/EditProfile.php\">Edit Profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Resources/static/error/404.html\">Application history</a>";

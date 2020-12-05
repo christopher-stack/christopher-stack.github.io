@@ -113,7 +113,7 @@ foreach ($userData[0] as $item) {
                   echo " href=\"../Pages/Project_Form.php\">Profile</a>";
                   echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"./Pages/Project_Form.php\">Edit Profile</a>";
+									echo " href=\"../Resources/php/server/EditProfile.php\">Edit Profile</a>";
                   echo "<a";
                   echo " class=\"dropdown-item\"";
                   echo " href=\"../Resources/static/error/404.html\">Application history</a>";
