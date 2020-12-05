@@ -236,79 +236,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 	</nav>
 	<!-- NAVIGATION HEADER END -->
     <div class="registerEmp-wrapper">
-        <h2>Register HR Employee</h2>
-        <p>Please fill out this form to create an employee account.</p>
+        <h2>Post New Job</h2>
+        <p>Please fill out this form to post a new job for Job Seekers.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="bottom-padding form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
-                <span class="help-block"><?php echo $username_err; ?></span>
+            <div class="bottom-padding form-group <?php echo (!empty($position_err)) ? 'has-error' : ''; ?>">
+                <label for="positionEntry">Position Title</label>
+                <input type="text" name="positionEntry" class="form-control" value="<?php echo $position; ?>">
+                <span class="help-block"><?php echo $position_err; ?></span>
             </div>    
-            <div class="bottom-padding form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
-                <span class="help-block"><?php echo $password_err; ?></span>
+            <div class="form-group mb-4">
+                <label for="descriptionEntry">Position Description</label>
+                <textarea class="form-control" id="descriptionEntry" name="Position Description" required="required" rows="10" data-error="This field is required." placeholder="Please describe this position with as much detail as possible."></textarea>
             </div>
-            <div class="bottom-padding form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
-                <label>Confirm Password</label>
-                <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
-                <span class="help-block"><?php echo $confirm_password_err; ?></span>
-            </div>
-            <div class="form-group row mb-4 <?php echo (!empty($company_err)) ? 'has-error' : ''; ?>">
-                <label for="companyEntry">Select Company</label>
+            <div class="form-group row mb-4">
+                <label for="salaryEntry">Salary</label>
                 <div class="input-group mb-2">
-                <select class="form-select" name="companyEntry">
-                    <option selected="true" disabled>Choose one ...</option>
-                    <?php
-                    foreach($_SESSION["companiesList"] as $row) { ?>
-                    <option>
-                        <?php
-                        echo $row['name'];
-                        ?>
-                    </option>
-                    <?php
-                    }
-                    ?>
-                </select>
-                <span class="help-block"><?php echo $company_err; ?></span>
-            </div>
-            <div class="input-group mb-4">
-                <div class="form-group mr-3 col-md-5 <?php echo (!empty($fname_err)) ? 'has-error' : ''; ?>">
-                    <label for="firstNameEntry">First Name</label>
-                    <input type="text" class="form-control" name="firstNameEntry" required="required" data-error="This field is required." placeholder="Tom" value="<?php echo $fname; ?>">
-                    <span class="help-block"><?php echo $fname_err; ?></span>
+                <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
                 </div>
-                <div class="form-group col-md-5 <?php echo (!empty($lname_err)) ? 'has-error' : ''; ?>">
-                    <label for="lastNameEntry">Last Name</label>
-                    <input type="text" class="form-control" name="lastNameEntry" required="required" data-error="This field is required." placeholder="Smith" value="<?php echo $lname; ?>">
-                    <span class="help-block"><?php echo $lname_err; ?></span>
+                <input type="text" class="form-control" id="salaryEntry" name="Salary" required="required" aria-label="Amount (to the nearest dollar)">
+                <div class="input-group-append">
+                    <span class="input-group-text">.00</span>
                 </div>
-            </div>
-            <div class="input-group mb-4">
-                <div class="form-group mr-3 col-md-5 <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
-                    <label for="emailEntry">Email Address</label>
-                    <input type="email" class="form-control" name="emailEntry" required="required" data-error="This field is required." placeholder="example@yahoo.com" value="<?php echo $email; ?>">
-                    <span class="help-block"><?php echo $email_err; ?></span>
                 </div>
-                <div class="form-group col-md-5 <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
-                    <label for="phoneEntry">Phone Number</label>
-                    <input type="tel" class="form-control" name="phoneEntry" data-error="This field is optional but must be valid." placeholder="xxx-xxx-xxxx" pattern="\(?\d{3}\)?\s?\-?\s?\d{3}\s?\-?\s?\d{4}" value="<?php echo $phone; ?>">
-                    <span class="help-block"><?php echo $phone_err; ?></span>
-                </div>
-            </div>
-            <div class="form-group row mb-4 <?php echo (!empty($dob_err)) ? 'has-error' : ''; ?>">
-                <label for="dateOfBirthEntry">Date of Birth</label>
+                <label for="startDateEntry">Start Date</label>
                 <div class="input-group date" data-date-format="dd.mm.yyyy">
-                    <input type="date" class="form-control" name="dateOfBirthEntry" placeholder="dd.mm.yyyy" value="<?php echo $dob; ?>">
+                <input type="date" class="form-control" id="startDateEntry" name="Start Date" required="required" placeholder="dd.mm.yyyy">
                 </div>
-                <span class="help-block"><?php echo $dob_err; ?></span>
             </div>
-            <div class="form-group mb-2 <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
-                <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" name="inputAddress" data-error="This field is optional but must be valid." placeholder="1234 Main St" value="<?php echo $address; ?>">
-                <span class="help-block"><?php echo $address_err; ?></span>
-            </div>
-            <div class="input-group mb-4">
+            <!-- <div class="input-group mb-4">
                 <div class="form-group mr-3 col-md-3 <?php echo (!empty($city_err)) ? 'has-error' : ''; ?>">
                     <label for="inputCity">City</label>
                     <input type="text" class="form-control" name="inputCity" data-error="This field is optional but must be valid." value="<?php echo $city; ?>">
@@ -329,7 +285,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                     <input type="text" class="form-control" name="inputCountry" data-error="This field is optional but must be valid." value="<?php echo $country; ?>">
                     <span class="help-block"><?php echo $country_err; ?></span>
                 </div>
-            </div>
+            </div> -->
             <div class="bottom-padding form-group">
                 <span>Already have an account? <a href="Login.php">Login here</a>.</span>
                 <input type="submit" class="btn btn-primary float-right ml-2" value="Submit">
