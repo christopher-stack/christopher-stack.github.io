@@ -124,20 +124,28 @@ a {
 	font-style: italic;
 }
 .input-icons i {
-	position: absolute;
+	position: relative;
 	color: #262626;
+	font-size: 1.25rem;
+	padding: .5rem;
+	top: -2.4rem;
 }
-.input-icons { 
-	width: 100%; 
+.icon {
+	transition: ease-in-out, color .35s ease-in-out;
 }
-.icon { 
-	padding: 1rem; 
-	min-width: 50px; 
+.input-icons {
+	width: 100%;
 }
-.search-field { 
-	width: 100%; 
-	padding: 10px; 
-	padding-left: 3rem;
+.search-field {
+	padding-left: 2.4rem;
+	transition: ease-in-out, background-color border-color .35s ease-in-out;
+}
+.search-field:focus {
+	background-color: #262626;
+	border-color: #ffa500;
+}
+.search-field:focus + i {
+	color: #f6f6f6;
 }
 
 /* Center the loader */

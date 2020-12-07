@@ -24,7 +24,9 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "jobseeker"){
 
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
+    $search = "";
 
+    
 }
 ?>
  
@@ -147,8 +149,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             <div class="form-group mb-2 <?php echo (!empty($search_err)) ? 'has-error' : ''; ?>">
                 <!-- <label for="searchEntry">Search</label> -->
                 <div class="input-icons">
-                    <i class="fa fa-search icon"></i>
                     <input type="text" class="form-control search-field" name="searchEntry" required="required" data-error="This field is required." value="">
+                    <i class="fa fa-search icon"></i>
                 </div>
                 <!-- <span class="help-block"><?php echo $search_err; ?></span> -->
             </div>
@@ -156,7 +158,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             <!-- SUBMIT BUTTON -->
             <div class="bottom-padding form-group">
                 <input type="submit" class="btn btn-primary float-right ml-2" value="Submit">
-                <input type="reset" class="btn btn-secondary float-right" value="Reset">
             </div>
             <div class="btm-space"></div>
         </form>
