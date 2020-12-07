@@ -91,7 +91,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 									echo " href=\"./Resources/static/error/404.html\">Application history</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/static/error/404.html\">Search jobs</a>";
+									echo " href=\"./Resources/php/server/Search.php\">Search jobs</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
 									echo " href=\"./Resources/static/error/404.html\">View jobs by category</a>";

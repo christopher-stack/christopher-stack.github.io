@@ -123,6 +123,22 @@ a {
 	font-size: .85rem;
 	font-style: italic;
 }
+.input-icons i {
+	position: absolute;
+	color: #262626;
+}
+.input-icons { 
+	width: 100%; 
+}
+.icon { 
+	padding: 1rem; 
+	min-width: 50px; 
+}
+.search-field { 
+	width: 100%; 
+	padding: 10px; 
+	padding-left: 3rem;
+}
 
 /* Center the loader */
 
