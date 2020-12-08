@@ -143,6 +143,7 @@ a {
 .search-field:focus {
 	background-color: #262626;
 	border-color: #ffa500;
+	color: #f6f6f6;
 }
 .search-field:focus + i {
 	color: #f6f6f6;

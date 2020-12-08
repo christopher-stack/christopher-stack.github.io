@@ -21,11 +21,41 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "jobseeker"){
 }
 
 // Define variables and initialize with empty values
+$currUser = $_SESSION["username"];
+$search = $searchParam = "";
+$jobResults = [];
+$appliedResults = [];
 
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
-    $search = "";
 
+    // fetch jobids that currUser has applied for and store in $appliedResults array
+    $sql = "SELECT jobid from applied_for WHERE jobseeker = ?";
+    if ($stmt = mysqli_prepare($link, $sql)) {
+        mysqli_stmt_bind_param($stmt, "s", $currUser);
+        if (mysqli_stmt_execute($stmt)) {
+            $res = mysqli_stmt_get_result($stmt);
+            while ($resArray = mysqli_fetch_array($res)) {
+                array_push($appliedResults, $resArray);
+            }
+        }
+    }
+
+    // fetch search and store in $jobResults array
+    if (!empty(trim($_POST["searchEntry"]))) {
+        $search = trim($_POST["searchEntry"]);
+        $searchParam = "%$search%";
+        $sql = "SELECT * from jobs WHERE position LIKE ?";
+        if ($stmt = mysqli_prepare($link, $sql)) {
+            mysqli_stmt_bind_param($stmt, "s", $searchParam);
+            if (mysqli_stmt_execute($stmt)) {
+                $res = mysqli_stmt_get_result($stmt);
+                while ($resAssocArray = mysqli_fetch_assoc($res)) {
+                    array_push($jobResults, $resAssocArray);
+                }
+            }
+        } 
+    }
     
 }
 ?>
@@ -147,12 +177,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         <h2>Search Jobs</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="searchForm">
             <div class="form-group mb-2 <?php echo (!empty($search_err)) ? 'has-error' : ''; ?>">
-                <!-- <label for="searchEntry">Search</label> -->
                 <div class="input-icons">
                     <input type="text" class="form-control search-field" name="searchEntry" required="required" data-error="This field is required." value="">
                     <i class="fa fa-search icon"></i>
                 </div>
-                <!-- <span class="help-block"><?php echo $search_err; ?></span> -->
             </div>
 
             <!-- SUBMIT BUTTON -->
