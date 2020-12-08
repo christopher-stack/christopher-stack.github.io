@@ -3,20 +3,20 @@
 
 use function PHPSTORM_META\type;
 
-require_once "Config.php";
+require_once "../Resources/php/server/Config.php";
 
 // Initialize the session
 session_start();
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
-    header("location: ./Login.php");
+    header("location: ../Resources/php/server/Login.php");
     exit;
 }
 
 // Check if user is "admin"
 if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "jobseeker"){
-    header("location: ../../static/error/Error_Permission.html");
+    header("location: ../Resources/static/error/Error_Permission.html");
     exit;
 }
 
@@ -25,8 +25,6 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "jobseeker"){
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     $search = "";
-
-    
 }
 ?>
  
@@ -135,8 +133,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 								echo " href=\"../Resources/static/error/404.html\">Search applicants</a>";
 							}
 						?>
-						<a class="dropdown-item" href="./Reset_Password.php">Reset password</a>
-						<a class="dropdown-item" href="./Logout.php">Sign out</a>
+						<a class="dropdown-item" href="../Resources/php/server/Reset_Password.php">Reset password</a>
+						<a class="dropdown-item" href="../Resources/php/server/Logout.php">Sign out</a>
 					</div>
 				</li>
 			</ul>

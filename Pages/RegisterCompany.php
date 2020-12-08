@@ -4,7 +4,7 @@ session_start();
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
-    header("location: ../Pages/Login.php");
+    header("location: ../Resources/php/server/Login.php");
     exit;
 } else {
   // If user satisfied the above condition, we'll also check their role.
@@ -16,7 +16,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 }
 
 // Include the config file
-require_once "Config.php";
+require_once "../Resources/php/server/Config.php";
  
 // Define variables and initialize with empty values
 $company_name = $company_name_err = "";
