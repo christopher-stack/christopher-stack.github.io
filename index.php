@@ -139,14 +139,15 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 			<a class="navbar-btn btn-primary btn" href="#">Profile</a>
 			<br />
 			<br />
-			<h1 style="text-align:left">Projects:</h1>
 			<?php
 				// Dedicated Links, based on role
 				if($_SESSION["role"] == "jobseeker"){
+					echo "<h1 style=\"text-align:left\">Projects:</h1>";
 					echo "<a";
 					echo " class=\"navbar-btn btn-primary btn\"";
 					echo " href=\"./Pages/Project_Form.php\">Applicant Form</a>";
 				} else if ($_SESSION["role"] == "admin") {
+					echo "<h1 style=\"text-align:left\">Projects:</h1>";
 					echo "<a";
 					echo " class=\"navbar-btn btn-primary btn\"";
 					echo " href=\"./Pages/RegisterCompany.php\">Register Company</a>";
