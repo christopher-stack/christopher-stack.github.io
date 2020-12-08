@@ -4,7 +4,7 @@ session_start();
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
-    header("location: ./Resources/php/server/Login.php");
+    header("location: ./Pages/Login.php");
     exit;
 }
 ?>
@@ -85,13 +85,13 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 									echo " href=\"./Pages/Project_Form.php\">Profile</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/php/server/EditProfile.php\">Edit Profile</a>";
+									echo " href=\"./Pages/EditProfile.php\">Edit Profile</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/static/error/404.html\">Application history</a>";
+									echo " href=\"./Pages/JobHistory.php\">Application history</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/php/server/Search.php\">Search jobs</a>";
+									echo " href=\"./Pages/Search.php\">Search jobs</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
 									echo " href=\"./Resources/static/error/404.html\">View jobs by category</a>";
@@ -101,10 +101,10 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 								} else if($_SESSION["role"] == "employer"){
 									echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/php/server/CompanyProfile.php\">Company profile</a>";
+									echo " href=\"./Pages/CompanyProfile.php\">Company profile</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/php/server/RegisterJob.php\">Post new position</a>";
+									echo " href=\"./Pages/RegisterJob.php\">Post new position</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
 									echo " href=\"./Resources/static/error/404.html\">Edit positions</a>";
@@ -117,7 +117,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 								} else if($_SESSION["role"] == "admin"){
 									echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/php/server/RegisterEmployer.php\">Register HR Employee</a>";
+									echo " href=\"./Pages/RegisterEmployer.php\">Register HR Employee</a>";
 								}
 							?>
 							<a class="dropdown-item" href="./Resources/php/server/Reset_Password.php">Reset password</a>
@@ -139,17 +139,18 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 			<a class="navbar-btn btn-primary btn" href="#">Profile</a>
 			<br />
 			<br />
-			<h1 style="text-align:left">Projects:</h1>
 			<?php
 				// Dedicated Links, based on role
 				if($_SESSION["role"] == "jobseeker"){
+					echo "<h1 style=\"text-align:left\">Projects:</h1>";
 					echo "<a";
 					echo " class=\"navbar-btn btn-primary btn\"";
 					echo " href=\"./Pages/Project_Form.php\">Applicant Form</a>";
 				} else if ($_SESSION["role"] == "admin") {
+					echo "<h1 style=\"text-align:left\">Projects:</h1>";
 					echo "<a";
 					echo " class=\"navbar-btn btn-primary btn\"";
-					echo " href=\"./Resources/php/server/RegisterCompany.php\">Register Company</a>";
+					echo " href=\"./Pages/RegisterCompany.php\">Register Company</a>";
 				}
 			?>
 			<br />

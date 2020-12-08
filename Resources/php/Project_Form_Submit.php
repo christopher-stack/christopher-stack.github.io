@@ -92,13 +92,13 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
                         echo " href=\"../../Pages/Project_Form.php\">Profile</a>";
                         echo "<a";
                         echo " class=\"dropdown-item\"";
-									      echo " href=\"./Resources/php/server/EditProfile.php\">Edit Profile</a>";
+									      echo " href=\"../../Pages/EditProfile.php\">Edit Profile</a>";
                         echo "<a";
                         echo " class=\"dropdown-item\"";
-                        echo " href=\"../static/error/404.html\">Application history</a>";
+                        echo " href=\"../../Pages/JobHistory.php\">Application history</a>";
                         echo "<a";
                         echo " class=\"dropdown-item\"";
-                        echo " href=\"../static/error/404.html\">Search jobs</a>";
+                        echo " href=\"../../Pages/Search.php\">Search jobs</a>";
                         echo "<a";
                         echo " class=\"dropdown-item\"";
                         echo " href=\"../static/error/404.html\">View jobs by category</a>";
@@ -108,10 +108,10 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
                     } else if($_SESSION["role"] == "employer"){
                         echo "<a";
                         echo " class=\"dropdown-item\"";
-                        echo " href=\"../static/error/404.html\">Company profile</a>";
+                        echo " href=\"../../Pages/CompanyProfile.php\">Company profile</a>";
                         echo "<a";
                         echo " class=\"dropdown-item\"";
-                        echo " href=\"../static/error/404.html\">Post new position</a>";
+                        echo " href=\"../../Pages/RegisterJob.php\">Post new position</a>";
                         echo "<a";
                         echo " class=\"dropdown-item\"";
                         echo " href=\"../static/error/404.html\">Edit positions</a>";

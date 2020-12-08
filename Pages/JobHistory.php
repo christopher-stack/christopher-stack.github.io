@@ -1,4 +1,8 @@
 <?php
+// Includes
+require_once "../Resources/php/server/Config.php";
+require_once "../Resources/php/server/ControllerFunc.php";
+
 // Initialize the session
 session_start();
  
@@ -6,14 +10,27 @@ session_start();
 if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
     header("location: ../Resources/php/server/Login.php");
     exit;
+} else {
+    // If user satisfied the above condition, we'll also check their role.
+    // If they lack permission, navigate them to the role error page
+    if ($_SESSION["role"] !== "jobseeker") {
+      header("location: ../Resources/static/error/Error_Permission.html");
+      exit;
+    }
 }
+
+// Fetch data of applied_for entry
+// Expanded data is retrieved on-demand to prevent performance decrease
+$currentUser = $_SESSION["username"];
+$query = "SELECT * FROM `applied_for` WHERE jobseeker = '$currentUser'";
+$appliedData = getData($link, $query);
 ?>
 
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
 	<meta char="UTF-8">
-	<title> TeamCDA Website - Template Page! </title>
+	<title> TeamCDA Website - Applicant Job History </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
 	<!-- Style Scripts -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Roboto">
@@ -125,11 +142,79 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 	</nav>
 	<!-- NAVIGATION HEADER END -->
 	<div class="container" style="overflow-x:auto;">
-		<h1>Lorem Ipsum</h1>
-		<br />
-		<p style="text-align:center">
-		<script>document.write(demoString);</script>
-		</p>
+    <h1>Job Applicant - History</h1>
+        <br />
+        <h2 style="text-align:left">Instructions</h2>
+        <p style="text-align:left; white-space: pre-wrap;">
+The below table highlights your past job submissions recorded on this portal.
+Further details about your selection will be shown upon clicking an entry.
+        </p>
+        <hr />
+        <!--Table Data-->
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Job Title</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    if (!empty($appliedData)) {
+                        foreach($appliedData as $row) {
+                            $jobId = $row['jobid'];
+                            $query = "SELECT * FROM `jobs` WHERE jobid='$jobId'";
+                            $jobData = getData($link, $query);
+                            if (!empty($jobData)) {
+                                $jobInfo = $jobData[0];
+                ?>
+                    <tr data-toggle="collapse" data-target="#accordion_<?php echo $jobId; ?>" class="clickable">
+                        <th scope="row"><?php echo $jobId; ?></th>
+                        <td><?php echo $jobInfo['position']; ?></td>
+                        <td><?php echo $jobInfo['start_date']; ?></td>
+                        <td><?php echo $jobInfo['salary']; ?></td>
+                    </tr>
+                    <tr id="accordion_<?php echo $jobId; ?>" class="collapse">
+                        <td colspan="4">
+                            <div>
+                                <h3>Details:</h3>
+                                <p style="text-align:left; white-space: pre-wrap;">
+    Position Name: <?php echo $jobInfo['position']; ?>
+
+    Description:
+        <?php echo $jobInfo['description']; ?>
+
+
+    Salary: <?php echo $jobInfo['salary']; ?>
+
+    Start Date: <?php echo $jobInfo['start_date']; ?>
+
+    Posted Date: <?php echo $jobInfo['posted_date']; ?>
+
+
+    Education:
+        <?php echo $jobInfo['required_education']; ?>
+
+    Skills:
+        <?php echo $jobInfo['required_skills']; ?>
+
+
+    Specific Job Requisites:
+        <?php echo $jobInfo['required_job_specific']; ?>
+
+    Prior Experience Requisites:
+        <?php echo $jobInfo['required_prior_experience']; ?>
+                                </p>
+                            </div>
+                <?php
+                            }
+                        }
+                    }
+                ?>
+            </tbody>
+        </table>
 	</div>
 	<!-- NAVIGATION FOOTER START -->
 	<nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary">
