@@ -88,7 +88,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 									echo " href=\"./Resources/php/server/EditProfile.php\">Edit Profile</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"./Resources/static/error/404.html\">Application history</a>";
+									echo " href=\"./Resources/php/server/JobHistory.php\">Application history</a>";
 									echo "<a";
 									echo " class=\"dropdown-item\"";
 									echo " href=\"./Resources/php/server/Search.php\">Search jobs</a>";

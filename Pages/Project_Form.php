@@ -1,14 +1,14 @@
 <?php
 // Includes
-require_once "../Resources/php/server/Config.php";
-require_once "../Resources/php/server/ControllerFunc.php";
+require_once "../Pages/Config.php";
+require_once "../Pages/ControllerFunc.php";
 
 // Initialize the session
 session_start();
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
-    header("location: ../Resources/php/server/Login.php");
+    header("location: ../Pages/Login.php");
     exit;
 } else {
   // If user satisfied the above condition, we'll also check their role.
@@ -113,13 +113,13 @@ foreach ($userData[0] as $item) {
                   echo " href=\"../Pages/Project_Form.php\">Profile</a>";
                   echo "<a";
 									echo " class=\"dropdown-item\"";
-									echo " href=\"../Resources/php/server/EditProfile.php\">Edit Profile</a>";
+									echo " href=\"../Pages/EditProfile.php\">Edit Profile</a>";
                   echo "<a";
                   echo " class=\"dropdown-item\"";
-                  echo " href=\"../Resources/static/error/404.html\">Application history</a>";
+                  echo " href=\"../Pages/JobHistory.php\">Application history</a>";
                   echo "<a";
                   echo " class=\"dropdown-item\"";
-                  echo " href=\"../Resources/static/error/404.html\">Search jobs</a>";
+                  echo " href=\"../Pages/Search.php\">Search jobs</a>";
                   echo "<a";
                   echo " class=\"dropdown-item\"";
                   echo " href=\"../Resources/static/error/404.html\">View jobs by category</a>";
@@ -129,10 +129,10 @@ foreach ($userData[0] as $item) {
                 } else if($_SESSION["role"] == "employer"){
                   echo "<a";
                   echo " class=\"dropdown-item\"";
-                  echo " href=\"../Resources/static/error/404.html\">Company profile</a>";
+                  echo " href=\"../Pages/CompanyProfile.php\">Company profile</a>";
                   echo "<a";
                   echo " class=\"dropdown-item\"";
-                  echo " href=\"../Resources/php/server/RegisterJob.php\">Post new position</a>";
+                  echo " href=\"../Pages/RegisterJob.php\">Post new position</a>";
                   echo "<a";
                   echo " class=\"dropdown-item\"";
                   echo " href=\"../Resources/static/error/404.html\">Edit positions</a>";
