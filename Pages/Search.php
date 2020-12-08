@@ -10,13 +10,13 @@ session_start();
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
-    header("location: ../Resources/php/server/Login.php");
+    header("location: ./Login.php");
     exit;
 }
 
 // Check if user is "admin"
 if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "jobseeker"){
-    header("location: ../Resources/static/error/Error_Permission.html");
+    header("location: ../../static/error/Error_Permission.html");
     exit;
 }
 
@@ -28,7 +28,6 @@ $appliedResults = [];
 
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
-<<<<<<< HEAD:Resources/php/server/Search.php
 
     // fetch jobids that currUser has applied for and store in $appliedResults array
     $sql = "SELECT jobid from applied_for WHERE jobseeker = ?";
@@ -58,9 +57,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         } 
     }
     
-=======
-    $search = "";
->>>>>>> e00486b2748a197dd22dbc657e998dd7a7776367:Pages/Search.php
 }
 ?>
  
@@ -80,14 +76,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 	<script src="https://kit.fontawesome.com/ccfb95e64e.js" crossorigin="anonymous"></script>
 	<script src="../Resources/static/js/script.js"></script>
 	<!-- Favicon Code - Include ALL Below -->
-	<link rel="shortcut icon" href="../Resources/static/icon/favicon.ico" type="image/x-icon">
-	<link rel="apple-touch-icon" sizes="180x180" href="../Resources/static/icon/apple-touch-icon.png">
-	<link rel="icon" type="image/png" href="../Resources/static/icon/favicon-32x32.png" sizes="32x32">
-	<link rel="icon" type="image/png" href="../Resources/static/icon/favicon-16x16.png" sizes="16x16">
-	<link rel="manifest" href="../Resources/static/icon/manifest.json">
-	<link rel="mask-icon" href="../Resources/static/icon/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="shortcut icon" href="../../static/icon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" sizes="180x180" href="../../static/icon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="../../static/icon/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="../../static/icon/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="../../static/icon/manifest.json">
+	<link rel="mask-icon" href="../../static/icon/safari-pinned-tab.svg" color="#5bbad5">
 	<meta name="msapplication-TileColor" content="#2b5797">
-	<meta name="msapplication-TileImage" content="../Resources/static/icon/mstile-144x144.png">
+	<meta name="msapplication-TileImage" content="../../static/icon/mstile-144x144.png">
 	<meta name="theme-color" content="#ffffff">
 	<!-- END FAVICON CODE -->
 </head>
@@ -138,13 +134,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                                 echo " href=\"../Pages/Project_Form.php\">Profile</a>";
                                 echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Pages/EditProfile.php\">Edit Profile</a>";
+								echo " href=\"../Resources/php/server/EditProfile.php\">Edit Profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Pages/JobHistory.php\">Application history</a>";
+								echo " href=\"../Resources/static/error/404.html\">Application history</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Pages/Search.php\">Search jobs</a>";
+								echo " href=\"../server/Search.php\">Search jobs</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Resources/static/error/404.html\">View jobs by category</a>";
@@ -154,10 +150,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 							} else if($_SESSION["role"] == "employer"){
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Pages/CompanyProfile.php\">Company profile</a>";
+								echo " href=\"\">Company profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Pages/RegisterJob.php\">Post new position</a>";
+								echo " href=\"../Resources/php/server/RegisterJob.php\">Post new position</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Resources/static/error/404.html\">Edit positions</a>";
@@ -169,8 +165,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 								echo " href=\"../Resources/static/error/404.html\">Search applicants</a>";
 							}
 						?>
-						<a class="dropdown-item" href="../Resources/php/server/Reset_Password.php">Reset password</a>
-						<a class="dropdown-item" href="../Resources/php/server/Logout.php">Sign out</a>
+						<a class="dropdown-item" href="./Reset_Password.php">Reset password</a>
+						<a class="dropdown-item" href="./Logout.php">Sign out</a>
 					</div>
 				</li>
 			</ul>
@@ -202,6 +198,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         </nav>
         <!-- NAVIGATION FOOTER END -->
     </div>
-    <script src="../../static/js/script.js" type="text/javascript"></script>
+    <script src="../Resources/static/js/script.js" type="text/javascript"></script>
 </body>
 </html>
