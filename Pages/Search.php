@@ -22,12 +22,13 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "jobseeker"){
 
 // Define variables and initialize with empty values
 $currUser = $_SESSION["username"];
-$search = $searchParam = "";
-$jobResults = [];
-$appliedResults = [];
 
 // Processing form data when form is submitted and contains data
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
+
+	$search = $searchParam = "";
+	$jobResults = [];
+	$appliedResults = [];
 
     // fetch jobids that currUser has applied for and store in $appliedResults array
     $sql = "SELECT jobid from applied_for WHERE jobseeker = ?";
@@ -55,7 +56,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 }
             }
         } 
-    }
+	}
+	
+	$_SESSION["jobResults"] = $jobResults;
+	$_SESSION["appliedResults"] = $appliedResults;
     
 }
 ?>
@@ -181,14 +185,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                     <input type="text" class="form-control search-field" name="searchEntry" required="required" data-error="This field is required." value="">
                     <i class="fa fa-search icon"></i>
                 </div>
+			</div>
+			<div class="form-group text-center">
+				<button type="submit" class="btn btn-dark w-75">Search</button>
             </div>
+		</form>
+		
+		
 
-            <!-- SUBMIT BUTTON -->
-            <div class="bottom-padding form-group">
-                <input type="submit" class="btn btn-primary float-right ml-2" value="Submit">
-            </div>
-            <div class="btm-space"></div>
-        </form>
         <!-- NAVIGATION FOOTER START -->
         <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
