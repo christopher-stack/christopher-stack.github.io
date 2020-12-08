@@ -264,28 +264,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
                 <input type="date" class="form-control" name="startDateEntry" required="required" placeholder="dd.mm.yyyy">
                 </div>
             </div>
-            <!-- <div class="input-group mb-4">
-                <div class="form-group mr-3 col-md-3 <?php echo (!empty($city_err)) ? 'has-error' : ''; ?>">
-                    <label for="inputCity">City</label>
-                    <input type="text" class="form-control" name="inputCity" data-error="This field is optional but must be valid." value="<?php echo $city; ?>">
-                    <span class="help-block"><?php echo $city_err; ?></span>
-                </div>
-                <div class="form-group mr-3 col-md-3 <?php echo (!empty($state_err)) ? 'has-error' : ''; ?>">
-                    <label for="inputState">State</label>
-                    <input type="text" class="form-control" name="inputState" data-error="This field is optional but must be valid." value="<?php echo $state; ?>">
-                    <span class="help-block"><?php echo $state_err; ?></span>
-                </div>
-                <div class="form-group mr-3 col-md-2 <?php echo (!empty($postal_err)) ? 'has-error' : ''; ?>">
-                    <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" name="inputZip" data-error="This field is optional but must be valid." value="<?php echo $postal; ?>">
-                    <span class="help-block"><?php echo $postal_err; ?></span>
-                </div>
-                <div class="form-group mr-3 col-md-2 <?php echo (!empty($country_err)) ? 'has-error' : ''; ?>">
-                    <label for="inputCountry">Country</label>
-                    <input type="text" class="form-control" name="inputCountry" data-error="This field is optional but must be valid." value="<?php echo $country; ?>">
-                    <span class="help-block"><?php echo $country_err; ?></span>
-                </div>
-            </div> -->
+            <div class="form-group mb-4">
+                <label for="requiredEducationEntry">Required Education</label>
+                <textarea class="form-control" name="requiredEducationEntry" rows="10" data-error="This field is invalid." placeholder="Please describe the required education for this position with as much detail as possible."></textarea>
+            </div>
+            <div class="form-group mb-4">
+                <label for="requiredSkillsEntry">Required Skills</label>
+                <textarea class="form-control" name="requiredSkillsEntry" rows="10" data-error="This field is invalid." placeholder="Please describe the required skills for this position with as much detail as possible."></textarea>
+            </div>
+            <div class="form-group mb-4">
+                <label for="jobSpecificRequirementsEntry">Specific Job Requirements</label>
+                <textarea class="form-control" name="jobSpecificRequirementsEntry" rows="10" data-error="This field is invalid." placeholder="Please describe any specific job requisites for this position with as much detail as possible."></textarea>
+            </div>
+            <div class="form-group mb-4">
+                <label for="priorExperienceRequirementsEntry">Prior Experience Requirements</label>
+                <textarea class="form-control" name="priorExperienceRequirementsEntry" rows="10" data-error="This field is invalid." placeholder="Please describe any prior experience requisites for this position with as much detail as possible."></textarea>
+            </div>
             <div class="bottom-padding form-group">
                 <input type="submit" class="btn btn-primary float-right ml-2" value="Submit">
                 <input type="reset" class="btn btn-secondary float-right" value="Reset">
