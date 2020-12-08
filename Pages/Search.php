@@ -10,13 +10,13 @@ session_start();
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
-    header("location: ./Login.php");
+    header("location: ../Resources/php/server/Login.php");
     exit;
 }
 
 // Check if user is "admin"
 if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "jobseeker"){
-    header("location: ../../static/error/Error_Permission.html");
+    header("location: ../Resources/static/error/Error_Permission.html");
     exit;
 }
 
