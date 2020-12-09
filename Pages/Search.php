@@ -45,10 +45,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     // fetch search and store in $jobResults array
     if (!empty(trim($_POST["searchEntry"]))) {
         $search = trim($_POST["searchEntry"]);
-        $searchParam = "%$search%";
-        $sql = "SELECT * from jobs WHERE position LIKE ?";
+		$searchParam = "%$search%";
+		$sql = "SELECT * FROM `jobs` LEFT JOIN `people` ON jobs.employer = people.username WHERE jobs.position LIKE ? OR jobs.description LIKE ? UNION SELECT * from `jobs` RIGHT JOIN `people` ON jobs.employer = people.username WHERE jobs.position LIKE ? OR jobs.description LIKE ?";
+        //$sql = "SELECT * from jobs WHERE position LIKE ?";
         if ($stmt = mysqli_prepare($link, $sql)) {
-            mysqli_stmt_bind_param($stmt, "s", $searchParam);
+            mysqli_stmt_bind_param($stmt, "ssss", $searchParam, $searchParam, $searchParam, $searchParam);
             if (mysqli_stmt_execute($stmt)) {
                 $res = mysqli_stmt_get_result($stmt);
                 while ($resAssocArray = mysqli_fetch_assoc($res)) {
@@ -58,6 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
         } 
 	}
 	
+	$_SESSION["search"] = $search;
 	$_SESSION["jobResults"] = $jobResults;
 	$_SESSION["appliedResults"] = $appliedResults;
     
@@ -191,7 +193,41 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
             </div>
 		</form>
 		
-		
+		<?php
+		if (isset($_SESSION["jobResults"]) && isset($_SESSION["appliedResults"])) {
+			$search = $_SESSION["search"];
+			$jobResults = $_SESSION["jobResults"];
+			$appliedResults = $_SESSION["appliedResults"];
+		?>
+		<div class="results-container mt-5">
+			<h2><?php echo "Search results for \"$search\""?></h2>
+			<?php
+			foreach($jobResults as $jobDetails) {
+			?>
+			<div class="result my-5">
+				<h3><?php echo $jobDetails["position"]?></h3>
+				<p><?php echo $jobDetails["start_date"]?></p>
+				<p>$<?php echo $jobDetails["salary"]?></p>
+				<p><?php echo $jobDetails["employing_company"]?></p>
+				<p><?php echo $jobDetails["city"]?></p>
+				<p><?php echo $jobDetails["state"]?></p>
+				<p><?php echo $jobDetails["posted_date"]?></p>
+				<p><?php echo $jobDetails["required_education"]?></p>
+				<p><?php echo $jobDetails["required_skills"]?></p>
+				<p><?php echo $jobDetails["required_job_specific"]?></p>
+				<p><?php echo $jobDetails["required_prior_experience"]?></p>
+			</div>
+			<hr>
+			<?php
+			}
+			?>
+		</div>
+		<?php
+		unset($_SESSION["search"]);
+		unset($_SESSION["jobResults"]);
+		unset($_SESSION["appliedResults"]);
+		}
+		?>
 
         <!-- NAVIGATION FOOTER START -->
         <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary">
