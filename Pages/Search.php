@@ -46,10 +46,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     if (!empty(trim($_POST["searchEntry"]))) {
         $search = trim($_POST["searchEntry"]);
 		$searchParam = "%$search%";
-		$sql = "SELECT * FROM `jobs` LEFT JOIN `people` ON jobs.employer = people.username WHERE jobs.position LIKE ? OR jobs.description LIKE ? UNION SELECT * from `jobs` RIGHT JOIN `people` ON jobs.employer = people.username WHERE jobs.position LIKE ? OR jobs.description LIKE ?";
-        //$sql = "SELECT * from jobs WHERE position LIKE ?";
+		$sql = "SELECT jobid, position, description, salary, DATE_FORMAT(start_date, '%b %d, %Y') as start_date, DATE_FORMAT(posted_date, '%b %d, %Y') as posted_date, required_education, required_skills, required_job_specific, required_prior_experience, street, city, state, postal, employing_company FROM `jobs` LEFT JOIN `people` ON jobs.employer = people.username WHERE (jobs.position LIKE ? OR jobs.description LIKE ?) AND jobs.start_date > CURDATE()";
         if ($stmt = mysqli_prepare($link, $sql)) {
-            mysqli_stmt_bind_param($stmt, "ssss", $searchParam, $searchParam, $searchParam, $searchParam);
+            mysqli_stmt_bind_param($stmt, "ss", $searchParam, $searchParam);
             if (mysqli_stmt_execute($stmt)) {
                 $res = mysqli_stmt_get_result($stmt);
                 while ($resAssocArray = mysqli_fetch_assoc($res)) {
@@ -204,18 +203,75 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 			<?php
 			foreach($jobResults as $jobDetails) {
 			?>
-			<div class="result my-5">
-				<h3><?php echo $jobDetails["position"]?></h3>
-				<p><?php echo $jobDetails["start_date"]?></p>
-				<p>$<?php echo $jobDetails["salary"]?></p>
-				<p><?php echo $jobDetails["employing_company"]?></p>
-				<p><?php echo $jobDetails["city"]?></p>
-				<p><?php echo $jobDetails["state"]?></p>
-				<p><?php echo $jobDetails["posted_date"]?></p>
-				<p><?php echo $jobDetails["required_education"]?></p>
-				<p><?php echo $jobDetails["required_skills"]?></p>
-				<p><?php echo $jobDetails["required_job_specific"]?></p>
-				<p><?php echo $jobDetails["required_prior_experience"]?></p>
+			<div class="container my-5">
+				<div class="row my-3">
+					<h3><?php echo $jobDetails["position"]?></h3>
+				</div>
+				<div class="mx-2 row">
+					<div class="col-md-8">
+						<p><?php echo $jobDetails["employing_company"]?> [<?php echo $jobDetails["city"]?>, <?php echo $jobDetails["state"]?>]</p>
+					</div>
+					<div class="col-md-4">
+						<p></p>
+					</div>
+				</div>
+				<div class="mx-2 row">
+					<div class="col-md-8">
+						<p>Start Date: <?php echo $jobDetails["start_date"]?></p>
+					</div>
+					<div class="col-md-4">
+						<p>Salary: $<?php echo $jobDetails["salary"]?></p>
+					</div>
+				</div>
+				<div class="mx-2 row">
+					<div class="col-md-4">
+						<p>Required Education:</p>
+					</div>
+					<div class="col-md-8">
+						<p><?php echo $jobDetails["required_education"]?></p>
+					</div>
+				</div>
+				<div class="mx-2 row">
+					<div class="col-md-4">
+						<p>Required Skils:</p>
+					</div>
+					<div class="col-md-8">
+						<p><?php echo $jobDetails["required_skills"]?></p>
+					</div>
+				</div>
+				<div class="mx-2 row">
+					<div class="col-md-4">
+						<p>Job Specific Requirements:</p>
+					</div>
+					<div class="col-md-8">
+						<p><?php echo $jobDetails["required_job_specific"]?></p>
+					</div>
+				</div>
+				<div class="mx-2 row">
+					<div class="col-md-4">
+						<p>Required Prior Experience:</p>
+					</div>
+					<div class="col-md-8">
+						<p><?php echo $jobDetails["required_prior_experience"]?></p>
+					</div>
+				</div>
+				<div class="mx-2 row">
+					<p class="offset-md-8">Posted on: <?php echo $jobDetails["posted_date"]?></p>
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				<form action="../Resources/php/server/apply.php" method="post" id="applyForm">
+					<input type="hidden" name="jobidEntry" value="<?php echo $jobDetails["jobid"]; ?>">
+					<input type="hidden" name="jobseekerEntry" value="<?php echo $currUser; ?>">
+					<input type="hidden" name="desiredSalaryEntry" value="<?php echo $jobDetails["salary"]; ?>">
+					<input type="hidden" name="desiredStartEntry" value="<?php echo $jobDetails["start_date"]; ?>">
+					<button type="submit" class="btn btn-dark w-20 mt-3">Apply Now</button>
+				</form>
 			</div>
 			<hr>
 			<?php
