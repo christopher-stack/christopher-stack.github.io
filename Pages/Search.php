@@ -223,49 +223,48 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 						<p>Salary: $<?php echo $jobDetails["salary"]?></p>
 					</div>
 				</div>
-				<div class="mx-2 row">
-					<div class="col-md-4">
-						<p>Required Education:</p>
+				<div class="hidden" id="details<?php echo $jobDetails["jobid"] ?>">
+					<div class="mx-2 row">
+						<div class="col-md-4">
+							<p>Required Education:</p>
+						</div>
+						<div class="col-md-8">
+							<p><?php echo $jobDetails["required_education"]?></p>
+						</div>
 					</div>
-					<div class="col-md-8">
-						<p><?php echo $jobDetails["required_education"]?></p>
+					<div class="mx-2 row">
+						<div class="col-md-4">
+							<p>Required Skils:</p>
+						</div>
+						<div class="col-md-8">
+							<p><?php echo $jobDetails["required_skills"]?></p>
+						</div>
+					</div>
+					<div class="mx-2 row">
+						<div class="col-md-4">
+							<p>Job Specific Requirements:</p>
+						</div>
+						<div class="col-md-8">
+							<p><?php echo $jobDetails["required_job_specific"]?></p>
+						</div>
+					</div>
+					<div class="mx-2 row">
+						<div class="col-md-4">
+							<p>Required Prior Experience:</p>
+						</div>
+						<div class="col-md-8">
+							<p><?php echo $jobDetails["required_prior_experience"]?></p>
+						</div>
+					</div>
+					<div class="mx-2 row">
+						<p>Posted on: <?php echo $jobDetails["posted_date"]?></p>
 					</div>
 				</div>
-				<div class="mx-2 row">
-					<div class="col-md-4">
-						<p>Required Skils:</p>
-					</div>
-					<div class="col-md-8">
-						<p><?php echo $jobDetails["required_skills"]?></p>
-					</div>
+				<div class="row toggleBtn">
+					<p onclick="showMore(<?php echo $jobDetails['jobid'] ?>)" style="font-size: .8rem" class="showMore offset-md-9" id="more<?php echo $jobDetails["jobid"] ?>">+ Show More</p>
+					<p onclick="showLess(<?php echo $jobDetails['jobid'] ?>)" style="font-size: .8rem" class="hidden showLess offset-md-9" id="less<?php echo $jobDetails["jobid"] ?>">- Show Less</p>
 				</div>
-				<div class="mx-2 row">
-					<div class="col-md-4">
-						<p>Job Specific Requirements:</p>
-					</div>
-					<div class="col-md-8">
-						<p><?php echo $jobDetails["required_job_specific"]?></p>
-					</div>
-				</div>
-				<div class="mx-2 row">
-					<div class="col-md-4">
-						<p>Required Prior Experience:</p>
-					</div>
-					<div class="col-md-8">
-						<p><?php echo $jobDetails["required_prior_experience"]?></p>
-					</div>
-				</div>
-				<div class="mx-2 row">
-					<p class="offset-md-8">Posted on: <?php echo $jobDetails["posted_date"]?></p>
-				</div>
-				
-				
-				
-				
-				
-				
-				
-				<form action="../Resources/php/server/apply.php" method="post" id="applyForm">
+				<form action="../Resources/php/server/Apply.php" method="post" id="applyForm">
 					<input type="hidden" name="jobidEntry" value="<?php echo $jobDetails["jobid"]; ?>">
 					<input type="hidden" name="jobseekerEntry" value="<?php echo $currUser; ?>">
 					<input type="hidden" name="desiredSalaryEntry" value="<?php echo $jobDetails["salary"]; ?>">

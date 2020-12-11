@@ -148,6 +148,12 @@ a {
 .search-field:focus + i {
 	color: #f6f6f6;
 }
+.hidden {
+	display: none;
+}
+.toggleBtn {
+	cursor: pointer;
+}
 
 /* Center the loader */
 

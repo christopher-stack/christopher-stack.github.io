@@ -260,3 +260,27 @@ function addEdu(eduHistCount) {
 	profileForm.insertBefore(inputGroupD, addBtn);
 	profileForm.insertBefore(inputGroupE, addBtn);
 }
+
+function showMore(id) {
+	let targetEl = document.getElementById(`details${id}`);
+	if (targetEl.classList.contains("hidden")) {
+		targetEl.classList.remove("hidden");
+	}
+	let moreBtn = document.getElementById(`more${id}`);
+	moreBtn.classList.add("hidden");
+	let lessBtn = document.getElementById(`less${id}`);
+	if (lessBtn.classList.contains("hidden")) {
+		lessBtn.classList.remove("hidden");
+	}
+}
+
+function showLess(id) {
+	let targetEl = document.getElementById(`details${id}`);
+	targetEl.classList.add("hidden");
+	let moreBtn = document.getElementById(`more${id}`);
+	if (moreBtn.classList.contains("hidden")) {
+		moreBtn.classList.remove("hidden");
+	}
+	let lessBtn = document.getElementById(`less${id}`);
+	lessBtn.classList.add("hidden");
+}
