@@ -21,48 +21,19 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] !== "jobseeker"){
 }
 
 // Define variables and initialize with empty values
+$appHist =[];
 $currUser = $_SESSION["username"];
-
-// Processing form data when form is submitted and contains data
-if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
-
-	$search = $searchParam = "";
-	$jobResults = [];
-	$appliedResults = [];
-
-    // fetch jobids that currUser has applied for and store in $appliedResults array
-    $sql = "SELECT jobid from applied_for WHERE jobseeker = ?";
-    if ($stmt = mysqli_prepare($link, $sql)) {
-        mysqli_stmt_bind_param($stmt, "s", $currUser);
-        if (mysqli_stmt_execute($stmt)) {
-            $res = mysqli_stmt_get_result($stmt);
-            while ($resArray = mysqli_fetch_array($res)) {
-                array_push($appliedResults, $resArray);
-            }
+$sql = "SELECT jobs.jobid as jobid, position, DATE_FORMAT(start_date, '%b %d, %Y') as start_date, salary, required_education, required_skills, required_job_specific, required_prior_experience, city, state, employing_company FROM `applied_for` INNER JOIN `jobs` ON applied_for.jobid = jobs.jobid INNER JOIN `people` ON jobs.employer = people.username WHERE applied_for.jobseeker = ?";
+if ($stmt = mysqli_prepare($link, $sql)) {
+    mysqli_stmt_bind_param($stmt, "s", $currUser);
+    if (mysqli_stmt_execute($stmt)) {
+        $res = mysqli_stmt_get_result($stmt);
+        while ($row = mysqli_fetch_assoc($res)) {
+            array_push($appHist, $row);
         }
     }
-
-    // fetch search and store in $jobResults array
-    if (!empty(trim($_POST["searchEntry"]))) {
-        $search = trim($_POST["searchEntry"]);
-		$searchParam = "%$search%";
-		$sql = "SELECT jobid, position, description, salary, DATE_FORMAT(start_date, '%b %d, %Y') as start_date, DATE_FORMAT(posted_date, '%b %d, %Y') as posted_date, required_education, required_skills, required_job_specific, required_prior_experience, street, city, state, postal, employing_company FROM `jobs` LEFT JOIN `people` ON jobs.employer = people.username WHERE (jobs.position LIKE ? OR jobs.description LIKE ?) AND jobs.start_date > CURDATE()";
-        if ($stmt = mysqli_prepare($link, $sql)) {
-            mysqli_stmt_bind_param($stmt, "ss", $searchParam, $searchParam);
-            if (mysqli_stmt_execute($stmt)) {
-                $res = mysqli_stmt_get_result($stmt);
-                while ($resAssocArray = mysqli_fetch_assoc($res)) {
-                    array_push($jobResults, $resAssocArray);
-                }
-            }
-        } 
-	}
-	
-	$_SESSION["search"] = $search;
-	$_SESSION["jobResults"] = $jobResults;
-	$_SESSION["appliedResults"] = $appliedResults;
-    
 }
+
 ?>
  
 <!DOCTYPE html>
@@ -142,7 +113,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 								echo " href=\"../Resources/php/server/EditProfile.php\">Edit Profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Pages/History.php\">Application history</a>";
+								echo " href=\"../Pages/JobHistory.php\">Application history</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../server/Search.php\">Search jobs</a>";
@@ -179,128 +150,85 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 	</nav>
 	<!-- NAVIGATION HEADER END -->
     <div class="registerEmp-wrapper">
-        <h2>Search Jobs</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="searchForm">
-            <div class="form-group <?php echo (!empty($search_err)) ? 'has-error' : ''; ?>">
-                <div class="input-icons">
-                    <input type="text" id="searchField" class="form-control search-field" name="searchEntry" autocomplete="off" value="" onkeyup="search(this.value)">
-                    <i class="fa fa-search icon"></i>
-                </div>
-			</div>
-			<div id="suggestionsList"></div>
-			<div class="form-group text-center">
-				<button type="submit" class="btn btn-dark w-75">Search</button>
-            </div>
-		</form>
-		
-		<?php
-		if (isset($_SESSION["jobResults"]) && isset($_SESSION["appliedResults"])) {
-			$search = $_SESSION["search"];
-			$jobResults = $_SESSION["jobResults"];
-			$appliedResults = $_SESSION["appliedResults"];
-		?>
-		<div class="results-container mt-5">
-			<h2><?php echo "Search results for \"$search\""?></h2>
-			<?php
-			foreach($jobResults as $jobDetails) {
-				$appliedBefore = false;
-				foreach($appliedResults as $applied) {
-					if ($applied["jobid"] == $jobDetails["jobid"]) {
-						$appliedBefore = true;
-					}
-				}
-			?>
-			<div class="container my-5">
-				<div class="row my-3">
-					<h3><?php echo $jobDetails["position"]?></h3>
-				</div>
-				<div class="mx-2 row">
-					<div class="col-md-8">
-						<p><?php echo $jobDetails["employing_company"]?> [<?php echo $jobDetails["city"]?>, <?php echo $jobDetails["state"]?>]</p>
-					</div>
-					<div class="col-md-4">
-						<p></p>
-					</div>
-				</div>
-				<div class="mx-2 row">
-					<div class="col-md-8">
-						<p>Start Date: <?php echo $jobDetails["start_date"]?></p>
-					</div>
-					<div class="col-md-4">
-						<p>Salary: $<?php echo $jobDetails["salary"]?></p>
-					</div>
-				</div>
-				<div class="hidden" id="details<?php echo $jobDetails["jobid"] ?>">
-					<div class="mx-2 row">
-						<div class="col-md-4">
-							<p>Required Education:</p>
-						</div>
-						<div class="col-md-8">
-							<p><?php echo $jobDetails["required_education"]?></p>
-						</div>
-					</div>
-					<div class="mx-2 row">
-						<div class="col-md-4">
-							<p>Required Skils:</p>
-						</div>
-						<div class="col-md-8">
-							<p><?php echo $jobDetails["required_skills"]?></p>
-						</div>
-					</div>
-					<div class="mx-2 row">
-						<div class="col-md-4">
-							<p>Job Specific Requirements:</p>
-						</div>
-						<div class="col-md-8">
-							<p><?php echo $jobDetails["required_job_specific"]?></p>
-						</div>
-					</div>
-					<div class="mx-2 row">
-						<div class="col-md-4">
-							<p>Required Prior Experience:</p>
-						</div>
-						<div class="col-md-8">
-							<p><?php echo $jobDetails["required_prior_experience"]?></p>
-						</div>
-					</div>
-					<div class="mx-2 row">
-						<p>Posted on: <?php echo $jobDetails["posted_date"]?></p>
-					</div>
-				</div>
-				<div class="row toggleBtn">
-					<p onclick="showMore(<?php echo $jobDetails['jobid'] ?>)" style="font-size: .8rem" class="showMore offset-md-9" id="more<?php echo $jobDetails["jobid"] ?>">+ Show More</p>
-					<p onclick="showLess(<?php echo $jobDetails['jobid'] ?>)" style="font-size: .8rem" class="hidden showLess offset-md-9" id="less<?php echo $jobDetails["jobid"] ?>">- Show Less</p>
-				</div>
-				<form action="../Resources/php/server/Apply.php" method="post" id="applyForm">
-					<input type="hidden" name="jobidEntry" value="<?php echo $jobDetails["jobid"]; ?>">
-					<input type="hidden" name="jobseekerEntry" value="<?php echo $currUser; ?>">
-					<input type="hidden" name="desiredSalaryEntry" value="<?php echo $jobDetails["salary"]; ?>">
-					<input type="hidden" name="desiredStartEntry" value="<?php echo $jobDetails["start_date"]; ?>">
-					<?php
-					if (!$appliedBefore) {
-					?>
-					<button type="submit" class="btn btn-dark w-20 mt-3">Apply Now</button>
-					<?php
-					}
-					else {
-					?>
-					<button type="submit" disabled class="btn btn-dark w-20 mt-3">Application Completed</button>
-					<?php	
-					}
-					?>
-				</form>
-			</div>
-			<hr>
-			<?php
-			}
-			?>
-		</div>
-		<?php
-		unset($_SESSION["search"]);
-		unset($_SESSION["jobResults"]);
-		unset($_SESSION["appliedResults"]);
-		}
-		?>
+        <h2>Application History</h2>
+        <p>Click on the headers to sort by title, start date, or salary.</p>
+        <p>Click on each job summary for full description.</p>
+        <div class="histTable">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th onclick="sortByCol(document.querySelector('table'), 1)">Job Title</th>
+                        <th onclick="sortByCol(document.querySelector('table'), 2)">Start Date</th>
+                        <th onclick="sortByCol(document.querySelector('table'), 3)">Salary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach($appHist as $app) {
+                    ?>
+                    <tr data-toggle="collapse" data-target="#accordion_<?php echo $app["jobid"]; ?>" class="clickable">
+                        <td><?php echo $app["position"] ?></td>
+                        <td><?php echo $app["start_date"] ?></td>
+                        <td>$<?php echo $app["salary"] ?></td>
+                    </tr>
+                    <tr id="accordion_<?php echo $app["jobid"]; ?>" class="collapse">
+                        <td colspan="3">
+                            <div class="mx-2 row">
+                                <div class="col-md-4">
+                                    <p>Company:</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><?php echo $app["employing_company"]?></p>
+                                </div>
+                            </div>
+                            <div class="mx-2 row">
+                                <div class="col-md-4">
+                                    <p>Location:</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><?php echo $app["city"]?>, <?php echo $app["state"]?></p>
+                                </div>
+                            </div>
+                            <div class="mx-2 row">
+                                <div class="col-md-4">
+                                    <p>Required Education:</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><?php echo $app["required_education"]?></p>
+                                </div>
+                            </div>
+                            <div class="mx-2 row">
+                                <div class="col-md-4">
+                                    <p>Required Skils:</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><?php echo $app["required_skills"]?></p>
+                                </div>
+                            </div>
+                            <div class="mx-2 row">
+                                <div class="col-md-4">
+                                    <p>Job Specific Requirements:</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><?php echo $app["required_job_specific"]?></p>
+                                </div>
+                            </div>
+                            <div class="mx-2 row">
+                                <div class="col-md-4">
+                                    <p>Required Prior Experience:</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><?php echo $app["required_prior_experience"]?></p>
+                                </div>
+					        </div>
+                        </td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
         <!-- NAVIGATION FOOTER START -->
         <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary">

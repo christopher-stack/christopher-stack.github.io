@@ -529,7 +529,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 								echo " href=\"../Pages/EditProfile.php\">Edit Profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Pages/JobHistory.php\">Application history</a>";
+								echo " href=\"../Pages/History.php\">Application history</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Pages/Search.php\">Search jobs</a>";

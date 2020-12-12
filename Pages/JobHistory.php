@@ -155,7 +155,7 @@ Further details about your selection will be shown upon clicking an entry.
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Job Title</th>
+                    <th scope="col" onclick="sortByTitle()">Job Title</th>
                     <th scope="col">Start Date</th>
                     <th scope="col">Salary</th>
                 </tr>
@@ -181,31 +181,15 @@ Further details about your selection will be shown upon clicking an entry.
                             <div>
                                 <h3>Details:</h3>
                                 <p style="text-align:left; white-space: pre-wrap;">
-    Position Name: <?php echo $jobInfo['position']; ?>
-
-    Description:
-        <?php echo $jobInfo['description']; ?>
-
-
-    Salary: <?php echo $jobInfo['salary']; ?>
-
-    Start Date: <?php echo $jobInfo['start_date']; ?>
-
-    Posted Date: <?php echo $jobInfo['posted_date']; ?>
-
-
-    Education:
-        <?php echo $jobInfo['required_education']; ?>
-
-    Skills:
-        <?php echo $jobInfo['required_skills']; ?>
-
-
-    Specific Job Requisites:
-        <?php echo $jobInfo['required_job_specific']; ?>
-
-    Prior Experience Requisites:
-        <?php echo $jobInfo['required_prior_experience']; ?>
+    							Position Name: <?php echo $jobInfo['position']; ?>
+								Description: <?php echo $jobInfo['description']; ?>
+								Salary: <?php echo $jobInfo['salary']; ?>
+								Start Date: <?php echo $jobInfo['start_date']; ?>
+								Posted Date: <?php echo $jobInfo['posted_date']; ?>
+								Education: <?php echo $jobInfo['required_education']; ?>
+								Skills: <?php echo $jobInfo['required_skills']; ?>
+								Specific Job Requisites: <?php echo $jobInfo['required_job_specific']; ?>
+								Prior Experience Requisites: <?php echo $jobInfo['required_prior_experience']; ?>
                                 </p>
                             </div>
                 <?php

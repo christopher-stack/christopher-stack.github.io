@@ -308,10 +308,6 @@ function search(str) {
 }
 
 function fetchSearchData(str) {
-	// fetch('../Resources/php/server/SuggestSearch.php', {
-	// 	method: 'GET',
-	// 	body: new URLSearchParams('q=' + str)
-	// })
 	fetch('../Resources/php/server/SuggestSearch.php?q=' + str)
 	.then(res => res.text())
 	.then(data => listSuggestions(data))
@@ -338,3 +334,32 @@ function listSuggestions(data) {
 	}
 }
 
+function sortByCol(table, col, asc=true) {
+	const dirMod = asc ? 1 : -1;
+	const tableBody = table.tBodies[0];
+	const oddrows = Array.from(tableBody.querySelectorAll("tr:nth-child(odd)"));
+	const evenrows = Array.from(tableBody.querySelectorAll("tr:nth-child(even)"));
+	
+	// console.log(evenrows);
+	let allrows = [];
+
+	for (i = 0; i < evenrows.length; i++) {
+		allrows[i] = [oddrows[i], evenrows[i]];
+	}
+
+	const sortedRows = allrows.sort((a, b) => {
+		const aColText = a[0].querySelector(`td:nth-child(${col})`).textContent.trim();
+		const bColText = b[0].querySelector(`td:nth-child(${col})`).textContent.trim();
+
+		return aColText > bColText ? (1 * dirMod) : (-1 * dirMod);
+	})
+
+	while (tableBody.firstChild) {
+		tableBody.removeChild(tableBody.firstChild);
+	}
+
+	for (i = 0; i < evenrows.length; i++) {
+		tableBody.appendChild(allrows[i][0]);
+		tableBody.appendChild(allrows[i][1]);
+	}
+}

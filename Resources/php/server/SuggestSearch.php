@@ -20,16 +20,6 @@ if ($stmt = mysqli_prepare($link, $sql)) {
         
         header('Content-type:application/json;charset=utf-8');
         echo json_encode(['positions' => $suggestions]);
-        //print_r($suggestions);
-        // echo json_last_error();
-
-        // var_dump($data);
-        //return $data;
-        // foreach($resArray as $item) {
-        //     array_push($suggestionsArray, $item[0]);
-        // }
-        // $data = json_encode($suggestionsArray);
-        // return $data;
     }
 }
 
