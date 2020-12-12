@@ -181,12 +181,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
     <div class="registerEmp-wrapper">
         <h2>Search Jobs</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="searchForm">
-            <div class="form-group mb-2 <?php echo (!empty($search_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group <?php echo (!empty($search_err)) ? 'has-error' : ''; ?>">
                 <div class="input-icons">
-                    <input type="text" class="form-control search-field" name="searchEntry" required="required" data-error="This field is required." value="">
+                    <input type="text" id="searchField" class="form-control search-field" name="searchEntry" autocomplete="off" value="" onkeyup="search(this.value)">
                     <i class="fa fa-search icon"></i>
                 </div>
 			</div>
+			<div id="suggestionsList"></div>
 			<div class="form-group text-center">
 				<button type="submit" class="btn btn-dark w-75">Search</button>
             </div>

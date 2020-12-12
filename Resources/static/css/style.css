@@ -154,6 +154,18 @@ a {
 .toggleBtn {
 	cursor: pointer;
 }
+#suggestionsList {
+	background-color: #262626;
+	position: relative;
+	top: -35px;
+}
+#suggestionsList p {
+	text-indent: 2.5rem;
+}
+#suggestionsList p:hover {
+	cursor: pointer;
+	background-color: blue;
+}
 
 /* Center the loader */
 

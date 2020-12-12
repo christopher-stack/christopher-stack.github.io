@@ -284,3 +284,57 @@ function showLess(id) {
 	let lessBtn = document.getElementById(`less${id}`);
 	lessBtn.classList.add("hidden");
 }
+
+function suggestSearch(str) {
+	if (str.length == 0) {
+		document.getElementById("suggestions").innerHTML = "";
+		document.getElementById("suggestions").style.border = "0px";
+		return;
+	}
+	let xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("suggestions").innerHTML = this.responseText;
+			document.getElementById("suggestions").style.border = "1px solid #A5ACB2";
+		}
+	}
+	xmlhttp.open("GET", "../Resources/php/server/SuggestSearch.php?q="+str, true);
+	xmlhttp.send();
+}
+
+function search(str) {
+	if (str.length == 0) return;
+	fetchSearchData(str);
+}
+
+function fetchSearchData(str) {
+	// fetch('../Resources/php/server/SuggestSearch.php', {
+	// 	method: 'GET',
+	// 	body: new URLSearchParams('q=' + str)
+	// })
+	fetch('../Resources/php/server/SuggestSearch.php?q=' + str)
+	.then(res => res.text())
+	.then(data => listSuggestions(data))
+	.catch(err => console.log('Error: ' + err));
+}
+
+function listSuggestions(data) {
+	const suggestionsList = document.getElementById("suggestionsList");
+	suggestionsList.innerHTML = "";
+
+	const searchField = document.getElementById('searchField');
+	const form = document.getElementById('searchForm');
+	suggestionsArray = JSON.parse(data)["positions"];
+	
+	for (i = 0; i < suggestionsArray.length; i++) {
+		const p = document.createElement('p');
+		p.innerHTML = suggestionsArray[i];
+		p.onclick = function searchItem() {
+			suggestionsList.classList.add('hidden');
+			searchField.value = this.innerHTML;
+			form.submit();
+		};
+		suggestionsList.appendChild(p);
+	}
+}
+
