@@ -202,6 +202,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 			<h2><?php echo "Search results for \"$search\""?></h2>
 			<?php
 			foreach($jobResults as $jobDetails) {
+				$appliedBefore = false;
+				foreach($appliedResults as $applied) {
+					if ($applied["jobid"] == $jobDetails["jobid"]) {
+						$appliedBefore = true;
+					}
+				}
 			?>
 			<div class="container my-5">
 				<div class="row my-3">
@@ -269,7 +275,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 					<input type="hidden" name="jobseekerEntry" value="<?php echo $currUser; ?>">
 					<input type="hidden" name="desiredSalaryEntry" value="<?php echo $jobDetails["salary"]; ?>">
 					<input type="hidden" name="desiredStartEntry" value="<?php echo $jobDetails["start_date"]; ?>">
+					<?php
+					if (!$appliedBefore) {
+					?>
 					<button type="submit" class="btn btn-dark w-20 mt-3">Apply Now</button>
+					<?php
+					}
+					else {
+					?>
+					<button type="submit" disabled class="btn btn-dark w-20 mt-3">Application Completed</button>
+					<?php	
+					}
+					?>
 				</form>
 			</div>
 			<hr>
