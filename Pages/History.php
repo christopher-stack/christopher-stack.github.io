@@ -107,13 +107,13 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 							if($_SESSION["role"] == "jobseeker"){
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-                                echo " href=\"../Pages/Project_Form.php\">Profile</a>";
+                                echo " href=\"../Pages/EditProfile.php\">Profile</a>";
                                 echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Resources/php/server/EditProfile.php\">Edit Profile</a>";
+								echo " href=\"../Pages/EditProfile.php\">Edit Profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Pages/JobHistory.php\">Application history</a>";
+								echo " href=\"../Pages/History.php\">Application history</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Pages/Search.php\">Search jobs</a>";
@@ -141,8 +141,8 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 								echo " href=\"../Resources/static/error/404.html\">Search applicants</a>";
 							}
 						?>
-						<a class="dropdown-item" href="./Reset_Password.php">Reset password</a>
-						<a class="dropdown-item" href="./Logout.php">Sign out</a>
+						<a class="dropdown-item" href="../Resources/php/server/Reset_Password.php">Reset password</a>
+						<a class="dropdown-item" href="../Resources/php/server/Logout.php">Sign out</a>
 					</div>
 				</li>
 			</ul>

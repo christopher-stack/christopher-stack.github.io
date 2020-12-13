@@ -136,16 +136,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 							if($_SESSION["role"] == "jobseeker"){
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-                                echo " href=\"../Pages/Project_Form.php\">Profile</a>";
+                                echo " href=\"../Pages/EditProfile.php\">Profile</a>";
                                 echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../Resources/php/server/EditProfile.php\">Edit Profile</a>";
+								echo " href=\"../Pages/EditProfile.php\">Edit Profile</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Pages/History.php\">Application history</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../server/Search.php\">Search jobs</a>";
+								echo " href=\"../Pages/Search.php\">Search jobs</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Resources/static/error/404.html\">View jobs by category</a>";
@@ -170,8 +170,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 								echo " href=\"../Resources/static/error/404.html\">Search applicants</a>";
 							}
 						?>
-						<a class="dropdown-item" href="./Reset_Password.php">Reset password</a>
-						<a class="dropdown-item" href="./Logout.php">Sign out</a>
+						<a class="dropdown-item" href="../Resources/php/server/Reset_Password.php">Reset password</a>
+						<a class="dropdown-item" href="../Resources/php/server/Logout.php">Sign out</a>
 					</div>
 				</li>
 			</ul>

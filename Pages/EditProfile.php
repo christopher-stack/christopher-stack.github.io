@@ -523,7 +523,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 							if($_SESSION["role"] == "jobseeker"){
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-                                echo " href=\"../Pages/Project_Form.php\">Profile</a>";
+                                echo " href=\"../Pages/EditProfile.php\">Profile</a>";
                                 echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Pages/EditProfile.php\">Edit Profile</a>";
