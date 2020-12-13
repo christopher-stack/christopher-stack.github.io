@@ -274,11 +274,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST)) {
 				<form action="../Resources/php/server/Apply.php" method="post" id="applyForm">
 					<input type="hidden" name="jobidEntry" value="<?php echo $jobDetails["jobid"]; ?>">
 					<input type="hidden" name="jobseekerEntry" value="<?php echo $currUser; ?>">
-					<input type="hidden" name="desiredSalaryEntry" value="<?php echo $jobDetails["salary"]; ?>">
-					<input type="hidden" name="desiredStartEntry" value="<?php echo $jobDetails["start_date"]; ?>">
 					<?php
 					if (!$appliedBefore) {
 					?>
+					<div class="input-group">
+						<div class="form-group col-md-5">
+							<label for="desiredSalaryEntry">Desired Salary ($)</label>
+							<input type="number" name="desiredSalaryEntry" value="<?php echo $jobDetails["salary"]; ?>">
+						</div>
+						<div class="form-group col-md-5">
+							<label for="desiredStartEntry">Desired Start Date</label>
+							<input type="date" name="desiredStartEntry" value="<?php echo $jobDetails["start_date"]; ?>">
+						</div>
+					</div>
 					<button type="submit" class="btn btn-dark w-20 mt-3">Apply Now</button>
 					<?php
 					}

@@ -116,7 +116,7 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 								echo " href=\"../Pages/JobHistory.php\">Application history</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
-								echo " href=\"../server/Search.php\">Search jobs</a>";
+								echo " href=\"../Pages/Search.php\">Search jobs</a>";
 								echo "<a";
 								echo " class=\"dropdown-item\"";
 								echo " href=\"../Resources/static/error/404.html\">View jobs by category</a>";
