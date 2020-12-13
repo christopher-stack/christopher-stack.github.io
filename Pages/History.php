@@ -151,15 +151,15 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 	<!-- NAVIGATION HEADER END -->
     <div class="registerEmp-wrapper">
         <h2>Application History</h2>
-        <p>Click on the headers to sort by title, start date, or salary.</p>
+        <p>Click on the headers to toggle between ascending/descending sorts by title, start date, or salary.</p>
         <p>Click on each job summary for full description.</p>
         <div class="histTable">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th onclick="sortByCol(document.querySelector('table'), 1)">Job Title</th>
-                        <th onclick="sortByCol(document.querySelector('table'), 2)">Start Date</th>
-                        <th onclick="sortByCol(document.querySelector('table'), 3)">Salary</th>
+                        <th id="titleHead" onclick="sortByCol(document.querySelector('table'), 1, this.id)">Job Title</th>
+                        <th id="startHead" onclick="sortByCol(document.querySelector('table'), 2, this.id)">Start Date</th>
+                        <th id="salaryHead" onclick="sortByCol(document.querySelector('table'), 3, this.id)">Salary</th>
                     </tr>
                 </thead>
                 <tbody>

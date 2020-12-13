@@ -334,7 +334,17 @@ function listSuggestions(data) {
 	}
 }
 
-function sortByCol(table, col, asc=true) {
+function sortByCol(table, col, id, asc=true) {
+
+	let head = document.getElementById(id);
+	if (asc) {
+		head.setAttribute("onclick", "sortByCol(document.querySelector('table'), 1, this.id, false)");
+	}
+	else {
+		head.setAttribute("onclick", "sortByCol(document.querySelector('table'), 1, this.id)");
+	}
+	
+
 	const dirMod = asc ? 1 : -1;
 	const tableBody = table.tBodies[0];
 	const oddrows = Array.from(tableBody.querySelectorAll("tr:nth-child(odd)"));
